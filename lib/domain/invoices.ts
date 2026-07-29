@@ -15,10 +15,14 @@ export const INVOICE_STATUS_BADGE_CLASS: Record<InvoiceStatus, string> = {
 // Overdue is derived, never stored — same convention as task due dates:
 // a `status` column only tracks draft/sent/paid, not a fourth "overdue"
 // state that would need something to keep it in sync.
+// `today` must be a YYYY-MM-DD string in the company's timezone (see
+// getCompanyToday) — comparing against `new Date()` directly would judge
+// "overdue" against the server's clock/timezone instead of the company's.
 export function isInvoiceOverdue(
   dueDate: string | null,
-  status: InvoiceStatus
+  status: InvoiceStatus,
+  today: string
 ): boolean {
   if (!dueDate || status !== "sent") return false;
-  return new Date(dueDate + "T23:59:59") < new Date();
+  return dueDate < today;
 }

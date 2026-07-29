@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanyToday } from "@/lib/supabase/company";
 import { buttonVariants } from "@/components/ui/button";
 import { InvoiceStatusSelect } from "@/components/invoices/invoice-status-select";
 import { InvoiceFormSheet } from "@/components/invoices/invoice-form-sheet";
@@ -35,7 +36,8 @@ export default async function InvoiceDetailPage({
     .is("deleted_at", null)
     .order("name");
 
-  const overdue = isInvoiceOverdue(invoice.due_date, invoice.status);
+  const today = await getCompanyToday(user.profile.company_id);
+  const overdue = isInvoiceOverdue(invoice.due_date, invoice.status, today);
 
   return (
     <div className="max-w-2xl space-y-6">

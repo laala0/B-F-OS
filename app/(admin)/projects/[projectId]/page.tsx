@@ -1,9 +1,9 @@
-import { notFound } from "next/navigation";
+import { requireProjectAccess } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { ProjectNav } from "@/components/projects/project-nav";
 import { ProjectForm } from "@/components/projects/project-form";
 import { DeleteProjectDialog } from "@/components/projects/delete-project-dialog";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { PhaseList } from "@/components/phases/phase-list";
 
 export default async function ProjectOverviewPage({
   params,
@@ -11,16 +11,14 @@ export default async function ProjectOverviewPage({
   params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = await params;
-
+  const { project } = await requireProjectAccess(projectId);
   const supabase = await createClient();
-  const { data: project } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("id", projectId)
-    .is("deleted_at", null)
-    .single();
 
-  if (!project) notFound();
+  const { data: phases } = await supabase
+    .from("project_phases")
+    .select("*")
+    .eq("project_id", projectId)
+    .order("position", { ascending: true });
 
   return (
     <div className="max-w-2xl space-y-6">
@@ -32,11 +30,7 @@ export default async function ProjectOverviewPage({
         <DeleteProjectDialog projectId={project.id} projectName={project.name} />
       </div>
       <ProjectForm project={project} />
-      <ComingSoon
-        title="Timeline & phases"
-        phase="a later Phase 2 pass"
-        description="Footings, base prep, rebar, anchors, pour, waterproofing — with planned vs. actual dates. Not part of this pass (create/edit/delete/assign/status)."
-      />
+      <PhaseList projectId={projectId} phases={phases ?? []} />
     </div>
   );
 }

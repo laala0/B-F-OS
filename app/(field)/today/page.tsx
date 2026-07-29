@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { getCompanyToday } from "@/lib/supabase/company";
+import { ClockWidget } from "@/components/field/clock-widget";
 import { TaskPriorityBadge } from "@/components/tasks/task-priority-badge";
 import { TASK_STATUS_LABELS, TASK_STATUS_BADGE_CLASS, isOverdue } from "@/lib/domain/tasks";
 import { cn } from "@/lib/utils";
@@ -9,19 +10,36 @@ import { cn } from "@/lib/utils";
 export default async function TodayPage() {
   const user = await requireRole("admin", "employee");
   const supabase = await createClient();
+  const today = await getCompanyToday(user.profile.company_id);
 
-  const { data: tasks } = await supabase
-    .from("tasks")
-    .select("*, project:projects(name)")
-    .eq("assigned_to", user.id)
-    .is("deleted_at", null);
+  const [{ data: tasks }, { data: openEntry }, { data: assignments }] = await Promise.all([
+    supabase
+      .from("tasks")
+      .select("id, title, status, due_date, priority, project:projects(name)")
+      .eq("assigned_to", user.id)
+      .is("deleted_at", null),
+    supabase
+      .from("time_entries")
+      .select("*")
+      .eq("profile_id", user.id)
+      .eq("status", "open")
+      .maybeSingle(),
+    supabase
+      .from("project_assignments")
+      .select("project:projects(id, name)")
+      .eq("profile_id", user.id),
+  ]);
+
+  const assignedProjects = (assignments ?? [])
+    .map((a) => a.project)
+    .filter((p): p is { id: string; name: string } => p != null);
 
   const priorityWeight = { high: 0, medium: 1, low: 2 } as const;
   const sorted = [...(tasks ?? [])].sort((a, b) => {
     if (a.status === "done" && b.status !== "done") return 1;
     if (a.status !== "done" && b.status === "done") return -1;
-    const aOverdue = isOverdue(a.due_date, a.status);
-    const bOverdue = isOverdue(b.due_date, b.status);
+    const aOverdue = isOverdue(a.due_date, a.status, today);
+    const bOverdue = isOverdue(b.due_date, b.status, today);
     if (aOverdue !== bOverdue) return aOverdue ? -1 : 1;
     if (a.due_date && b.due_date) return a.due_date.localeCompare(b.due_date);
     if (a.due_date) return -1;
@@ -35,11 +53,7 @@ export default async function TodayPage() {
         Hey {user.profile.first_name}
       </h1>
 
-      <ComingSoon
-        title="Clock in / out"
-        phase="Phase 3 (Time Tracking)"
-        description="Not built yet — this pass covers assigned tasks below, not the clock."
-      />
+      <ClockWidget openEntry={openEntry ?? null} projects={assignedProjects} />
 
       <div className="space-y-2">
         <p className="text-sm font-medium text-neutral-900">Your tasks</p>
@@ -50,7 +64,7 @@ export default async function TodayPage() {
         ) : (
           <ul className="space-y-2">
             {sorted.map((task) => {
-              const overdue = isOverdue(task.due_date, task.status);
+              const overdue = isOverdue(task.due_date, task.status, today);
               return (
                 <li key={task.id}>
                   <Link

@@ -6,6 +6,21 @@ export const loginSchema = z.object({
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 
+export const signupSchema = z
+  .object({
+    companyName: z.string().trim().min(1, "Company name is required").max(200),
+    firstName: z.string().trim().min(1, "First name is required"),
+    lastName: z.string().trim().min(1, "Last name is required"),
+    email: z.string().trim().email("Enter a valid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string().min(1, "Confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+export type SignupInput = z.infer<typeof signupSchema>;
+
 export const acceptInviteSchema = z
   .object({
     token: z.string().uuid(),

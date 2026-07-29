@@ -8,6 +8,7 @@ import { updateSession } from "@/lib/supabase/middleware";
 // actual authorization boundary; this just keeps anonymous requests out.
 const PUBLIC_PREFIXES = [
   "/login",
+  "/signup",
   "/accept-invite",
   "/reset-password",
   "/auth/callback",

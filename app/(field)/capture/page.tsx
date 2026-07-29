@@ -1,14 +1,95 @@
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { requireRole } from "@/lib/auth/guards";
+import { createClient } from "@/lib/supabase/server";
+import { NoteProjectSelect } from "@/components/notes/note-project-select";
+import { MediaUploader } from "@/components/media/media-uploader";
+import { DeleteMediaButton } from "@/components/media/delete-media-button";
 
-export default function CapturePage() {
+export default async function CapturePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ project?: string }>;
+}) {
+  const { project: rawProjectId } = await searchParams;
+  const user = await requireRole("admin", "employee");
+  const supabase = await createClient();
+
+  let projects: { id: string; name: string }[];
+  if (user.profile.role === "admin") {
+    const { data } = await supabase
+      .from("projects")
+      .select("id, name")
+      .eq("company_id", user.profile.company_id)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false });
+    projects = data ?? [];
+  } else {
+    const { data } = await supabase
+      .from("project_assignments")
+      .select("project:projects(id, name)")
+      .eq("profile_id", user.id);
+    projects = (data ?? [])
+      .map((a) => a.project)
+      .filter((p): p is { id: string; name: string } => p != null);
+  }
+
+  const projectId =
+    rawProjectId && projects.some((p) => p.id === rawProjectId)
+      ? rawProjectId
+      : (projects[0]?.id ?? "");
+
+  const { data: items } = projectId
+    ? await supabase
+        .from("media")
+        .select("id, storage_path, content_type, created_at")
+        .eq("project_id", projectId)
+        .order("created_at", { ascending: false })
+        .limit(12)
+    : { data: [] };
+
+  const withUrls = await Promise.all(
+    (items ?? []).map(async (item) => {
+      const { data: signed } = await supabase.storage
+        .from("media")
+        .createSignedUrl(item.storage_path, 3600);
+      return { ...item, url: signed?.signedUrl ?? null };
+    })
+  );
+
   return (
     <div className="space-y-4 p-4">
       <h1 className="text-lg font-semibold text-neutral-900">Capture</h1>
-      <ComingSoon
-        title="Camera capture"
-        phase="Phase 5 (Media)"
-        description="Take a photo or video straight from the job site — it uploads directly to storage and converts automatically so it's viewable in the office."
-      />
+
+      {projects.length === 0 ? (
+        <p className="text-sm text-neutral-500">
+          You&apos;re not assigned to any jobs yet.
+        </p>
+      ) : (
+        <>
+          <NoteProjectSelect projectId={projectId} projects={projects} />
+          <MediaUploader projectId={projectId} companyId={user.profile.company_id} capture />
+
+          {withUrls.length > 0 ? (
+            <div className="grid grid-cols-3 gap-2 pt-2">
+              {withUrls.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative aspect-square overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100"
+                >
+                  {item.url ? (
+                    item.content_type?.startsWith("video") ? (
+                      <video src={item.url} controls className="h-full w-full object-cover" />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.url} alt="" className="h-full w-full object-cover" />
+                    )
+                  ) : null}
+                  <DeleteMediaButton mediaId={item.id} projectId={projectId} />
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </>
+      )}
     </div>
   );
 }

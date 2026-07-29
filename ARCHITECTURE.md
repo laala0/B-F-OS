@@ -134,14 +134,19 @@ Cross-cutting fixes from a full-project audit, not tied to a feature phase — s
 - `prevent_task_field_escalation` (0003) now also blocks self-writes to `completed_at` — it's meant to be a pure side effect of a status transition (`trg_set_task_completed_at`, 0005), not a client-settable value.
 - App-layer follow-ups made necessary by the above (not the primary enforcement — see this migration's own header comment): `getCurrentUser()` (`lib/auth/session.ts`) explicitly checks `status === "active"` as defense in depth; `login()` (`actions/auth.ts`) switches its post-auth status lookup to the admin client, since the regular client can no longer see a suspended profile's own row and would otherwise show the wrong error message.
 
-**Later migrations (by phase):**
+**Shipped in `supabase/migrations/0009_employment_records.sql` through `0012_media_documents.sql`:**
 
-- `employment_records` (Phase 1) — hourly_rate_cents, overtime_rate_cents, employment_type, hired_on, certifications. Separate table so "employees can read profiles in their company" never means "employees can read each other's pay."
-- `project_phases` (rest of Phase 2) — timeline/phases (footings, base prep, rebar, anchors, pour, waterproofing) weren't part of the create/edit/delete/assign/status pass and remain a `ComingSoon` placeholder on the project overview page.
-- `time_events` (append-only) + `time_entries` (derived shifts) + `time_adjustments` (Phase 3) — event log records every clock tap as it happened and never changes; the shift row is a rebuildable summary. `client_event_id` gives offline clock-ins an idempotency key.
-- `media`, `documents` (Phase 5).
-- `invoice_line_items`, `payments`, `holdback_releases`, `change_orders` (rest of Phase 7) — the lightweight `invoices` table already shipped (0004) covers amount/status/dates; this is the rest — holdback modeled as a first-class thing, not folded into "unpaid," per the BC Builders Lien Act's ~10% holdback and lien-period release timing (confirm exact percentage/timing with your accountant).
-- `activity_events`, `notifications`, `audit_log` (Phase 6/cross-cutting).
+- `employment_records` (0009) — hourly_rate_cents, overtime_rate_cents, employment_type, hired_on, notes. Admin-only RLS, same posture as invoices — no employee-visible select policy at all.
+- `time_entries` (0010) — one row per shift (`clock_in`/`clock_out`/`status`), not the three-table event-log design (`time_events`/`time_entries`/`time_adjustments`) originally planned — see Implementation Notes below for why. A partial unique index enforces one open shift per profile; a trigger derives `status` on clock-out instead of trusting the client, same pattern as `set_task_completed_at`.
+- `daily_notes`, `project_phases`, `activity_events` (0011) — notes are project-scoped with no per-day uniqueness constraint (real crews log whenever, not exactly once/day); phases follow the same admin-manages/assigned-employee-views split as projects/tasks; the activity feed is populated two ways — AFTER triggers on tasks/invoices/projects log creation and status changes automatically, and a `record_activity()` security-definer RPC covers everything else (clock in/out, notes, invites, media/document uploads) so the table itself needs no client-facing insert policy at all.
+- `media`, `documents` (0012) — two private Storage buckets (`media`, `documents`), path convention `{company_id}/{project_id}/{uuid}-{filename}`, RLS on `storage.objects` keyed off that path (admin or an assigned employee, matching every other project-scoped table). Reads go through `createSignedUrl()`, never a public bucket. HEIC conversion not implemented.
+
+**Still not built:**
+
+- `time_events` / `time_adjustments`, offline clock-in queue, GPS geofencing, BC overtime-rate rules (rest of Phase 3).
+- `invoice_line_items`, `payments`, `holdback_releases`, `change_orders` (rest of Phase 7) — the lightweight `invoices` table (0004) covers amount/status/dates; holdback as a first-class concept per the BC Builders Lien Act's ~10% holdback and lien-period release timing (confirm exact percentage/timing with your accountant) is not modeled.
+- `notifications` (rest of Phase 6) — the activity feed itself is done; push/email alerts on top of it are not.
+- Phase 9 (PWA/offline hardening) entirely.
 
 ## 3. User Roles
 
@@ -169,17 +174,17 @@ Media uploads never pass through a server action/route body — Vercel serverles
 ## 5. Implementation Order
 
 0. **Foundation** — repo, Supabase project, auth, RLS helpers, folder structure. **Done.**
-1. **Company & Crew** — invites, employment records, crew list. *(Invite backend done; crew list UI still pending.)*
-2. **Projects** — create/edit/delete/assign/status **done**; phases/timeline still pending. **← this pass**
-3. **Time Tracking** — event log, offline queue, geofence, approval queue, BC overtime rules. The hard one.
-4. **Tasks & Daily Notes**
-5. **Media** — signed uploads, HEIC conversion, galleries.
-6. **Activity Feed & Notifications**
-7. **Invoicing** — progress claims, GST, holdback, payments.
-8. **Reports**
-9. **Hardening** — PWA, offline polish, backups, multi-tenant SaaS onboarding if that path is chosen.
+1. **Company & Crew** — invites, employment records, crew list. **Done** — self-service signup (`/signup`), invite creation with a shareable link (`/crew`), crew profile with role/status/wage editing.
+2. **Projects** — create/edit/delete/assign/status **done**; phases/timeline **done** (`project_phases`, editable on the project overview page).
+3. **Time Tracking** — clock in/out + admin approval queue **done** (`time_entries`, migration 0010). Offline queue, GPS geofencing, and BC overtime-rate calculation are **not** — see the Implementation Notes below for why that was cut from this pass.
+4. **Tasks & Daily Notes** — tasks done earlier; daily notes **done** (`daily_notes`, migration 0011 — project-scoped log, no per-day uniqueness constraint).
+5. **Media** — **done**, minus HEIC conversion. Direct browser-to-Storage uploads (two private buckets, RLS-gated by path), signed URLs for viewing, `/capture` for camera-first mobile upload.
+6. **Activity Feed & Notifications** — activity feed **done** (`activity_events`, migration 0011: DB triggers log task/invoice/project status changes automatically, `record_activity()` RPC covers everything else). Notifications (push/email alerts) not built.
+7. **Invoicing** — the lightweight tracker from migration 0004 remains as-is; the fuller system (line items, GST breakout, holdback releases, change orders) is still not built.
+8. **Reports** — done.
+9. **Hardening** — PWA, offline polish, backups, multi-tenant SaaS onboarding if that path is chosen. Not started.
 
-Ship boundary: Phases 0–3 are the real MVP.
+Ship boundary: Phases 0–8 are functionally complete except the items called out above (offline/geofence time tracking, HEIC conversion, notifications, full invoicing, Phase 9 hardening).
 
 ---
 
@@ -191,4 +196,6 @@ Changes made while building, disclosed here rather than silently:
 2. **Helper functions live in `public`, not `auth`.** Supabase restricts writing into the `auth` schema on hosted projects. `public.company_id()` etc. instead of `auth.company_id()`.
 3. **Field's project view moved from `/projects/[projectId]` to `/job/[projectId]`.** The original folder plan had both `(admin)/projects/[projectId]` and `(field)/projects/[projectId]` — since route groups are stripped from the URL, both resolved to the identical path, which Next.js rejects outright. Renamed the field-facing one to `/job/[projectId]`.
 4. **Roles collapsed from five (owner/admin/foreman/employee/client) to two (admin/employee).** Requested explicitly after the foundation pass. `owner` and `admin` merged into a single `admin` role — there's no longer a company-settings tier above it. The `foreman` "clock the whole crew in at the gate" behavior was removed along with the role, including its `/crew-clock` page and tab; if that workflow turns out to still be needed, it'll need a role (or a per-project permission) to hang off of. `client` was already unbuilt (no screens existed) and is dropped rather than left as a dead enum value. This touched the `user_role` enum, every RLS policy/helper function referencing `'owner'`, all route guards, and `scripts/create-first-admin.mjs` (renamed from `create-first-owner.mjs`).
-5. **shadcn is configured for Base UI, not Radix — their component APIs differ in ways that surface as real TypeScript errors, not just style.** Discovered while building the Projects UI: `components/ui/button.tsx` wraps `@base-ui/react/button` (`components.json`'s `"style": "base-nova"`), and Base UI has no `asChild` prop anywhere. Where a shadcn/Radix tutorial says `<Button asChild><Link>...</Link></Button>`, this codebase needs either `buttonVariants({...})` applied as a className directly on the `<Link>` (used in `app/(admin)/projects/page.tsx`), or a `render={<Button>...</Button>}` prop on primitives that accept one, like `AlertDialogTrigger` (used in `components/projects/delete-project-dialog.tsx`). Also note: Base UI's `Select`'s `onValueChange` is `(value: string | null, eventDetails) => void` — one extra, nullable-first-argument compared to Radix's plain `(value: string) => void` — see `components/projects/project-status-select.tsx` for the pattern (`onChange(next: string | null)` with a null-guard, not a bare setter passed straight through).
+6. **Time tracking shipped as one `time_entries` table, not the three-table event-log design** (`time_events` append-only + derived `time_entries` + `time_adjustments`). The original design exists to support an offline clock-in queue (`client_event_id` as an idempotency key for events replayed after reconnecting) — without building that queue, the extra tables and replay logic have nothing to serve. Shipped the real, usable core (clock in, clock out, one open shift at a time, admin approval/correction) as a single table; revisit the event-log split only alongside actually building offline support.
+7. **Two real bugs found and fixed while verifying this pass in a browser, both pre-dating this work:** (a) `components/shared/user-menu.tsx` used `<DropdownMenuLabel>` (Base UI's `Menu.GroupLabel`, which throws if it's not inside a `Menu.Group`) standalone — this crashed the entire app the instant *any* user, on *any* page, opened their account menu. (b) The "Log out" `DropdownMenuItem` used an `onSelect` prop — Base UI's `Menu.Item` has no such prop (it uses `onClick`); React silently attached a listener for the native, irrelevant `select` DOM event on a `<div>` instead, so the button visibly existed and looked normal but never did anything. Together, no user could ever open the account menu without crashing the app, and even after that crash was fixed, no user could log out through the UI — likely present since the app was first scaffolded. Both fixed by wrapping the label in `<DropdownMenuGroup>` and changing `onSelect` to `onClick`.
+8. **shadcn is configured for Base UI, not Radix — their component APIs differ in ways that surface as real TypeScript errors, not just style.** Discovered while building the Projects UI: `components/ui/button.tsx` wraps `@base-ui/react/button` (`components.json`'s `"style": "base-nova"`), and Base UI has no `asChild` prop anywhere. Where a shadcn/Radix tutorial says `<Button asChild><Link>...</Link></Button>`, this codebase needs either `buttonVariants({...})` applied as a className directly on the `<Link>` (used in `app/(admin)/projects/page.tsx`), or a `render={<Button>...</Button>}` prop on primitives that accept one, like `AlertDialogTrigger` (used in `components/projects/delete-project-dialog.tsx`). Also note: Base UI's `Select`'s `onValueChange` is `(value: string | null, eventDetails) => void` — one extra, nullable-first-argument compared to Radix's plain `(value: string) => void` — see `components/projects/project-status-select.tsx` for the pattern (`onChange(next: string | null)` with a null-guard, not a bare setter passed straight through).

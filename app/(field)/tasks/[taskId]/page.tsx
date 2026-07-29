@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanyToday } from "@/lib/supabase/company";
 import { TaskPriorityBadge } from "@/components/tasks/task-priority-badge";
 import { TaskStatusSelect } from "@/components/tasks/task-status-select";
 import { ChecklistItemToggle } from "@/components/tasks/checklist-item-toggle";
@@ -16,7 +17,9 @@ export default async function FieldTaskPage({
 
   const { data: task } = await supabase
     .from("tasks")
-    .select("*, project:projects(name)")
+    .select(
+      "id, title, description, priority, status, due_date, company_id, project:projects(name)"
+    )
     .eq("id", taskId)
     .is("deleted_at", null)
     .single();
@@ -25,11 +28,12 @@ export default async function FieldTaskPage({
 
   const { data: checklistItems } = await supabase
     .from("task_checklist_items")
-    .select("*")
+    .select("id, label, is_done")
     .eq("task_id", taskId)
     .order("position");
 
-  const overdue = isOverdue(task.due_date, task.status);
+  const today = await getCompanyToday(task.company_id);
+  const overdue = isOverdue(task.due_date, task.status, today);
 
   return (
     <div className="space-y-4 p-4">

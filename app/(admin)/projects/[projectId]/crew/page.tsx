@@ -1,5 +1,4 @@
-import { notFound } from "next/navigation";
-import { requireRole } from "@/lib/auth/guards";
+import { requireProjectAccess } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { ProjectNav } from "@/components/projects/project-nav";
 import { ProjectCrewManager } from "@/components/projects/project-crew-manager";
@@ -10,17 +9,8 @@ export default async function ProjectCrewPage({
   params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = await params;
-  const user = await requireRole("admin");
+  const { user, project } = await requireProjectAccess(projectId);
   const supabase = await createClient();
-
-  const { data: project } = await supabase
-    .from("projects")
-    .select("id, name")
-    .eq("id", projectId)
-    .is("deleted_at", null)
-    .single();
-
-  if (!project) notFound();
 
   const [{ data: assignments }, { data: employees }] = await Promise.all([
     supabase

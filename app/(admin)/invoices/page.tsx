@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanyToday } from "@/lib/supabase/company";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
@@ -20,6 +21,7 @@ import { cn } from "@/lib/utils";
 export default async function InvoicesPage() {
   const user = await requireRole("admin");
   const supabase = await createClient();
+  const today = await getCompanyToday(user.profile.company_id);
 
   const [{ data: invoices }, { data: projects }] = await Promise.all([
     supabase
@@ -100,7 +102,11 @@ export default async function InvoicesPage() {
             </TableHeader>
             <TableBody>
               {invoiceList.map((invoice) => {
-                const overdue = isInvoiceOverdue(invoice.due_date, invoice.status);
+                const overdue = isInvoiceOverdue(
+                  invoice.due_date,
+                  invoice.status,
+                  today
+                );
                 return (
                   <TableRow key={invoice.id}>
                     <TableCell className="font-medium">

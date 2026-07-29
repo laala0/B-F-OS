@@ -94,6 +94,12 @@ export function LoginForm() {
             <Button type="submit" className="w-full" disabled={isPending}>
               {isPending ? "Logging in…" : "Log in"}
             </Button>
+            <p className="text-center text-xs text-neutral-500">
+              Starting a new company?{" "}
+              <a href="/signup" className="font-medium text-neutral-900 hover:underline">
+                Create one
+              </a>
+            </p>
           </form>
         </Form>
       </CardContent>

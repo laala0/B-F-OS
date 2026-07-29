@@ -7,6 +7,7 @@ import {
   type ReportTaskRow,
 } from "@/components/reports/task-list-table";
 import { formatCents } from "@/lib/domain/money";
+import { isOverdue } from "@/lib/domain/tasks";
 import {
   addDays,
   dateInTimezone,
@@ -94,8 +95,8 @@ export default async function ReportsPage({
   // browsing a past day/week — we only track current status, not a
   // historical log of it, so pretending we can reconstruct "overdue as of
   // that date" would just be guessing.
-  const overdueTasks = taskList.filter(
-    (t) => t.due_date && t.due_date < today && t.status !== "done"
+  const overdueTasks = taskList.filter((t) =>
+    isOverdue(t.due_date, t.status, today)
   );
 
   const rangeStart = view === "daily" ? date : weekStart;

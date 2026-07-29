@@ -6,10 +6,12 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
   loginSchema,
+  signupSchema,
   acceptInviteSchema,
   requestPasswordResetSchema,
   updatePasswordSchema,
   type LoginInput,
+  type SignupInput,
   type AcceptInviteInput,
   type RequestPasswordResetInput,
   type UpdatePasswordInput,
@@ -68,6 +70,64 @@ export async function login(input: LoginInput): Promise<ActionResult> {
   }
 
   redirect(landingPathForRole(profile.role));
+}
+
+// Self-service version of scripts/create-first-admin.mjs — creates a brand
+// new company and its first (admin) user in one step. Same admin-client +
+// bootstrap_company RPC pattern as that script, just reachable from the
+// browser instead of a terminal. Everyone after this account gets invited
+// from Crew, same as before.
+export async function signup(input: SignupInput): Promise<ActionResult> {
+  const parsed = signupSchema.safeParse(input);
+  if (!parsed.success) {
+    return actionError(
+      "Check the highlighted fields.",
+      parsed.error.flatten().fieldErrors
+    );
+  }
+  const { companyName, firstName, lastName, email, password } = parsed.data;
+
+  const admin = createAdminClient();
+
+  const { data: created, error: createError } = await admin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+  });
+
+  if (createError || !created.user) {
+    if (createError?.message.includes("already been registered")) {
+      return actionError("An account with this email already exists. Try logging in instead.");
+    }
+    return actionError("Couldn't create your account. Please try again.");
+  }
+
+  const { error: rpcError } = await admin.rpc("bootstrap_company", {
+    p_owner_id: created.user.id,
+    p_company_name: companyName,
+    p_first_name: firstName,
+    p_last_name: lastName,
+    p_email: email,
+  });
+
+  if (rpcError) {
+    await admin.auth.admin.deleteUser(created.user.id);
+    return actionError("Couldn't create your company. Please try again.");
+  }
+
+  const supabase = await createClient();
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (signInError) {
+    return actionError(
+      "Your account was created — please log in with your new password."
+    );
+  }
+
+  redirect("/dashboard");
 }
 
 export async function logout(): Promise<never> {

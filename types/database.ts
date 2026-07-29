@@ -23,6 +23,9 @@ export type ProjectStatus =
 export type TaskPriority = "low" | "medium" | "high";
 export type TaskStatus = "todo" | "in_progress" | "done";
 export type InvoiceStatus = "draft" | "sent" | "paid";
+export type TimeEntryStatus = "open" | "pending" | "approved" | "rejected";
+export type PhaseStatus = "not_started" | "in_progress" | "complete";
+export type DocumentCategory = "drawing" | "permit" | "contract" | "quote" | "other";
 
 export type Json =
   | string
@@ -409,6 +412,305 @@ export interface Database {
           },
         ];
       };
+      employment_records: {
+        Row: {
+          id: string;
+          company_id: string;
+          profile_id: string;
+          hourly_rate_cents: number | null;
+          overtime_rate_cents: number | null;
+          employment_type: string;
+          hired_on: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          profile_id: string;
+          hourly_rate_cents?: number | null;
+          overtime_rate_cents?: number | null;
+          employment_type?: string;
+          hired_on?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<
+          Database["public"]["Tables"]["employment_records"]["Insert"]
+        >;
+        Relationships: [
+          {
+            foreignKeyName: "employment_records_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "companies";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "employment_records_profile_id_company_id_fkey";
+            columns: ["profile_id", "company_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id", "company_id"];
+          },
+        ];
+      };
+      time_entries: {
+        Row: {
+          id: string;
+          company_id: string;
+          profile_id: string;
+          project_id: string | null;
+          clock_in: string;
+          clock_out: string | null;
+          status: TimeEntryStatus;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          profile_id: string;
+          project_id?: string | null;
+          clock_in?: string;
+          clock_out?: string | null;
+          status?: TimeEntryStatus;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["time_entries"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "time_entries_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "companies";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "time_entries_profile_id_company_id_fkey";
+            columns: ["profile_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id", "company_id"];
+          },
+          {
+            foreignKeyName: "time_entries_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+        ];
+      };
+      daily_notes: {
+        Row: {
+          id: string;
+          company_id: string;
+          project_id: string;
+          author_id: string;
+          log_date: string;
+          weather: string | null;
+          crew_count: number | null;
+          note: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          project_id: string;
+          author_id: string;
+          log_date?: string;
+          weather?: string | null;
+          crew_count?: number | null;
+          note: string;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["daily_notes"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "daily_notes_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+          {
+            foreignKeyName: "daily_notes_author_id_fkey";
+            columns: ["author_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      project_phases: {
+        Row: {
+          id: string;
+          company_id: string;
+          project_id: string;
+          name: string;
+          status: PhaseStatus;
+          planned_start: string | null;
+          planned_end: string | null;
+          actual_start: string | null;
+          actual_end: string | null;
+          position: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          project_id: string;
+          name: string;
+          status?: PhaseStatus;
+          planned_start?: string | null;
+          planned_end?: string | null;
+          actual_start?: string | null;
+          actual_end?: string | null;
+          position?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["project_phases"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "project_phases_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+        ];
+      };
+      activity_events: {
+        Row: {
+          id: string;
+          company_id: string;
+          project_id: string | null;
+          actor_id: string | null;
+          event_type: string;
+          description: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          project_id?: string | null;
+          actor_id?: string | null;
+          event_type: string;
+          description: string;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["activity_events"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "activity_events_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+          {
+            foreignKeyName: "activity_events_actor_id_fkey";
+            columns: ["actor_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      media: {
+        Row: {
+          id: string;
+          company_id: string;
+          project_id: string;
+          uploaded_by: string;
+          storage_path: string;
+          content_type: string | null;
+          size_bytes: number | null;
+          caption: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          project_id: string;
+          uploaded_by: string;
+          storage_path: string;
+          content_type?: string | null;
+          size_bytes?: number | null;
+          caption?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["media"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "media_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+          {
+            foreignKeyName: "media_uploaded_by_fkey";
+            columns: ["uploaded_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      documents: {
+        Row: {
+          id: string;
+          company_id: string;
+          project_id: string;
+          uploaded_by: string;
+          storage_path: string;
+          original_filename: string;
+          category: DocumentCategory;
+          version: number;
+          content_type: string | null;
+          size_bytes: number | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          project_id: string;
+          uploaded_by: string;
+          storage_path: string;
+          original_filename: string;
+          category?: DocumentCategory;
+          version?: number;
+          content_type?: string | null;
+          size_bytes?: number | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["documents"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "documents_project_id_company_id_fkey";
+            columns: ["project_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id", "company_id"];
+          },
+          {
+            foreignKeyName: "documents_uploaded_by_fkey";
+            columns: ["uploaded_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -447,6 +749,14 @@ export interface Database {
         };
         Returns: Database["public"]["Tables"]["profiles"]["Row"];
       };
+      reconcile_task_checklist: {
+        Args: { p_task_id: string; p_items: Json };
+        Returns: Database["public"]["Tables"]["task_checklist_items"]["Row"][];
+      };
+      record_activity: {
+        Args: { p_project_id: string | null; p_event_type: string; p_description: string };
+        Returns: Database["public"]["Tables"]["activity_events"]["Row"];
+      };
     };
     Enums: {
       user_role: UserRole;
@@ -469,3 +779,10 @@ export type ProjectAssignment = Tables<"project_assignments">;
 export type Task = Tables<"tasks">;
 export type TaskChecklistItem = Tables<"task_checklist_items">;
 export type Invoice = Tables<"invoices">;
+export type EmploymentRecord = Tables<"employment_records">;
+export type TimeEntry = Tables<"time_entries">;
+export type DailyNote = Tables<"daily_notes">;
+export type ProjectPhase = Tables<"project_phases">;
+export type ActivityEvent = Tables<"activity_events">;
+export type Media = Tables<"media">;
+export type ProjectDocument = Tables<"documents">;

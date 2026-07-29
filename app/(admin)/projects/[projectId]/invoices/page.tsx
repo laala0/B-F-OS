@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { requireRole } from "@/lib/auth/guards";
+import { requireProjectAccess } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanyToday } from "@/lib/supabase/company";
 import { ProjectNav } from "@/components/projects/project-nav";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -25,17 +25,9 @@ export default async function ProjectInvoicesPage({
   params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = await params;
-  const user = await requireRole("admin");
+  const { user, project } = await requireProjectAccess(projectId);
   const supabase = await createClient();
-
-  const { data: project } = await supabase
-    .from("projects")
-    .select("id, name")
-    .eq("id", projectId)
-    .is("deleted_at", null)
-    .single();
-
-  if (!project) notFound();
+  const today = await getCompanyToday(user.profile.company_id);
 
   const [{ data: invoices }, { data: projects }] = await Promise.all([
     supabase
@@ -87,7 +79,11 @@ export default async function ProjectInvoicesPage({
             </TableHeader>
             <TableBody>
               {invoiceList.map((invoice) => {
-                const overdue = isInvoiceOverdue(invoice.due_date, invoice.status);
+                const overdue = isInvoiceOverdue(
+                  invoice.due_date,
+                  invoice.status,
+                  today
+                );
                 return (
                   <TableRow key={invoice.id}>
                     <TableCell className="font-medium">

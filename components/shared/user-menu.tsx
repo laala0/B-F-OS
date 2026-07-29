@@ -10,6 +10,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -43,18 +44,20 @@ export function UserMenu({
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col">
-          <span className="font-medium">
-            {firstName} {lastName}
-          </span>
-          <span className="truncate text-xs font-normal text-neutral-500">
-            {email}
-          </span>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex flex-col">
+            <span className="font-medium">
+              {firstName} {lastName}
+            </span>
+            <span className="truncate text-xs font-normal text-neutral-500">
+              {email}
+            </span>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           disabled={isPending}
-          onSelect={() => startTransition(() => logout())}
+          onClick={() => startTransition(() => logout())}
         >
           <LogOut className="mr-2 h-4 w-4" />
           Log out

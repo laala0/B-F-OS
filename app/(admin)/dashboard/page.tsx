@@ -9,45 +9,58 @@ import { todayInTimezone } from "@/lib/domain/reports";
 export default async function DashboardPage() {
   const user = await requireRole("admin");
   const supabase = await createClient();
+  const companyId = user.profile.company_id;
 
   const { data: company } = await supabase
     .from("companies")
     .select("name, timezone")
-    .eq("id", user.profile.company_id)
+    .eq("id", companyId)
     .single();
   const today = todayInTimezone(company?.timezone ?? "America/Vancouver");
 
-  const [{ data: projects }, { data: tasks }, { data: invoices }] =
-    await Promise.all([
-      supabase
-        .from("projects")
-        .select("id, status")
-        .eq("company_id", user.profile.company_id)
-        .is("deleted_at", null),
-      supabase
-        .from("tasks")
-        .select("id, due_date, status")
-        .eq("company_id", user.profile.company_id)
-        .is("deleted_at", null),
-      supabase
-        .from("invoices")
-        .select("id, amount_cents, status")
-        .eq("company_id", user.profile.company_id)
-        .is("deleted_at", null),
-    ]);
+  // Counted/summed in Postgres (count: "exact", head: true returns just the
+  // count, no rows) instead of fetching every project/task/invoice in the
+  // company and reducing them in JS — these four numbers used to cost a
+  // full-table transfer each, and that transfer only grows as the company
+  // racks up history.
+  const [
+    { count: activeProjects },
+    { count: tasksDueToday },
+    { count: overdueTasks },
+    { data: outstandingInvoices },
+  ] = await Promise.all([
+    supabase
+      .from("projects")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("status", "active")
+      .is("deleted_at", null),
+    supabase
+      .from("tasks")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("due_date", today)
+      .neq("status", "done")
+      .is("deleted_at", null),
+    supabase
+      .from("tasks")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .lt("due_date", today)
+      .neq("status", "done")
+      .is("deleted_at", null),
+    supabase
+      .from("invoices")
+      .select("amount_cents")
+      .eq("company_id", companyId)
+      .eq("status", "sent")
+      .is("deleted_at", null),
+  ]);
 
-  const activeProjects = (projects ?? []).filter(
-    (p) => p.status === "active"
-  ).length;
-  const tasksDueToday = (tasks ?? []).filter(
-    (t) => t.due_date === today && t.status !== "done"
-  ).length;
-  const overdueTasks = (tasks ?? []).filter(
-    (t) => t.due_date && t.due_date < today && t.status !== "done"
-  ).length;
-  const outstandingCents = (invoices ?? [])
-    .filter((i) => i.status === "sent")
-    .reduce((sum, i) => sum + i.amount_cents, 0);
+  const outstandingCents = (outstandingInvoices ?? []).reduce(
+    (sum, i) => sum + i.amount_cents,
+    0
+  );
 
   return (
     <div className="space-y-6">
@@ -66,12 +79,12 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Active projects" value={activeProjects} />
-        <StatCard label="Tasks due today" value={tasksDueToday} />
+        <StatCard label="Active projects" value={activeProjects ?? 0} />
+        <StatCard label="Tasks due today" value={tasksDueToday ?? 0} />
         <StatCard
           label="Overdue tasks"
-          value={overdueTasks}
-          tone={overdueTasks > 0 ? "red" : "default"}
+          value={overdueTasks ?? 0}
+          tone={(overdueTasks ?? 0) > 0 ? "red" : "default"}
         />
         <StatCard
           label="Outstanding invoices"

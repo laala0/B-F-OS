@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
-import { requireRole } from "@/lib/auth/guards";
+import { requireProjectAccess } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
+import { getCompanyToday } from "@/lib/supabase/company";
 import { ProjectNav } from "@/components/projects/project-nav";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -25,17 +25,9 @@ export default async function ProjectTasksPage({
   params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = await params;
-  const user = await requireRole("admin");
+  const { user, project } = await requireProjectAccess(projectId);
   const supabase = await createClient();
-
-  const { data: project } = await supabase
-    .from("projects")
-    .select("id, name")
-    .eq("id", projectId)
-    .is("deleted_at", null)
-    .single();
-
-  if (!project) notFound();
+  const today = await getCompanyToday(user.profile.company_id);
 
   const [{ data: tasks }, { data: employees }] = await Promise.all([
     supabase
@@ -118,7 +110,7 @@ export default async function ProjectTasksPage({
                 const assignee = task.assigned_to
                   ? employeeById.get(task.assigned_to)
                   : undefined;
-                const overdue = isOverdue(task.due_date, task.status);
+                const overdue = isOverdue(task.due_date, task.status, today);
 
                 return (
                   <TableRow key={task.id}>

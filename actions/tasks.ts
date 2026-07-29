@@ -132,15 +132,22 @@ export async function updateTask(
       }))
     );
   }
-  for (const item of toUpdate) {
-    await supabase
-      .from("task_checklist_items")
-      .update({
+  if (toUpdate.length > 0) {
+    // One upsert instead of one UPDATE per row — company_id/task_id are
+    // included so the ON CONFLICT DO UPDATE branch (the only branch that
+    // ever runs here; every id in toUpdate already exists) still satisfies
+    // their NOT NULL constraints when Postgres builds the candidate row.
+    await supabase.from("task_checklist_items").upsert(
+      toUpdate.map((item) => ({
+        id: item.id!,
+        company_id: user.profile.company_id,
+        task_id: taskId,
         label: item.label,
         is_done: item.isDone,
         position: v.checklist.indexOf(item),
-      })
-      .eq("id", item.id!);
+      })),
+      { onConflict: "id" }
+    );
   }
 
   revalidatePath(`/projects/${task.project_id}/tasks`);

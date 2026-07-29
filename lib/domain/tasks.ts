@@ -24,7 +24,14 @@ export const TASK_STATUS_BADGE_CLASS: Record<TaskStatus, string> = {
   done: "bg-green-100 text-green-700",
 };
 
-export function isOverdue(dueDate: string | null, status: TaskStatus): boolean {
+// `today` must be a YYYY-MM-DD string in the company's timezone (see
+// getCompanyToday) — comparing against `new Date()` directly would judge
+// "overdue" against the server's clock/timezone instead of the company's.
+export function isOverdue(
+  dueDate: string | null,
+  status: TaskStatus,
+  today: string
+): boolean {
   if (!dueDate || status === "done") return false;
-  return new Date(dueDate + "T23:59:59") < new Date();
+  return dueDate < today;
 }
