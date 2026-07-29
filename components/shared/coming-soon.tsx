@@ -14,9 +14,9 @@ export function ComingSoon({
       <CardHeader>
         <CardTitle className="text-base font-medium">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 text-sm text-neutral-600">
+      <CardContent className="space-y-2 text-sm text-muted-foreground">
         <p>{description}</p>
-        <p className="text-neutral-400">Ships in {phase}.</p>
+        <p className="text-muted-foreground">Ships in {phase}.</p>
       </CardContent>
     </Card>
   );

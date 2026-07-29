@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import {
   Form,
   FormControl,
@@ -55,7 +56,7 @@ export function SignupForm() {
         <CardTitle className="text-base font-medium">
           Set up your company
         </CardTitle>
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-muted-foreground">
           You&apos;ll be the admin (Boss) — invite your crew afterward from Crew.
         </p>
       </CardHeader>
@@ -69,7 +70,11 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Company name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Boss & Friends Construction" {...field} />
+                    <Input
+                      placeholder="Boss & Friends Construction"
+                      className="h-11 text-base"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,7 +88,7 @@ export function SignupForm() {
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input autoComplete="given-name" {...field} />
+                      <Input autoComplete="given-name" className="h-11 text-base" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -96,7 +101,7 @@ export function SignupForm() {
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input autoComplete="family-name" {...field} />
+                      <Input autoComplete="family-name" className="h-11 text-base" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -114,6 +119,7 @@ export function SignupForm() {
                       type="email"
                       autoComplete="email"
                       placeholder="you@bossandfriends.ca"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -128,9 +134,9 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       autoComplete="new-password"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -145,9 +151,9 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       autoComplete="new-password"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -155,12 +161,12 @@ export function SignupForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="h-11 w-full text-base" disabled={isPending}>
               {isPending ? "Creating company…" : "Create company"}
             </Button>
-            <p className="text-center text-xs text-neutral-500">
+            <p className="text-center text-xs text-muted-foreground">
               Already have an account?{" "}
-              <a href="/login" className="font-medium text-neutral-900 hover:underline">
+              <a href="/login" className="font-medium text-foreground hover:underline">
                 Log in
               </a>
             </p>

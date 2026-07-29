@@ -24,15 +24,15 @@ export default async function ProjectsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">Projects</h1>
+        <h1 className="text-xl font-semibold text-foreground">Projects</h1>
         <Link href="/projects/new" className={buttonVariants()}>
           New project
         </Link>
       </div>
 
       {!projects || projects.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No projects yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No projects yet.</p>
           <Link
             href="/projects/new"
             className={buttonVariants({ variant: "outline", className: "mt-4" })}
@@ -41,7 +41,7 @@ export default async function ProjectsPage() {
           </Link>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -66,10 +66,10 @@ export default async function ProjectsPage() {
                     </Link>
                   </TableCell>
                   <TableCell>{project.name}</TableCell>
-                  <TableCell className="text-neutral-500">
+                  <TableCell className="text-muted-foreground">
                     {project.client_name ?? "—"}
                   </TableCell>
-                  <TableCell className="text-neutral-500">
+                  <TableCell className="text-muted-foreground">
                     {project.gc_company ?? "—"}
                   </TableCell>
                   <TableCell>

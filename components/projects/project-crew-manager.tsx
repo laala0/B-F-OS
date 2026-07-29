@@ -59,11 +59,11 @@ export function ProjectCrewManager({
   return (
     <div className="space-y-4">
       {assigned.length === 0 ? (
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-muted-foreground">
           Nobody&apos;s assigned to this job yet.
         </p>
       ) : (
-        <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-200">
+        <ul className="divide-y divide-border rounded-lg border border-border">
           {assigned.map((employee) => (
             <li
               key={employee.id}
@@ -76,10 +76,10 @@ export function ProjectCrewManager({
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium text-neutral-900">
+                  <p className="text-sm font-medium text-foreground">
                     {employee.firstName} {employee.lastName}
                   </p>
-                  <p className="text-xs text-neutral-500">{employee.email}</p>
+                  <p className="text-xs text-muted-foreground">{employee.email}</p>
                 </div>
               </div>
               <Button
@@ -118,7 +118,7 @@ export function ProjectCrewManager({
           </Button>
         </div>
       ) : (
-        <p className="text-sm text-neutral-400">
+        <p className="text-sm text-muted-foreground">
           Everyone in the company is already assigned to this job.
         </p>
       )}

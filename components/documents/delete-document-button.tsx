@@ -28,7 +28,7 @@ export function DeleteDocumentButton({
       size="icon-sm"
       disabled={isPending}
       onClick={onClick}
-      className="text-neutral-400 hover:text-red-600"
+      className="text-muted-foreground hover:text-red-600"
     >
       <Trash2 className="h-3.5 w-3.5" />
     </Button>

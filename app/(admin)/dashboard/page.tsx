@@ -1,10 +1,19 @@
 import Link from "next/link";
+import {
+  Building2,
+  CalendarClock,
+  AlertTriangle,
+  Receipt,
+  HardHat,
+  Hourglass,
+} from "lucide-react";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { StatCard } from "@/components/reports/stat-card";
 import { buttonVariants } from "@/components/ui/button";
 import { formatCents } from "@/lib/domain/money";
 import { todayInTimezone } from "@/lib/domain/reports";
+import { durationHours } from "@/lib/domain/time";
 
 export default async function DashboardPage() {
   const user = await requireRole("admin");
@@ -28,6 +37,8 @@ export default async function DashboardPage() {
     { count: tasksDueToday },
     { count: overdueTasks },
     { data: outstandingInvoices },
+    { count: crewOnSite },
+    { data: pendingEntries },
   ] = await Promise.all([
     supabase
       .from("projects")
@@ -55,10 +66,24 @@ export default async function DashboardPage() {
       .eq("company_id", companyId)
       .eq("status", "sent")
       .is("deleted_at", null),
+    supabase
+      .from("time_entries")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("status", "open"),
+    supabase
+      .from("time_entries")
+      .select("clock_in, clock_out")
+      .eq("company_id", companyId)
+      .eq("status", "pending"),
   ]);
 
   const outstandingCents = (outstandingInvoices ?? []).reduce(
     (sum, i) => sum + i.amount_cents,
+    0
+  );
+  const hoursPendingApproval = (pendingEntries ?? []).reduce(
+    (sum, e) => sum + durationHours(e.clock_in, e.clock_out),
     0
   );
 
@@ -66,10 +91,10 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-neutral-900">
+          <h1 className="text-xl font-semibold text-foreground">
             {company?.name ?? "Your company"}
           </h1>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Welcome back, {user.profile.first_name}.
           </p>
         </div>
@@ -78,25 +103,42 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <StatCard label="Active projects" value={activeProjects ?? 0} />
-        <StatCard label="Tasks due today" value={tasksDueToday ?? 0} />
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <StatCard
+          label="Active projects"
+          value={activeProjects ?? 0}
+          icon={Building2}
+        />
+        <StatCard
+          label="Crew on site"
+          value={crewOnSite ?? 0}
+          icon={HardHat}
+          tone={(crewOnSite ?? 0) > 0 ? "green" : "default"}
+        />
+        <StatCard
+          label="Tasks due today"
+          value={tasksDueToday ?? 0}
+          icon={CalendarClock}
+        />
         <StatCard
           label="Overdue tasks"
           value={overdueTasks ?? 0}
+          icon={AlertTriangle}
           tone={(overdueTasks ?? 0) > 0 ? "red" : "default"}
+        />
+        <StatCard
+          label="Hours pending approval"
+          value={hoursPendingApproval.toFixed(1)}
+          icon={Hourglass}
+          tone={hoursPendingApproval > 0 ? "amber" : "default"}
         />
         <StatCard
           label="Outstanding invoices"
           value={formatCents(outstandingCents)}
-          tone="amber"
+          icon={Receipt}
+          tone="gold"
         />
       </div>
-
-      <p className="text-xs text-neutral-400">
-        Crew-on-site and hours-pending-approval widgets are still waiting on
-        Phase 3 (Time Tracking).
-      </p>
     </div>
   );
 }

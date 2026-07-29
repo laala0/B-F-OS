@@ -57,10 +57,10 @@ export default async function CapturePage({
 
   return (
     <div className="space-y-4 p-4">
-      <h1 className="text-lg font-semibold text-neutral-900">Capture</h1>
+      <h1 className="text-lg font-semibold text-foreground">Capture</h1>
 
       {projects.length === 0 ? (
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-muted-foreground">
           You&apos;re not assigned to any jobs yet.
         </p>
       ) : (
@@ -73,7 +73,7 @@ export default async function CapturePage({
               {withUrls.map((item) => (
                 <div
                   key={item.id}
-                  className="relative aspect-square overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100"
+                  className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted"
                 >
                   {item.url ? (
                     item.content_type?.startsWith("video") ? (

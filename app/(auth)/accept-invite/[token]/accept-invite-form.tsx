@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import {
   Form,
   FormControl,
@@ -63,7 +64,7 @@ export function AcceptInviteForm({
         <CardTitle className="text-base font-medium">
           Set up your account
         </CardTitle>
-        <p className="text-sm text-neutral-500">{email}</p>
+        <p className="text-sm text-muted-foreground">{email}</p>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -76,7 +77,7 @@ export function AcceptInviteForm({
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input autoComplete="given-name" {...field} />
+                      <Input autoComplete="given-name" className="h-11 text-base" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +90,7 @@ export function AcceptInviteForm({
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input autoComplete="family-name" {...field} />
+                      <Input autoComplete="family-name" className="h-11 text-base" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,9 +104,9 @@ export function AcceptInviteForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       autoComplete="new-password"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -120,9 +121,9 @@ export function AcceptInviteForm({
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       autoComplete="new-password"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -130,7 +131,7 @@ export function AcceptInviteForm({
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="h-11 w-full text-base" disabled={isPending}>
               {isPending ? "Creating account…" : "Create account"}
             </Button>
           </form>

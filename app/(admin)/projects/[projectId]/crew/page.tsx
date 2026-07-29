@@ -49,7 +49,7 @@ export default async function ProjectCrewPage({
   return (
     <div className="max-w-2xl space-y-6">
       <ProjectNav projectId={projectId} />
-      <h1 className="text-xl font-semibold text-neutral-900">
+      <h1 className="text-xl font-semibold text-foreground">
         Crew — {project.name}
       </h1>
       <ProjectCrewManager

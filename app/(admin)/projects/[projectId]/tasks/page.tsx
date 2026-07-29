@@ -75,7 +75,7 @@ export default async function ProjectTasksPage({
     <div className="max-w-4xl space-y-6">
       <ProjectNav projectId={projectId} />
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">
+        <h1 className="text-xl font-semibold text-foreground">
           Tasks — {project.name}
         </h1>
         <TaskFormSheet
@@ -86,11 +86,11 @@ export default async function ProjectTasksPage({
       </div>
 
       {taskList.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No tasks yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No tasks yet.</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -115,7 +115,7 @@ export default async function ProjectTasksPage({
                 return (
                   <TableRow key={task.id}>
                     <TableCell className="font-medium">{task.title}</TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {assignee
                         ? `${assignee.firstName} ${assignee.lastName}`
                         : "Unassigned"}
@@ -129,7 +129,7 @@ export default async function ProjectTasksPage({
                       {task.due_date ?? "—"}
                       {overdue ? " (overdue)" : ""}
                     </TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {items.length > 0 ? `${done}/${items.length}` : "—"}
                     </TableCell>
                     <TableCell>

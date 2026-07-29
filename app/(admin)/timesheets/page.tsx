@@ -35,7 +35,7 @@ export default async function TimesheetsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-xl font-semibold text-neutral-900">Timesheets</h1>
+      <h1 className="text-xl font-semibold text-foreground">Timesheets</h1>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <StatCard label="Pending review" value={pending.length} tone={pending.length > 0 ? "amber" : "default"} />
@@ -44,11 +44,11 @@ export default async function TimesheetsPage() {
       </div>
 
       {rows.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No time entries yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No time entries yet.</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -67,10 +67,10 @@ export default async function TimesheetsPage() {
                   <TableCell className="font-medium">
                     {entry.profile?.first_name} {entry.profile?.last_name}
                   </TableCell>
-                  <TableCell className="text-neutral-500">
+                  <TableCell className="text-muted-foreground">
                     {entry.project?.name ?? "—"}
                   </TableCell>
-                  <TableCell className="text-neutral-500">
+                  <TableCell className="text-muted-foreground">
                     {new Date(entry.clock_in).toLocaleString([], {
                       month: "short",
                       day: "numeric",
@@ -78,7 +78,7 @@ export default async function TimesheetsPage() {
                       minute: "2-digit",
                     })}
                   </TableCell>
-                  <TableCell className="text-neutral-500">
+                  <TableCell className="text-muted-foreground">
                     {entry.clock_out
                       ? new Date(entry.clock_out).toLocaleString([], {
                           month: "short",

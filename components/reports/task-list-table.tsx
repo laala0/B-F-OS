@@ -28,7 +28,7 @@ export function TaskListTable({
   showDueDate?: boolean;
 }) {
   if (tasks.length === 0) {
-    return <p className="text-sm text-neutral-500">{emptyLabel}</p>;
+    return <p className="text-sm text-muted-foreground">{emptyLabel}</p>;
   }
 
   return (
@@ -46,8 +46,8 @@ export function TaskListTable({
         {tasks.map((task) => (
           <TableRow key={task.id}>
             <TableCell className="font-medium">{task.title}</TableCell>
-            <TableCell className="text-neutral-500">{task.projectName}</TableCell>
-            <TableCell className="text-neutral-500">{task.assigneeName}</TableCell>
+            <TableCell className="text-muted-foreground">{task.projectName}</TableCell>
+            <TableCell className="text-muted-foreground">{task.assigneeName}</TableCell>
             <TableCell>
               <TaskPriorityBadge priority={task.priority} />
             </TableCell>

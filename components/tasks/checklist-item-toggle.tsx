@@ -34,7 +34,7 @@ export function ChecklistItemToggle({
       <span
         className={cn(
           "text-sm",
-          isDone ? "text-neutral-400 line-through" : "text-neutral-900"
+          isDone ? "text-muted-foreground line-through" : "text-foreground"
         )}
       >
         {label}

@@ -16,7 +16,7 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold text-neutral-900">Settings</h1>
+      <h1 className="text-xl font-semibold text-foreground">Settings</h1>
       <Card className="max-w-xl">
         <CardHeader>
           <CardTitle className="text-base font-medium">Company</CardTitle>

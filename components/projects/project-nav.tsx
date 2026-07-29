@@ -19,7 +19,7 @@ export function ProjectNav({ projectId }: { projectId: string }) {
   const base = `/projects/${projectId}`;
 
   return (
-    <nav className="flex gap-1 border-b border-neutral-200">
+    <nav className="flex gap-1 border-b border-border">
       {TABS.map(({ segment, label }) => {
         const href = segment ? `${base}/${segment}` : base;
         const active = pathname === href;
@@ -28,10 +28,10 @@ export function ProjectNav({ projectId }: { projectId: string }) {
             key={href}
             href={href}
             className={cn(
-              "border-b-2 px-3 py-2 text-sm font-medium -mb-px",
+              "border-b-2 px-3 py-2 text-sm font-medium -mb-px transition-colors",
               active
-                ? "border-neutral-900 text-neutral-900"
-                : "border-transparent text-neutral-500 hover:text-neutral-900"
+                ? "border-primary text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
             )}
           >
             {label}

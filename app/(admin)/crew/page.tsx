@@ -17,7 +17,7 @@ import { RevokeInviteButton } from "@/components/crew/revoke-invite-button";
 const STATUS_BADGE_CLASS: Record<string, string> = {
   active: "bg-green-100 text-green-700",
   invited: "bg-sky-100 text-sky-700",
-  suspended: "bg-neutral-100 text-neutral-500",
+  suspended: "bg-muted text-muted-foreground",
 };
 
 export default async function CrewPage() {
@@ -44,11 +44,11 @@ export default async function CrewPage() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">Crew</h1>
+        <h1 className="text-xl font-semibold text-foreground">Crew</h1>
         <InviteCrewDialog />
       </div>
 
-      <div className="rounded-lg border border-neutral-200 bg-white">
+      <div className="rounded-lg border border-border bg-card shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
@@ -65,11 +65,11 @@ export default async function CrewPage() {
                   <Link href={`/crew/${p.id}`} className="hover:underline">
                     {p.first_name} {p.last_name}
                     {p.id === user.id ? (
-                      <span className="ml-1.5 text-xs text-neutral-400">(you)</span>
+                      <span className="ml-1.5 text-xs text-muted-foreground">(you)</span>
                     ) : null}
                   </Link>
                 </TableCell>
-                <TableCell className="text-neutral-500">{p.email}</TableCell>
+                <TableCell className="text-muted-foreground">{p.email}</TableCell>
                 <TableCell>
                   <RoleBadge role={p.role} />
                 </TableCell>
@@ -89,10 +89,10 @@ export default async function CrewPage() {
 
       {invites && invites.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-neutral-900">
+          <p className="text-sm font-medium text-foreground">
             Pending invites
           </p>
-          <div className="rounded-lg border border-neutral-200 bg-white">
+          <div className="rounded-lg border border-border bg-card shadow-sm">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -109,7 +109,7 @@ export default async function CrewPage() {
                     <TableCell>
                       <RoleBadge role={invite.role} />
                     </TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {new Date(invite.expires_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">

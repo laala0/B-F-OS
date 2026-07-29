@@ -52,7 +52,7 @@ export default async function InvoicesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">
+        <h1 className="text-xl font-semibold text-foreground">
           Invoice tracker
         </h1>
         <InvoiceFormSheet
@@ -62,20 +62,20 @@ export default async function InvoicesPage() {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
-          <p className="text-xs font-medium text-neutral-500">Total invoiced</p>
-          <p className="mt-1 text-xl font-semibold text-neutral-900">
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+          <p className="text-xs font-medium text-muted-foreground">Total invoiced</p>
+          <p className="mt-1 text-xl font-semibold text-foreground">
             {formatCents(totalCents)}
           </p>
         </div>
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
-          <p className="text-xs font-medium text-neutral-500">Outstanding</p>
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+          <p className="text-xs font-medium text-muted-foreground">Outstanding</p>
           <p className="mt-1 text-xl font-semibold text-amber-600">
             {formatCents(outstandingCents)}
           </p>
         </div>
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
-          <p className="text-xs font-medium text-neutral-500">Paid</p>
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+          <p className="text-xs font-medium text-muted-foreground">Paid</p>
           <p className="mt-1 text-xl font-semibold text-green-600">
             {formatCents(paidCents)}
           </p>
@@ -83,11 +83,11 @@ export default async function InvoicesPage() {
       </div>
 
       {invoiceList.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No invoices yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No invoices yet.</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -117,10 +117,10 @@ export default async function InvoicesPage() {
                         {invoice.invoice_number}
                       </Link>
                     </TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {invoice.project?.name ?? "—"}
                     </TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {invoice.issued_date}
                     </TableCell>
                     <TableCell

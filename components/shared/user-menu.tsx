@@ -1,7 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
-import { LogOut } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { useTheme } from "next-themes";
+import { LogOut, Moon, Sun } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -34,13 +35,19 @@ export function UserMenu({
   avatarUrl?: string | null;
 }) {
   const [isPending, startTransition] = useTransition();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && theme === "dark";
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-neutral-400">
-        <Avatar className="h-8 w-8">
+      <DropdownMenuTrigger className="flex items-center gap-2 rounded-full outline-none ring-offset-2 ring-offset-background transition-shadow focus-visible:ring-2 focus-visible:ring-ring">
+        <Avatar className="h-8 w-8 ring-1 ring-border">
           <AvatarImage src={avatarUrl ?? undefined} alt={`${firstName} ${lastName}`} />
-          <AvatarFallback>{initials(firstName, lastName)}</AvatarFallback>
+          <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+            {initials(firstName, lastName)}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
@@ -49,11 +56,22 @@ export function UserMenu({
             <span className="font-medium">
               {firstName} {lastName}
             </span>
-            <span className="truncate text-xs font-normal text-neutral-500">
+            <span className="truncate text-xs font-normal text-muted-foreground">
               {email}
             </span>
           </DropdownMenuLabel>
         </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+        >
+          {isDark ? (
+            <Sun className="mr-2 h-4 w-4" />
+          ) : (
+            <Moon className="mr-2 h-4 w-4" />
+          )}
+          {isDark ? "Light mode" : "Dark mode"}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           disabled={isPending}

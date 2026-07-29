@@ -51,7 +51,7 @@ export default async function FieldJobPage({
     <div className="space-y-4 p-4">
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold text-neutral-900">{project.name}</h1>
+          <h1 className="text-lg font-semibold text-foreground">{project.name}</h1>
           <span
             className={cn(
               "rounded-full px-2 py-0.5 text-xs font-medium",
@@ -62,22 +62,22 @@ export default async function FieldJobPage({
           </span>
         </div>
         {project.site_address ? (
-          <p className="text-sm text-neutral-500">{project.site_address}</p>
+          <p className="text-sm text-muted-foreground">{project.site_address}</p>
         ) : null}
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">Your tasks here</p>
+        <p className="text-sm font-medium text-foreground">Your tasks here</p>
         {tasks && tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
               <li key={task.id}>
                 <Link
                   href={`/tasks/${task.id}`}
-                  className="block rounded-lg border border-neutral-200 bg-white p-3"
+                  className="block rounded-lg border border-border bg-card shadow-sm p-3"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-medium text-neutral-900">{task.title}</p>
+                    <p className="text-sm font-medium text-foreground">{task.title}</p>
                     <TaskPriorityBadge priority={task.priority} />
                   </div>
                   <span
@@ -93,13 +93,13 @@ export default async function FieldJobPage({
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-neutral-500">Nothing assigned to you on this job.</p>
+          <p className="text-sm text-muted-foreground">Nothing assigned to you on this job.</p>
         )}
       </div>
 
       {mediaWithUrls.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-neutral-900">Recent photos</p>
+          <p className="text-sm font-medium text-foreground">Recent photos</p>
           <div className="grid grid-cols-3 gap-2">
             {mediaWithUrls.map((item) =>
               item.url ? (
@@ -107,7 +107,7 @@ export default async function FieldJobPage({
                   <video
                     key={item.id}
                     src={item.url}
-                    className="aspect-square rounded-lg border border-neutral-200 object-cover"
+                    className="aspect-square rounded-lg border border-border object-cover"
                   />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -115,7 +115,7 @@ export default async function FieldJobPage({
                     key={item.id}
                     src={item.url}
                     alt=""
-                    className="aspect-square rounded-lg border border-neutral-200 object-cover"
+                    className="aspect-square rounded-lg border border-border object-cover"
                   />
                 )
               ) : null
@@ -126,17 +126,17 @@ export default async function FieldJobPage({
 
       {notes && notes.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-neutral-900">Recent notes</p>
+          <p className="text-sm font-medium text-foreground">Recent notes</p>
           <div className="space-y-2">
             {notes.map((n) => (
               <Card key={n.id}>
                 <CardContent className="space-y-1 pt-4">
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-xs text-muted-foreground">
                     {new Date(n.created_at).toLocaleDateString()}
                     {n.weather ? ` · ${n.weather}` : ""} · {n.author?.first_name}{" "}
                     {n.author?.last_name}
                   </p>
-                  <p className="text-sm text-neutral-900">{n.note}</p>
+                  <p className="text-sm text-foreground">{n.note}</p>
                 </CardContent>
               </Card>
             ))}

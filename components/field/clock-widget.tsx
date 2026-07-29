@@ -69,11 +69,11 @@ export function ClockWidget({
       <CardContent className="space-y-3 pt-6">
         {openEntry ? (
           <>
-            <div className="flex items-center gap-2 text-green-700">
+            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
               <Clock className="h-5 w-5" />
               <div>
                 <p className="text-sm font-medium">Clocked in</p>
-                <p className="text-xs text-neutral-500">
+                <p className="text-xs text-muted-foreground">
                   Since {new Date(openEntry.clock_in).toLocaleTimeString([], {
                     hour: "numeric",
                     minute: "2-digit",

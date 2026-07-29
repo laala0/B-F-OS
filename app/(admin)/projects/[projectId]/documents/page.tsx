@@ -51,11 +51,11 @@ export default async function ProjectDocumentsPage({
       <DocumentUploader projectId={projectId} companyId={user.profile.company_id} />
 
       {withUrls.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No documents yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No documents yet.</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -81,8 +81,8 @@ export default async function ProjectDocumentsPage({
                   <TableCell>
                     <Badge variant="secondary">{DOCUMENT_CATEGORY_LABELS[doc.category]}</Badge>
                   </TableCell>
-                  <TableCell className="text-neutral-500">v{doc.version}</TableCell>
-                  <TableCell className="text-neutral-500">{formatSize(doc.size_bytes)}</TableCell>
+                  <TableCell className="text-muted-foreground">v{doc.version}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatSize(doc.size_bytes)}</TableCell>
                   <TableCell className="text-right">
                     <DeleteDocumentButton documentId={doc.id} projectId={projectId} />
                   </TableCell>

@@ -38,10 +38,10 @@ export default async function FieldTaskPage({
   return (
     <div className="space-y-4 p-4">
       <div className="space-y-1">
-        <p className="text-xs font-medium text-neutral-400">
+        <p className="text-xs font-medium text-muted-foreground">
           {task.project?.name}
         </p>
-        <h1 className="text-lg font-semibold text-neutral-900">
+        <h1 className="text-lg font-semibold text-foreground">
           {task.title}
         </h1>
       </div>
@@ -52,7 +52,7 @@ export default async function FieldTaskPage({
           <span
             className={cn(
               "text-sm",
-              overdue ? "font-medium text-red-600" : "text-neutral-500"
+              overdue ? "font-medium text-red-600" : "text-muted-foreground"
             )}
           >
             Due {task.due_date}
@@ -62,17 +62,17 @@ export default async function FieldTaskPage({
       </div>
 
       {task.description ? (
-        <p className="text-sm text-neutral-700">{task.description}</p>
+        <p className="text-sm text-foreground">{task.description}</p>
       ) : null}
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">Status</p>
+        <p className="text-sm font-medium text-foreground">Status</p>
         <TaskStatusSelect taskId={task.id} status={task.status} size="default" />
       </div>
 
       {checklistItems && checklistItems.length > 0 ? (
-        <div className="space-y-1 rounded-lg border border-neutral-200 bg-white p-3">
-          <p className="pb-1 text-sm font-medium text-neutral-900">
+        <div className="space-y-1 rounded-lg border border-border bg-card shadow-sm p-3">
+          <p className="pb-1 text-sm font-medium text-foreground">
             Checklist
           </p>
           {checklistItems.map((item) => (

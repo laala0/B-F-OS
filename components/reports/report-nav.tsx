@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { addDays, formatDateLabel, formatDateRangeLabel } from "@/lib/domain/reports";
@@ -30,14 +31,14 @@ export function ReportNav({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex gap-1 rounded-lg border border-neutral-200 bg-white p-1">
+      <div className="flex gap-1 rounded-lg border border-border bg-card shadow-sm p-1">
         <Link
           href={`/reports?view=daily&date=${date}`}
           className={cn(
             "rounded-md px-3 py-1.5 text-sm font-medium",
             view === "daily"
-              ? "bg-neutral-900 text-white"
-              : "text-neutral-600 hover:bg-neutral-100"
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-muted"
           )}
         >
           Daily
@@ -47,8 +48,8 @@ export function ReportNav({
           className={cn(
             "rounded-md px-3 py-1.5 text-sm font-medium",
             view === "weekly"
-              ? "bg-neutral-900 text-white"
-              : "text-neutral-600 hover:bg-neutral-100"
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-muted"
           )}
         >
           Weekly
@@ -61,9 +62,9 @@ export function ReportNav({
           className={buttonVariants({ variant: "outline", size: "icon-sm" })}
           aria-label="Previous"
         >
-          ←
+          <ChevronLeft className="h-4 w-4" />
         </Link>
-        <span className="min-w-[9rem] text-center text-sm font-medium text-neutral-900">
+        <span className="min-w-[9rem] text-center text-sm font-medium text-foreground text-tabular">
           {label}
         </span>
         <Link
@@ -71,7 +72,7 @@ export function ReportNav({
           className={buttonVariants({ variant: "outline", size: "icon-sm" })}
           aria-label="Next"
         >
-          →
+          <ChevronRight className="h-4 w-4" />
         </Link>
         {!isCurrent ? (
           <Link

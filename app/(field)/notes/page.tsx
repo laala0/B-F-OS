@@ -47,10 +47,10 @@ export default async function NotesPage({
 
   return (
     <div className="space-y-4 p-4">
-      <h1 className="text-lg font-semibold text-neutral-900">Daily notes</h1>
+      <h1 className="text-lg font-semibold text-foreground">Daily notes</h1>
 
       {projects.length === 0 ? (
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-muted-foreground">
           You&apos;re not assigned to any jobs yet.
         </p>
       ) : (
@@ -60,13 +60,13 @@ export default async function NotesPage({
 
           <div className="space-y-2 pt-2">
             {(notes ?? []).length === 0 ? (
-              <p className="text-sm text-neutral-500">No notes yet for this job.</p>
+              <p className="text-sm text-muted-foreground">No notes yet for this job.</p>
             ) : (
               (notes ?? []).map((n) => (
                 <Card key={n.id}>
                   <CardContent className="space-y-1 pt-4">
                     <div className="flex items-start justify-between gap-2">
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-500">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                         <span>{new Date(n.created_at).toLocaleDateString()}</span>
                         {n.weather ? <span>· {n.weather}</span> : null}
                         {n.crew_count != null ? <span>· {n.crew_count} on site</span> : null}
@@ -76,7 +76,7 @@ export default async function NotesPage({
                       </div>
                       <DeleteNoteButton noteId={n.id} />
                     </div>
-                    <p className="text-sm text-neutral-900">{n.note}</p>
+                    <p className="text-sm text-foreground">{n.note}</p>
                   </CardContent>
                 </Card>
               ))

@@ -24,8 +24,8 @@ export default async function ProjectActivityPage({
       <ProjectNav projectId={projectId} />
 
       {!events || events.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">
             Nothing&apos;s happened on this job yet — clock-ins, photos,
             notes, and status changes will show up here.
           </p>
@@ -36,7 +36,7 @@ export default async function ProjectActivityPage({
             <ul className="space-y-4">
               {events.map((event) => (
                 <li key={event.id} className="flex gap-3 text-sm">
-                  <span className="w-32 shrink-0 text-xs text-neutral-400">
+                  <span className="w-32 shrink-0 text-xs text-muted-foreground">
                     {new Date(event.created_at).toLocaleString([], {
                       month: "short",
                       day: "numeric",
@@ -44,10 +44,10 @@ export default async function ProjectActivityPage({
                       minute: "2-digit",
                     })}
                   </span>
-                  <span className="text-neutral-900">
+                  <span className="text-foreground">
                     {event.description}
                     {event.actor && !event.description.startsWith(event.actor.first_name) ? (
-                      <span className="text-neutral-400">
+                      <span className="text-muted-foreground">
                         {" "}
                         — {event.actor.first_name} {event.actor.last_name}
                       </span>

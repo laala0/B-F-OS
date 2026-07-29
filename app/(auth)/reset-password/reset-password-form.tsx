@@ -45,8 +45,8 @@ export function ResetPasswordForm() {
     return (
       <Card>
         <CardContent className="pt-6 text-center">
-          <p className="font-medium text-neutral-900">Check your email</p>
-          <p className="mt-2 text-sm text-neutral-500">
+          <p className="font-medium text-foreground">Check your email</p>
+          <p className="mt-2 text-sm text-muted-foreground">
             If an account exists for that address, we&apos;ve sent a link to
             reset your password.
           </p>
@@ -67,13 +67,18 @@ export function ResetPasswordForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" autoComplete="email" {...field} />
+                    <Input
+                      type="email"
+                      autoComplete="email"
+                      className="h-11 text-base"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="h-11 w-full text-base" disabled={isPending}>
               {isPending ? "Sending…" : "Send reset link"}
             </Button>
           </form>

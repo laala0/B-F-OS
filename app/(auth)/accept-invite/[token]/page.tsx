@@ -35,10 +35,10 @@ export default async function AcceptInvitePage({
     return (
       <Card>
         <CardContent className="pt-6 text-center">
-          <p className="font-medium text-neutral-900">
+          <p className="font-medium text-foreground">
             This invite link is invalid or has expired.
           </p>
-          <p className="mt-2 text-sm text-neutral-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             Ask whoever invited you to send a new one.
           </p>
         </CardContent>

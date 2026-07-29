@@ -50,7 +50,7 @@ export default async function ProjectInvoicesPage({
     <div className="max-w-4xl space-y-6">
       <ProjectNav projectId={projectId} />
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">
+        <h1 className="text-xl font-semibold text-foreground">
           Invoices — {project.name}
         </h1>
         <InvoiceFormSheet
@@ -61,11 +61,11 @@ export default async function ProjectInvoicesPage({
       </div>
 
       {invoiceList.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No invoices for this job yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No invoices for this job yet.</p>
         </div>
       ) : (
-        <div className="rounded-lg border border-neutral-200 bg-white">
+        <div className="rounded-lg border border-border bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow>
@@ -94,7 +94,7 @@ export default async function ProjectInvoicesPage({
                         {invoice.invoice_number}
                       </Link>
                     </TableCell>
-                    <TableCell className="text-neutral-500">
+                    <TableCell className="text-muted-foreground">
                       {invoice.issued_date}
                     </TableCell>
                     <TableCell

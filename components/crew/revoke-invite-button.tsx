@@ -22,7 +22,7 @@ export function RevokeInviteButton({ inviteId }: { inviteId: string }) {
       size="sm"
       disabled={isPending}
       onClick={onClick}
-      className="text-neutral-500 hover:text-red-600"
+      className="text-muted-foreground hover:text-red-600"
     >
       <X className="mr-1.5 h-4 w-4" />
       Revoke

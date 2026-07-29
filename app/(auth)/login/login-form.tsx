@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import {
   Form,
   FormControl,
@@ -59,6 +60,7 @@ export function LoginForm() {
                       type="email"
                       autoComplete="email"
                       placeholder="you@bossandfriends.ca"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -75,15 +77,15 @@ export function LoginForm() {
                     <FormLabel>Password</FormLabel>
                     <a
                       href="/reset-password"
-                      className="text-xs text-neutral-500 hover:text-neutral-900"
+                      className="text-xs text-muted-foreground hover:text-foreground"
                     >
                       Forgot password?
                     </a>
                   </div>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       autoComplete="current-password"
+                      className="h-11 text-base"
                       {...field}
                     />
                   </FormControl>
@@ -91,12 +93,12 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="h-11 w-full text-base" disabled={isPending}>
               {isPending ? "Logging in…" : "Log in"}
             </Button>
-            <p className="text-center text-xs text-neutral-500">
+            <p className="text-center text-xs text-muted-foreground">
               Starting a new company?{" "}
-              <a href="/signup" className="font-medium text-neutral-900 hover:underline">
+              <a href="/signup" className="font-medium text-foreground hover:underline">
                 Create one
               </a>
             </p>

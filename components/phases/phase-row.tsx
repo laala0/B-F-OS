@@ -73,8 +73,8 @@ export function PhaseRow({
           </Button>
         </div>
         <div>
-          <p className="text-sm font-medium text-neutral-900">{phase.name}</p>
-          {dates ? <p className="text-xs text-neutral-500">{dates}</p> : null}
+          <p className="text-sm font-medium text-foreground">{phase.name}</p>
+          {dates ? <p className="text-xs text-muted-foreground">{dates}</p> : null}
         </div>
       </div>
       <div className="flex items-center gap-2">

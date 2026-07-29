@@ -35,15 +35,15 @@ export default async function ProjectMediaPage({
       <MediaUploader projectId={projectId} companyId={user.profile.company_id} />
 
       {withUrls.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center">
-          <p className="text-sm text-neutral-500">No photos or videos yet.</p>
+        <div className="rounded-lg border border-dashed border-border py-16 text-center">
+          <p className="text-sm text-muted-foreground">No photos or videos yet.</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
           {withUrls.map((item) => (
             <div
               key={item.id}
-              className="relative aspect-square overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100"
+              className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted"
             >
               {item.url ? (
                 item.content_type?.startsWith("video") ? (
@@ -57,7 +57,7 @@ export default async function ProjectMediaPage({
                   />
                 )
               ) : (
-                <div className="flex h-full items-center justify-center text-xs text-neutral-400">
+                <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
                   Unavailable
                 </div>
               )}

@@ -28,12 +28,12 @@ export function PhaseList({
       </CardHeader>
       <CardContent>
         {phases.length === 0 ? (
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Footings, base prep, rebar, anchors, pour, waterproofing — add the
             phases for this job.
           </p>
         ) : (
-          <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-200">
+          <ul className="divide-y divide-border rounded-lg border border-border">
             {phases.map((phase, index) => (
               <PhaseRow
                 key={phase.id}

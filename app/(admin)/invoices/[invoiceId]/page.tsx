@@ -45,14 +45,14 @@ export default async function InvoiceDetailPage({
         <div>
           <Link
             href="/invoices"
-            className="text-sm text-neutral-500 hover:underline"
+            className="text-sm text-muted-foreground hover:underline"
           >
             ← Invoice tracker
           </Link>
-          <h1 className="mt-1 text-xl font-semibold text-neutral-900">
+          <h1 className="mt-1 text-xl font-semibold text-foreground">
             {invoice.invoice_number}
           </h1>
-          <p className="text-sm text-neutral-500">{invoice.project?.name}</p>
+          <p className="text-sm text-muted-foreground">{invoice.project?.name}</p>
         </div>
         <div className="flex gap-2">
           <InvoiceFormSheet
@@ -72,15 +72,15 @@ export default async function InvoiceDetailPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 rounded-lg border border-neutral-200 bg-white p-4">
+      <div className="grid grid-cols-2 gap-4 rounded-lg border border-border bg-card shadow-sm p-4">
         <div>
-          <p className="text-xs font-medium text-neutral-500">Amount</p>
-          <p className="mt-1 text-lg font-semibold text-neutral-900">
+          <p className="text-xs font-medium text-muted-foreground">Amount</p>
+          <p className="mt-1 text-lg font-semibold text-foreground">
             {formatCents(invoice.amount_cents)}
           </p>
         </div>
         <div>
-          <p className="text-xs font-medium text-neutral-500">Status</p>
+          <p className="text-xs font-medium text-muted-foreground">Status</p>
           <div className="mt-1">
             <InvoiceStatusSelect
               invoiceId={invoice.id}
@@ -90,15 +90,15 @@ export default async function InvoiceDetailPage({
           </div>
         </div>
         <div>
-          <p className="text-xs font-medium text-neutral-500">Issued date</p>
-          <p className="mt-1 text-sm text-neutral-900">{invoice.issued_date}</p>
+          <p className="text-xs font-medium text-muted-foreground">Issued date</p>
+          <p className="mt-1 text-sm text-foreground">{invoice.issued_date}</p>
         </div>
         <div>
-          <p className="text-xs font-medium text-neutral-500">Due date</p>
+          <p className="text-xs font-medium text-muted-foreground">Due date</p>
           <p
             className={cn(
               "mt-1 text-sm",
-              overdue ? "font-medium text-red-600" : "text-neutral-900"
+              overdue ? "font-medium text-red-600" : "text-foreground"
             )}
           >
             {invoice.due_date ?? "—"}
@@ -107,16 +107,16 @@ export default async function InvoiceDetailPage({
         </div>
         {invoice.paid_date ? (
           <div>
-            <p className="text-xs font-medium text-neutral-500">Paid date</p>
-            <p className="mt-1 text-sm text-neutral-900">{invoice.paid_date}</p>
+            <p className="text-xs font-medium text-muted-foreground">Paid date</p>
+            <p className="mt-1 text-sm text-foreground">{invoice.paid_date}</p>
           </div>
         ) : null}
       </div>
 
       {invoice.notes ? (
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
-          <p className="text-xs font-medium text-neutral-500">Notes</p>
-          <p className="mt-1 whitespace-pre-wrap text-sm text-neutral-700">
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+          <p className="text-xs font-medium text-muted-foreground">Notes</p>
+          <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
             {invoice.notes}
           </p>
         </div>

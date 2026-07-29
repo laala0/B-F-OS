@@ -143,7 +143,7 @@ export default async function ReportsPage({
 
   return (
     <div className="max-w-4xl space-y-6">
-      <h1 className="text-xl font-semibold text-neutral-900">Reports</h1>
+      <h1 className="text-xl font-semibold text-foreground">Reports</h1>
 
       <ReportNav
         view={view}
@@ -170,11 +170,11 @@ export default async function ReportsPage({
       </div>
 
       {view === "weekly" ? (
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
-          <p className="mb-2 text-sm font-medium text-neutral-900">By day</p>
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+          <p className="mb-2 text-sm font-medium text-foreground">By day</p>
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-neutral-500">
+              <tr className="text-left text-muted-foreground">
                 <th className="pb-2 font-medium">Day</th>
                 <th className="pb-2 font-medium">Completed</th>
                 <th className="pb-2 font-medium">Due</th>
@@ -182,7 +182,7 @@ export default async function ReportsPage({
             </thead>
             <tbody>
               {dayBreakdown.map((d) => (
-                <tr key={d.date} className="border-t border-neutral-100">
+                <tr key={d.date} className="border-t border-border">
                   <td className="py-1.5">{formatDateLabel(d.date)}</td>
                   <td className="py-1.5">{d.completed}</td>
                   <td className="py-1.5">{d.due}</td>
@@ -194,10 +194,10 @@ export default async function ReportsPage({
       ) : null}
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">
+        <p className="text-sm font-medium text-foreground">
           {view === "daily" ? "Due today" : "Due this week"}
         </p>
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
           <TaskListTable
             tasks={dueInRange.map(toRow)}
             emptyLabel="Nothing due."
@@ -206,10 +206,10 @@ export default async function ReportsPage({
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">
+        <p className="text-sm font-medium text-foreground">
           {view === "daily" ? "Completed today" : "Completed this week"}
         </p>
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
           <TaskListTable
             tasks={completedInRange.map(toRow)}
             emptyLabel="Nothing completed yet."
@@ -218,10 +218,10 @@ export default async function ReportsPage({
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">
+        <p className="text-sm font-medium text-foreground">
           Currently overdue
         </p>
-        <div className="rounded-lg border border-neutral-200 bg-white p-4">
+        <div className="rounded-lg border border-border bg-card shadow-sm p-4">
           <TaskListTable
             tasks={overdueTasks.map(toRow)}
             emptyLabel="Nothing overdue."

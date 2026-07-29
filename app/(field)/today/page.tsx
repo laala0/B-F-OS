@@ -49,16 +49,16 @@ export default async function TodayPage() {
 
   return (
     <div className="space-y-4 p-4">
-      <h1 className="text-lg font-semibold text-neutral-900">
+      <h1 className="text-lg font-semibold text-foreground">
         Hey {user.profile.first_name}
       </h1>
 
       <ClockWidget openEntry={openEntry ?? null} projects={assignedProjects} />
 
       <div className="space-y-2">
-        <p className="text-sm font-medium text-neutral-900">Your tasks</p>
+        <p className="text-sm font-medium text-foreground">Your tasks</p>
         {sorted.length === 0 ? (
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Nothing&apos;s assigned to you right now.
           </p>
         ) : (
@@ -70,18 +70,18 @@ export default async function TodayPage() {
                   <Link
                     href={`/tasks/${task.id}`}
                     className={cn(
-                      "block rounded-lg border border-neutral-200 bg-white p-3",
+                      "block rounded-lg border border-border bg-card shadow-sm p-3",
                       task.status === "done" && "opacity-60"
                     )}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs font-medium text-neutral-400">
+                        <p className="text-xs font-medium text-muted-foreground">
                           {task.project?.name}
                         </p>
                         <p
                           className={cn(
-                            "text-sm font-medium text-neutral-900",
+                            "text-sm font-medium text-foreground",
                             task.status === "done" && "line-through"
                           )}
                         >
@@ -103,7 +103,7 @@ export default async function TodayPage() {
                         <span
                           className={cn(
                             "text-xs",
-                            overdue ? "font-medium text-red-600" : "text-neutral-500"
+                            overdue ? "font-medium text-red-600" : "text-muted-foreground"
                           )}
                         >
                           Due {task.due_date}

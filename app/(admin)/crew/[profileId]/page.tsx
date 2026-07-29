@@ -37,7 +37,7 @@ export default async function CrewMemberPage({
   return (
     <div className="max-w-2xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">
+        <h1 className="text-xl font-semibold text-foreground">
           {profile.first_name} {profile.last_name}
         </h1>
         {!isSelf ? (
@@ -62,7 +62,7 @@ export default async function CrewMemberPage({
           <CardTitle className="text-base font-medium">
             Wage &amp; employment
           </CardTitle>
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-muted-foreground">
             Only admins can see this — employees never can, even each
             other&apos;s.
           </p>

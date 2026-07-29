@@ -24,7 +24,7 @@ export default async function ProjectOverviewPage({
     <div className="max-w-2xl space-y-6">
       <ProjectNav projectId={projectId} />
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-neutral-900">
+        <h1 className="text-xl font-semibold text-foreground">
           {project.name}
         </h1>
         <DeleteProjectDialog projectId={project.id} projectName={project.name} />
