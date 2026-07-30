@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Camera, ChevronRight, MapPin } from "lucide-react";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { getCompanyToday } from "@/lib/supabase/company";
@@ -24,15 +25,21 @@ export default async function TodayPage() {
       .eq("profile_id", user.id)
       .eq("status", "open")
       .maybeSingle(),
+    // !inner + the embedded filters keep finished and deleted jobs out of both
+    // the job list and the clock-in dropdown — without it a crew member could
+    // still clock hours against a job that closed months ago.
     supabase
       .from("project_assignments")
-      .select("project:projects(id, name)")
-      .eq("profile_id", user.id),
+      .select("project:projects!inner(id, name, site_address)")
+      .eq("profile_id", user.id)
+      .eq("project.status", "active")
+      .is("project.deleted_at", null),
   ]);
 
+  type AssignedProject = { id: string; name: string; site_address: string | null };
   const assignedProjects = (assignments ?? [])
     .map((a) => a.project)
-    .filter((p): p is { id: string; name: string } => p != null);
+    .filter((p): p is AssignedProject => p != null);
 
   const priorityWeight = { high: 0, medium: 1, low: 2 } as const;
   const sorted = [...(tasks ?? [])].sort((a, b) => {
@@ -54,6 +61,49 @@ export default async function TodayPage() {
       </h1>
 
       <ClockWidget openEntry={openEntry ?? null} projects={assignedProjects} />
+
+      <div className="space-y-2">
+        <p className="text-sm font-medium text-foreground">Your jobs</p>
+        {assignedProjects.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            You&apos;re not on any active jobs yet — your boss assigns those.
+          </p>
+        ) : (
+          <ul className="space-y-2">
+            {assignedProjects.map((project) => (
+              <li
+                key={project.id}
+                className="overflow-hidden rounded-lg border border-border bg-card shadow-sm"
+              >
+                <Link
+                  href={`/job/${project.id}`}
+                  className="flex min-h-14 items-center gap-3 p-3 transition-colors active:bg-muted"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-foreground">
+                      {project.name}
+                    </p>
+                    {project.site_address ? (
+                      <p className="mt-0.5 flex items-center gap-1 truncate text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3 shrink-0" />
+                        {project.site_address}
+                      </p>
+                    ) : null}
+                  </div>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                </Link>
+                <Link
+                  href={`/capture?project=${project.id}`}
+                  className="flex min-h-12 items-center justify-center gap-2 border-t border-border bg-muted/40 text-sm font-medium text-primary transition-colors active:bg-muted"
+                >
+                  <Camera className="h-4 w-4" />
+                  Add photos
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <div className="space-y-2">
         <p className="text-sm font-medium text-foreground">Your tasks</p>

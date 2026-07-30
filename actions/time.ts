@@ -8,10 +8,12 @@ import {
   clockInSchema,
   clockOutSchema,
   adjustTimeEntrySchema,
+  createTimeEntrySchema,
   NO_PROJECT,
   type ClockInInput,
   type ClockOutInput,
   type AdjustTimeEntryInput,
+  type CreateTimeEntryInput,
 } from "@/lib/validation/time";
 
 function isUniqueViolation(error: { code?: string } | null): boolean {
@@ -112,6 +114,70 @@ export async function rejectTimeEntry(entryId: string): Promise<ActionResult> {
     .eq("id", entryId);
 
   if (error) return actionError("Couldn't reject that entry.");
+
+  revalidatePath("/timesheets");
+  return actionOk(undefined);
+}
+
+// The escape hatch for hours the app never captured: no signal in an
+// underground parkade, dead phone, or someone who just forgot. Without this,
+// those hours can only reach the boss by text — which is the exact workflow
+// the app is supposed to replace, so the app loses either way.
+//
+// Lands as "pending" rather than "approved" so a manually-typed shift still
+// shows up in the same review queue as a real clock-in and gets an explicit
+// approval, instead of quietly counting toward payroll on one person's word.
+export async function createTimeEntry(
+  input: CreateTimeEntryInput
+): Promise<ActionResult> {
+  const user = await requireRole("admin");
+  const parsed = createTimeEntrySchema.safeParse(input);
+  if (!parsed.success) {
+    return actionError(
+      "Check the highlighted fields.",
+      parsed.error.flatten().fieldErrors
+    );
+  }
+  const v = parsed.data;
+  const clockIn = new Date(v.clockIn);
+  const clockOut = new Date(v.clockOut);
+
+  if (clockOut <= clockIn) {
+    return actionError("Clock out must be after clock in.", {
+      clockOut: ["Must be after clock in"],
+    });
+  }
+
+  const projectId =
+    v.projectId && v.projectId !== NO_PROJECT ? v.projectId : null;
+
+  const supabase = await createClient();
+  // profile_id is trusted from the form here (unlike clockIn, which derives
+  // it from auth.uid()) — that's what makes this an admin-only action. The
+  // composite FK on (profile_id, company_id) still stops an admin from
+  // logging hours against someone in another company.
+  const { error } = await supabase.from("time_entries").insert({
+    company_id: user.profile.company_id,
+    profile_id: v.profileId,
+    project_id: projectId,
+    clock_in: clockIn.toISOString(),
+    clock_out: clockOut.toISOString(),
+    status: "pending",
+    notes: toNullable(v.notes),
+  });
+
+  if (error) {
+    if (isUniqueViolation(error)) {
+      return actionError("That person already has an open shift running.");
+    }
+    return actionError("Couldn't add that entry.");
+  }
+
+  await supabase.rpc("record_activity", {
+    p_project_id: projectId,
+    p_event_type: "time_entry_added",
+    p_description: `${user.profile.first_name} added a time entry by hand`,
+  });
 
   revalidatePath("/timesheets");
   return actionOk(undefined);

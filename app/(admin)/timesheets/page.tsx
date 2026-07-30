@@ -11,20 +11,44 @@ import {
 } from "@/components/ui/table";
 import { TimeEntryStatusBadge } from "@/components/timesheets/time-entry-status-badge";
 import { TimeEntryActions } from "@/components/timesheets/time-entry-actions";
+import { AddTimeEntryDialog } from "@/components/timesheets/add-time-entry-dialog";
 import { durationHours, formatDuration } from "@/lib/domain/time";
 
 export default async function TimesheetsPage() {
   const user = await requireRole("admin");
   const supabase = await createClient();
 
-  const { data: entries } = await supabase
-    .from("time_entries")
-    .select(
-      "id, clock_in, clock_out, status, notes, company_id, profile_id, project_id, created_at, updated_at, profile:profiles(first_name, last_name), project:projects(name)"
-    )
-    .eq("company_id", user.profile.company_id)
-    .order("clock_in", { ascending: false })
-    .limit(200);
+  const [{ data: entries }, { data: crewRows }, { data: projectRows }] =
+    await Promise.all([
+      supabase
+        .from("time_entries")
+        .select(
+          "id, clock_in, clock_out, status, notes, company_id, profile_id, project_id, created_at, updated_at, profile:profiles(first_name, last_name), project:projects(name)"
+        )
+        .eq("company_id", user.profile.company_id)
+        .order("clock_in", { ascending: false })
+        .limit(200),
+      supabase
+        .from("profiles")
+        .select("id, first_name, last_name")
+        .eq("company_id", user.profile.company_id)
+        .eq("status", "active")
+        .is("deleted_at", null)
+        .order("first_name"),
+      supabase
+        .from("projects")
+        .select("id, name")
+        .eq("company_id", user.profile.company_id)
+        .eq("status", "active")
+        .is("deleted_at", null)
+        .order("name"),
+    ]);
+
+  const crew = (crewRows ?? []).map((p) => ({
+    id: p.id,
+    name: `${p.first_name} ${p.last_name}`,
+  }));
+  const projects = projectRows ?? [];
 
   const rows = entries ?? [];
   const pending = rows.filter((r) => r.status === "pending");
@@ -35,7 +59,10 @@ export default async function TimesheetsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-xl font-semibold text-foreground">Timesheets</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-xl font-semibold text-foreground">Timesheets</h1>
+        <AddTimeEntryDialog crew={crew} projects={projects} />
+      </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <StatCard label="Pending review" value={pending.length} tone={pending.length > 0 ? "amber" : "default"} />
@@ -45,7 +72,10 @@ export default async function TimesheetsPage() {
 
       {rows.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border py-16 text-center">
-          <p className="text-sm text-muted-foreground">No time entries yet.</p>
+          <p className="text-sm text-muted-foreground">
+            No time entries yet. Crew clock in from their phones — or add one by
+            hand with the button above.
+          </p>
         </div>
       ) : (
         <div className="rounded-lg border border-border bg-card shadow-sm">

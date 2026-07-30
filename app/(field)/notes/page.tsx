@@ -1,6 +1,6 @@
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
-import { NoteProjectSelect } from "@/components/notes/note-project-select";
+import { ProjectFilterSelect } from "@/components/shared/project-filter-select";
 import { NoteForm } from "@/components/notes/note-form";
 import { DeleteNoteButton } from "@/components/notes/delete-note-button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,10 +24,14 @@ export default async function NotesPage({
       .order("created_at", { ascending: false });
     projects = data ?? [];
   } else {
+    // Crew only get jobs that are still running, matching "Your jobs" on
+    // /today — an admin can still file against a closed job (branch above).
     const { data } = await supabase
       .from("project_assignments")
-      .select("project:projects(id, name)")
-      .eq("profile_id", user.id);
+      .select("project:projects!inner(id, name)")
+      .eq("profile_id", user.id)
+      .eq("project.status", "active")
+      .is("project.deleted_at", null);
     projects = (data ?? [])
       .map((a) => a.project)
       .filter((p): p is { id: string; name: string } => p != null);
@@ -55,7 +59,7 @@ export default async function NotesPage({
         </p>
       ) : (
         <>
-          <NoteProjectSelect projectId={projectId} projects={projects} />
+          <ProjectFilterSelect projectId={projectId} projects={projects} />
           <NoteForm projectId={projectId} />
 
           <div className="space-y-2 pt-2">

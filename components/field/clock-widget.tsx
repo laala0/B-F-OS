@@ -37,6 +37,12 @@ export function ClockWidget({
   const [isPending, startTransition] = useTransition();
   const [projectId, setProjectId] = useState<string>(NO_PROJECT);
   const [notes, setNotes] = useState("");
+  // Base UI reads the trigger's label from `items`; without it a closed select
+  // prints the raw value, so the default read "__none__" instead of the label.
+  const jobItems = {
+    [NO_PROJECT]: "No specific job",
+    ...Object.fromEntries(projects.map((p) => [p.id, p.name])),
+  };
   const [elapsed, setElapsed] = useState(() =>
     openEntry ? formatElapsed(openEntry.clock_in) : ""
   );
@@ -98,7 +104,11 @@ export function ClockWidget({
         ) : (
           <>
             {projects.length > 0 ? (
-              <Select value={projectId} onValueChange={(v) => v && setProjectId(v)}>
+              <Select
+                items={jobItems}
+                value={projectId}
+                onValueChange={(v) => v && setProjectId(v)}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Which job?" />
                 </SelectTrigger>

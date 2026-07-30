@@ -1,6 +1,6 @@
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
-import { NoteProjectSelect } from "@/components/notes/note-project-select";
+import { ProjectFilterSelect } from "@/components/shared/project-filter-select";
 import { MediaUploader } from "@/components/media/media-uploader";
 import { DeleteMediaButton } from "@/components/media/delete-media-button";
 
@@ -23,10 +23,14 @@ export default async function CapturePage({
       .order("created_at", { ascending: false });
     projects = data ?? [];
   } else {
+    // Crew only get jobs that are still running, matching "Your jobs" on
+    // /today — an admin can still file against a closed job (branch above).
     const { data } = await supabase
       .from("project_assignments")
-      .select("project:projects(id, name)")
-      .eq("profile_id", user.id);
+      .select("project:projects!inner(id, name)")
+      .eq("profile_id", user.id)
+      .eq("project.status", "active")
+      .is("project.deleted_at", null);
     projects = (data ?? [])
       .map((a) => a.project)
       .filter((p): p is { id: string; name: string } => p != null);
@@ -65,7 +69,7 @@ export default async function CapturePage({
         </p>
       ) : (
         <>
-          <NoteProjectSelect projectId={projectId} projects={projects} />
+          <ProjectFilterSelect projectId={projectId} projects={projects} />
           <MediaUploader projectId={projectId} companyId={user.profile.company_id} capture />
 
           {withUrls.length > 0 ? (
