@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,13 +23,15 @@ export function StatCard({
   value,
   tone = "default",
   icon: Icon,
+  href,
 }: {
   label: string;
   value: string | number;
   tone?: "default" | "amber" | "green" | "red" | "gold";
   icon?: LucideIcon;
+  href?: string;
 }) {
-  return (
+  const content = (
     <div className="rounded-lg border border-border bg-card shadow-sm p-4">
       <div className="flex items-start justify-between gap-2">
         <p className="text-xs font-medium text-muted-foreground">{label}</p>
@@ -53,4 +56,14 @@ export function StatCard({
       </p>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block hover:opacity-80 transition-opacity">
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 }

@@ -6,6 +6,7 @@ import {
   Receipt,
   HardHat,
   Hourglass,
+  Image as ImageIcon,
 } from "lucide-react";
 import { requireRole } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
@@ -39,6 +40,8 @@ export default async function DashboardPage() {
     { data: outstandingInvoices },
     { count: crewOnSite },
     { data: pendingEntries },
+    { count: photosAddedToday },
+    { data: recentPhotos },
   ] = await Promise.all([
     supabase
       .from("projects")
@@ -76,6 +79,20 @@ export default async function DashboardPage() {
       .select("clock_in, clock_out")
       .eq("company_id", companyId)
       .eq("status", "pending"),
+    supabase
+      .from("media")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .gte("created_at", `${today}T00:00:00`)
+      .lt("created_at", `${today}T23:59:59`),
+    supabase
+      .from("media")
+      .select("id, storage_path, content_type, project_id, created_at")
+      .eq("company_id", companyId)
+      .gte("created_at", `${today}T00:00:00`)
+      .lt("created_at", `${today}T23:59:59`)
+      .order("created_at", { ascending: false })
+      .limit(6),
   ]);
 
   const outstandingCents = (outstandingInvoices ?? []).reduce(
@@ -85,6 +102,16 @@ export default async function DashboardPage() {
   const hoursPendingApproval = (pendingEntries ?? []).reduce(
     (sum, e) => sum + durationHours(e.clock_in, e.clock_out),
     0
+  );
+
+  // Generate signed URLs for recent photos
+  const photosWithUrls = await Promise.all(
+    (recentPhotos ?? []).map(async (photo) => {
+      const { data: signed } = await supabase.storage
+        .from("media")
+        .createSignedUrl(photo.storage_path, 3600);
+      return { ...photo, url: signed?.signedUrl ?? null };
+    })
   );
 
   return (
@@ -108,37 +135,88 @@ export default async function DashboardPage() {
           label="Active projects"
           value={activeProjects ?? 0}
           icon={Building2}
+          href="/admin/projects"
         />
         <StatCard
           label="Crew on site"
           value={crewOnSite ?? 0}
           icon={HardHat}
+          href="/admin/crew"
           tone={(crewOnSite ?? 0) > 0 ? "green" : "default"}
         />
         <StatCard
           label="Tasks due today"
           value={tasksDueToday ?? 0}
           icon={CalendarClock}
+          href="/admin/projects"
         />
         <StatCard
           label="Overdue tasks"
           value={overdueTasks ?? 0}
           icon={AlertTriangle}
+          href="/admin/projects"
           tone={(overdueTasks ?? 0) > 0 ? "red" : "default"}
         />
         <StatCard
           label="Hours pending approval"
           value={hoursPendingApproval.toFixed(1)}
           icon={Hourglass}
+          href="/admin/timesheets"
           tone={hoursPendingApproval > 0 ? "amber" : "default"}
         />
         <StatCard
           label="Outstanding invoices"
           value={formatCents(outstandingCents)}
           icon={Receipt}
+          href="/admin/invoices"
           tone="gold"
         />
       </div>
+
+      {photosAddedToday && photosAddedToday > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-foreground">
+              Photos added today ({photosAddedToday})
+            </h2>
+            <Link
+              href="/admin/projects"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              View all
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {photosWithUrls.map((photo) => (
+              <Link
+                key={photo.id}
+                href={`/admin/projects/${photo.project_id}/media`}
+                className="group relative aspect-square overflow-hidden rounded-lg border border-border hover:opacity-80 transition-opacity"
+              >
+                {photo.url ? (
+                  photo.content_type?.startsWith("video") ? (
+                    <video
+                      src={photo.url}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={photo.url}
+                      alt="Today's photo"
+                      className="h-full w-full object-cover"
+                    />
+                  )
+                ) : (
+                  <div className="h-full w-full bg-muted flex items-center justify-center">
+                    <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                )}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
