@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,19 +25,21 @@ export function StatCard({
   tone = "default",
   icon: Icon,
   href,
+  style,
 }: {
   label: string;
   value: string | number;
   tone?: "default" | "amber" | "green" | "red" | "gold";
   icon?: LucideIcon;
   href?: string;
+  style?: CSSProperties;
 }) {
   const content = (
     <div
       className={cn(
-        "rounded-lg border border-border bg-card shadow-sm p-4 transition-all duration-200 ease-out",
+        "rounded-xl border border-border bg-card shadow-sm p-5 transition-all duration-200 ease-out",
         href &&
-          "group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:border-foreground/15 group-active:translate-y-0 group-active:shadow-sm"
+          "group-hover:-translate-y-1 group-hover:shadow-lg group-hover:border-foreground/15 group-active:translate-y-0 group-active:scale-[0.97] group-active:shadow-sm"
       )}
     >
       <div className="flex items-start justify-between gap-2">
@@ -44,18 +47,18 @@ export function StatCard({
         {Icon && (
           <span
             className={cn(
-              "flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-transform duration-200 ease-out",
-              href && "group-hover:scale-110",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-transform duration-200 ease-out",
+              href && "group-hover:scale-110 group-hover:rotate-3",
               TONE_CHIP[tone]
             )}
           >
-            <Icon className="h-3.5 w-3.5" strokeWidth={2.25} />
+            <Icon className="h-4 w-4" strokeWidth={2.25} />
           </span>
         )}
       </div>
       <p
         className={cn(
-          "mt-1.5 font-display text-2xl tracking-wide text-tabular",
+          "mt-2 font-display text-3xl tracking-wide text-tabular",
           TONE_TEXT[tone]
         )}
       >
@@ -66,11 +69,22 @@ export function StatCard({
 
   if (href) {
     return (
-      <Link href={href} className="group block outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg">
+      <Link
+        href={href}
+        style={style}
+        className="group block animate-in fade-in-0 slide-in-from-bottom-3 fill-mode-backwards duration-500 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
+      >
         {content}
       </Link>
     );
   }
 
-  return content;
+  return (
+    <div
+      style={style}
+      className="animate-in fade-in-0 slide-in-from-bottom-3 fill-mode-backwards duration-500"
+    >
+      {content}
+    </div>
+  );
 }
