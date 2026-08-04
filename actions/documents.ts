@@ -13,7 +13,7 @@ export async function confirmDocumentUpload(
   const parsed = confirmDocumentSchema.safeParse(input);
   if (!parsed.success) return actionError("Couldn't save that upload.");
   const v = parsed.data;
-  const { user } = await requireProjectAccess(projectId);
+  const { user } = await requireProjectAccess(projectId, false);
 
   const supabase = await createClient();
 
