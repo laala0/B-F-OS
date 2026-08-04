@@ -13,7 +13,6 @@ export default async function CapturePage({
   const user = await requireRole("admin", "employee");
   const supabase = await createClient();
 
-  let projects: { id: string; name: string }[];
   // All users can capture photos to any active project in their company.
   // Assignment is not required for photo uploads.
   const { data } = await supabase
@@ -23,7 +22,7 @@ export default async function CapturePage({
     .eq("status", "active")
     .is("deleted_at", null)
     .order("created_at", { ascending: false });
-  projects = data ?? [];
+  const projects: { id: string; name: string }[] = data ?? [];
 
   const projectId =
     rawProjectId && projects.some((p) => p.id === rawProjectId)

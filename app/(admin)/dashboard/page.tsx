@@ -135,14 +135,14 @@ export default async function DashboardPage() {
           label="Active projects"
           value={activeProjects ?? 0}
           icon={Building2}
-          href="/admin/projects"
+          href="/projects"
           style={{ animationDelay: "0ms" }}
         />
         <StatCard
           label="Crew on site"
           value={crewOnSite ?? 0}
           icon={HardHat}
-          href="/admin/crew"
+          href="/crew"
           tone={(crewOnSite ?? 0) > 0 ? "green" : "default"}
           style={{ animationDelay: "50ms" }}
         />
@@ -150,14 +150,14 @@ export default async function DashboardPage() {
           label="Tasks due today"
           value={tasksDueToday ?? 0}
           icon={CalendarClock}
-          href="/admin/projects"
+          href="/projects"
           style={{ animationDelay: "100ms" }}
         />
         <StatCard
           label="Overdue tasks"
           value={overdueTasks ?? 0}
           icon={AlertTriangle}
-          href="/admin/projects"
+          href="/projects"
           tone={(overdueTasks ?? 0) > 0 ? "red" : "default"}
           style={{ animationDelay: "150ms" }}
         />
@@ -165,7 +165,7 @@ export default async function DashboardPage() {
           label="Hours pending approval"
           value={hoursPendingApproval.toFixed(1)}
           icon={Hourglass}
-          href="/admin/timesheets"
+          href="/timesheets"
           tone={hoursPendingApproval > 0 ? "amber" : "default"}
           style={{ animationDelay: "200ms" }}
         />
@@ -173,7 +173,7 @@ export default async function DashboardPage() {
           label="Outstanding invoices"
           value={formatCents(outstandingCents)}
           icon={Receipt}
-          href="/admin/invoices"
+          href="/invoices"
           tone="gold"
           style={{ animationDelay: "250ms" }}
         />
@@ -190,7 +190,7 @@ export default async function DashboardPage() {
               Photos added today ({photosAddedToday})
             </h2>
             <Link
-              href="/admin/projects"
+              href="/projects"
               className={buttonVariants({ variant: "outline", size: "sm" })}
             >
               View all
@@ -200,7 +200,7 @@ export default async function DashboardPage() {
             {photosWithUrls.map((photo, i) => (
               <Link
                 key={photo.id}
-                href={`/admin/projects/${photo.project_id}/media`}
+                href={`/projects/${photo.project_id}/media`}
                 style={{ animationDelay: `${i * 40}ms`, animationDuration: "400ms" }}
                 className="group relative aspect-square overflow-hidden rounded-lg border border-border animate-in fade-in-0 zoom-in-95 fill-mode-backwards transition-[transform,box-shadow] duration-200 ease-out hover:shadow-md hover:border-foreground/15 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
