@@ -13,28 +13,16 @@ export default async function CapturePage({
   const user = await requireRole("admin", "employee");
   const supabase = await createClient();
 
-  let projects: { id: string; name: string }[];
-  if (user.profile.role === "admin") {
-    const { data } = await supabase
-      .from("projects")
-      .select("id, name")
-      .eq("company_id", user.profile.company_id)
-      .is("deleted_at", null)
-      .order("created_at", { ascending: false });
-    projects = data ?? [];
-  } else {
-    // Crew only get jobs that are still running, matching "Your jobs" on
-    // /today — an admin can still file against a closed job (branch above).
-    const { data } = await supabase
-      .from("project_assignments")
-      .select("project:projects!inner(id, name)")
-      .eq("profile_id", user.id)
-      .eq("project.status", "active")
-      .is("project.deleted_at", null);
-    projects = (data ?? [])
-      .map((a) => a.project)
-      .filter((p): p is { id: string; name: string } => p != null);
-  }
+  // All users can capture photos to any active project in their company.
+  // Assignment is not required for photo uploads.
+  const { data } = await supabase
+    .from("projects")
+    .select("id, name")
+    .eq("company_id", user.profile.company_id)
+    .eq("status", "active")
+    .is("deleted_at", null)
+    .order("created_at", { ascending: false });
+  const projects: { id: string; name: string }[] = data ?? [];
 
   const projectId =
     rawProjectId && projects.some((p) => p.id === rawProjectId)

@@ -8,9 +8,8 @@ import { confirmMediaSchema, type ConfirmMediaInput } from "@/lib/validation/med
 
 // The browser already uploaded the bytes straight to Storage (see
 // components/media/media-uploader.tsx) — this just records the metadata
-// row once that succeeds. requireProjectAccess repeats the same check
-// Storage's own RLS policy just made, so a confirm call can't attach a
-// path to a project this user was never allowed to touch.
+// row once that succeeds. requireProjectAccess with requireAssignment=false
+// allows any user in the company to upload media to any project.
 export async function confirmMediaUpload(
   projectId: string,
   input: ConfirmMediaInput
@@ -18,7 +17,7 @@ export async function confirmMediaUpload(
   const parsed = confirmMediaSchema.safeParse(input);
   if (!parsed.success) return actionError("Couldn't save that upload.");
   const v = parsed.data;
-  const { user } = await requireProjectAccess(projectId);
+  const { user } = await requireProjectAccess(projectId, false);
 
   const supabase = await createClient();
   const { error } = await supabase.from("media").insert({
