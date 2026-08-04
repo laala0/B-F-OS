@@ -32,13 +32,20 @@ export function StatCard({
   href?: string;
 }) {
   const content = (
-    <div className="rounded-lg border border-border bg-card shadow-sm p-4">
+    <div
+      className={cn(
+        "rounded-lg border border-border bg-card shadow-sm p-4 transition-all duration-200 ease-out",
+        href &&
+          "group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:border-foreground/15 group-active:translate-y-0 group-active:shadow-sm"
+      )}
+    >
       <div className="flex items-start justify-between gap-2">
         <p className="text-xs font-medium text-muted-foreground">{label}</p>
         {Icon && (
           <span
             className={cn(
-              "flex h-7 w-7 shrink-0 items-center justify-center rounded-md",
+              "flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-transform duration-200 ease-out",
+              href && "group-hover:scale-110",
               TONE_CHIP[tone]
             )}
           >
@@ -59,7 +66,7 @@ export function StatCard({
 
   if (href) {
     return (
-      <Link href={href} className="block hover:opacity-80 transition-opacity">
+      <Link href={href} className="group block outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg">
         {content}
       </Link>
     );

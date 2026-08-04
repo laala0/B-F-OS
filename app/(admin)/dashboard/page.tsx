@@ -176,7 +176,11 @@ export default async function DashboardPage() {
       {photosAddedToday && photosAddedToday > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-foreground">
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#fb1616] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#fb1616]" />
+              </span>
               Photos added today ({photosAddedToday})
             </h2>
             <Link
@@ -191,20 +195,20 @@ export default async function DashboardPage() {
               <Link
                 key={photo.id}
                 href={`/admin/projects/${photo.project_id}/media`}
-                className="group relative aspect-square overflow-hidden rounded-lg border border-border hover:opacity-80 transition-opacity"
+                className="group relative aspect-square overflow-hidden rounded-lg border border-border transition-shadow duration-200 ease-out hover:shadow-md hover:border-foreground/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {photo.url ? (
                   photo.content_type?.startsWith("video") ? (
                     <video
                       src={photo.url}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                     />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={photo.url}
                       alt="Today's photo"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                     />
                   )
                 ) : (
@@ -212,6 +216,7 @@ export default async function DashboardPage() {
                     <ImageIcon className="h-6 w-6 text-muted-foreground" />
                   </div>
                 )}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
               </Link>
             ))}
           </div>
