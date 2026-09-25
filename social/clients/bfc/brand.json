@@ -1,0 +1,45 @@
+{
+  "client": "Boss & Friends Construction Ltd.",
+  "slug": "bfc",
+  "wordmark": "BOSS &amp; FRIENDS",
+  "subline": "Construction Ltd.",
+  "region": "Lower Mainland, BC",
+  "timezone": "America/Vancouver",
+  "colors": { "gold": "#f5a623", "ink": "#0e1419" },
+  "handles": {
+    "instagram": "TBD (set Sat Sep 26)",
+    "facebook": "TBD: Manpreet Singh's Page or a new BFC Page",
+    "tiktok": "TBD",
+    "linkedin": "TBD (ask Manpreet)"
+  },
+  "rules": [
+    "No phone numbers, emails or street addresses on posts. Engagement goes through comments, and freebies go out by DM.",
+    "City-level location only. Never a house number, a street sign or a licence plate.",
+    "GC or builder signage visible, or the builder named: hold the post until the builder says yes.",
+    "Crew faces: get a verbal OK first. Client homeowners: never without written OK.",
+    "Strip all photo metadata (GPS) before anything leaves the pipeline."
+  ],
+  "freebies": {
+    "POUR": {
+      "title": "Before The Pour: 30-point checklist",
+      "audience": "builders, GCs, crews, every trade with work in the slab or walls",
+      "file": "freebies/before-the-pour.html",
+      "goesLive": "2026-09-29",
+      "link": ""
+    },
+    "HIRE": {
+      "title": "10 Questions to Ask Before You Hire Any Contractor",
+      "audience": "homeowners",
+      "file": "freebies/before-you-hire.html",
+      "goesLive": "2026-10-06",
+      "link": ""
+    },
+    "SAFE": {
+      "title": "5 Five-Minute Toolbox Talks for Any Crew",
+      "audience": "workers, foremen, apprentices",
+      "file": "freebies/site-safety-toolbox-talks.html",
+      "goesLive": "2026-10-08",
+      "link": ""
+    }
+  }
+}

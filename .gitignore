@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# social kit: client photos and rendered output live in Drive, never in git
+/social/node_modules/
+/social/clients/*/raw/
+/social/clients/*/out/

@@ -1,0 +1,354 @@
+<title>Boss &amp; Friends Launch Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  /* Single-look page: the Boss & Friends "Dark Industrial" identity from the app. */
+  :root {
+    color-scheme: dark;
+    --ink: #0e1419; --panel: #161f28; --panel-2: #1b2630; --line: #26333f;
+    --text: #e8edf2; --muted: #9fb0bf; --gold: #f5a623; --gold-ink: #10161c;
+    --ok: #3ed27a; --sched: #4a90d9; --warn: #ff9f43;
+    --display: "Anton", Impact, "Arial Narrow", sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--ink); color: var(--text); font: 15px/1.5 var(--body); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 36px; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .02em; margin: 0; text-wrap: balance; }
+  .eyebrow { font: 700 11px/1 var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* header */
+  header.top { display: grid; gap: 18px; padding-block: 8px 4px; border-bottom: 1px solid var(--line); padding-bottom: 24px;
+    background: linear-gradient(var(--ink), var(--ink)) padding-box; position: relative; }
+  .brandrow { display: flex; align-items: center; gap: 14px; }
+  .mark { width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: linear-gradient(135deg,#1c2832,#0e1419); display: grid; place-items: center; color: var(--gold); flex: none; }
+  .mark svg { width: 26px; height: 26px; }
+  header.top h1 { font-size: clamp(34px, 6vw, 56px); line-height: .95; }
+  header.top h1 em { font-style: normal; color: var(--gold); }
+  .lede { color: var(--muted); max-width: 68ch; margin: 0; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stat { display: flex; align-items: baseline; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-variant-numeric: tabular-nums; }
+  .stat b { font: 400 22px/1 var(--display); }
+  .stat span { font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+  .stat.ok b { color: var(--ok); } .stat.sched b { color: var(--sched); } .stat.warn b { color: var(--warn); }
+
+  /* freebies */
+  .sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px; }
+  .sec-head h2 { font-size: 28px; }
+  .sec-head p { margin: 0; color: var(--muted); font-size: 13px; max-width: 60ch; }
+  .freebies { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .freebie { display: grid; grid-template-columns: 92px 1fr; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+  .freebie img { width: 92px; aspect-ratio: 8.5/11; object-fit: cover; object-position: top; border-radius: 6px; background: #fff; display: block; }
+  .freebie h3 { font-size: 17px; line-height: 1.1; }
+  .freebie .kw { font: 400 22px/1 var(--display); color: var(--gold-ink); background: var(--gold); padding: 4px 9px 2px; border-radius: 6px; display: inline-block; margin-bottom: 8px; }
+  .freebie p { margin: 6px 0 10px; font-size: 12.5px; color: var(--muted); }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); font-size: 12.5px; font-weight: 600; }
+  .btn:hover { border-color: var(--muted); }
+  .btn.gold { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+  .btn.copied { border-color: var(--ok); color: var(--ok); }
+
+  /* week + posts */
+  .week { display: grid; gap: 16px; }
+  .week-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; }
+  .week-head h2 { font-size: 30px; }
+  .week-head .kws { display: flex; gap: 6px; }
+  .pill { font: 700 10.5px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; padding: 6px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+  .pill.gold { color: var(--gold); border-color: rgba(245,166,35,.55); }
+  .pill.warn { color: var(--warn); border-color: rgba(255,159,67,.55); }
+  .pill.ok { color: var(--ok); border-color: rgba(62,210,122,.55); }
+  .pill.sched { color: var(--sched); border-color: rgba(74,144,217,.6); }
+
+  .post { display: grid; grid-template-columns: 116px minmax(0, 1fr); border: 1px solid var(--line); border-radius: 16px; background: var(--panel); overflow: hidden; }
+  .post.approved { border-color: rgba(62,210,122,.45); }
+  .when { padding: 16px 14px; border-right: 1px solid var(--line); background: var(--panel-2); display: grid; align-content: start; gap: 2px; }
+  .when .dow { font: 700 11px/1 var(--body); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+  .when .d { font: 400 44px/1 var(--display); }
+  .when .m { font: 700 11px/1 var(--body); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+  .when .t { font: 700 13px/1 var(--mono); color: var(--gold); margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .main { padding: 16px; display: grid; gap: 14px; min-width: 0; }
+  .post-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; }
+  .post-head h3 { font-size: 22px; line-height: 1.05; flex: 1 1 320px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+  .strip button { flex: 0 0 auto; padding: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #000; scroll-snap-align: start; position: relative; }
+  .strip img { display: block; width: 124px; aspect-ratio: 4/5; object-fit: cover; }
+  .strip .n { position: absolute; left: 5px; top: 5px; font: 700 10px/1 var(--mono); background: rgba(14,20,25,.85); padding: 3px 5px; border-radius: 4px; }
+  .slots { font-size: 12.5px; color: var(--warn); }
+  .slots code { font: 500 11.5px var(--mono); color: var(--text); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--line); }
+  .tab { padding: 8px 10px; border: 0; background: none; color: var(--muted); font-size: 13px; font-weight: 600; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--gold); }
+  .caption { white-space: pre-wrap; font-size: 13.5px; line-height: 1.55; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; max-height: 260px; overflow: auto; margin: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  details.more { border-top: 1px dashed var(--line); padding-top: 10px; }
+  details.more summary { cursor: pointer; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+  .kv { display: grid; gap: 10px; margin-top: 10px; }
+  .kv div { display: grid; gap: 4px; }
+  .kv b { font: 700 10.5px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .kv p { margin: 0; font-size: 13px; }
+
+  .decide { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-top: 12px; border-top: 1px solid var(--line); }
+  .toggle { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--ink); font-size: 12.5px; font-weight: 700; }
+  .toggle .box { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid var(--muted); display: grid; place-items: center; }
+  .toggle[aria-pressed="true"].appr { border-color: var(--ok); color: var(--ok); }
+  .toggle[aria-pressed="true"].appr .box { background: var(--ok); border-color: var(--ok); }
+  .toggle[aria-pressed="true"].sch { border-color: var(--sched); color: var(--sched); }
+  .toggle[aria-pressed="true"].sch .box { background: var(--sched); border-color: var(--sched); }
+  .toggle[aria-pressed="true"] .box::after { content: ""; width: 7px; height: 4px; border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(-45deg) translate(1px,-1px); }
+  .note { flex: 1 1 220px; min-width: 0; background: var(--ink); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; font: 13px/1.4 var(--body); resize: vertical; min-height: 34px; }
+  .sync { font-size: 11.5px; color: var(--muted); }
+
+  /* replies */
+  .replies { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .reply { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 14px; display: grid; gap: 10px; align-content: start; }
+  .reply .kw { font: 400 26px/1 var(--display); color: var(--gold); }
+  .reply ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .reply li { display: flex; gap: 8px; align-items: center; justify-content: space-between; font-size: 13px; background: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 6px 6px 6px 10px; }
+  .rules { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; display: grid; gap: 4px; max-width: 80ch; }
+
+  /* lightbox */
+  .lb { position: fixed; inset: 0; background: rgba(5,8,11,.92); display: grid; grid-template-rows: 1fr auto; gap: 12px; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 10; }
+  .lb img { max-width: 100%; max-height: 100%; margin: auto; display: block; border-radius: 8px; min-height: 0; }
+  .lb .row { justify-content: center; }
+  .toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--panel-2); border: 1px solid var(--line); padding: 9px 14px; border-radius: 10px; font-size: 13px; z-index: 11; }
+
+  @media (max-width: 640px) {
+    .post { grid-template-columns: 1fr; }
+    .when { border-right: 0; border-bottom: 1px solid var(--line); grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 10px; padding: 12px 16px; }
+    .when .d { font-size: 30px; }
+    .when .t { margin-top: 0; }
+    .strip img { width: 104px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .post { transition: border-color .2s; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brandrow"><span class="mark" id="mark"></span><span class="eyebrow">Boss &amp; Friends Construction · 2-week launch</span></div>
+    <h1>Launch <em>console</em></h1>
+    <p class="lede" id="lede"></p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section aria-labelledby="fb-h">
+    <div class="sec-head"><h2 id="fb-h">Freebies</h2><p>What people get for commenting the keyword. Upload the PDFs to Drive, set sharing to "Anyone with the link", and paste each link into the reply scripts below.</p></div>
+    <div class="freebies" id="freebies"></div>
+  </section>
+
+  <div id="weeks" style="display:grid;gap:40px"></div>
+
+  <section aria-labelledby="rp-h">
+    <div class="sec-head"><h2 id="rp-h">Comment replies</h2><p>Twice a day at 12:30 and 8:00 pm, work through new comments: a public reply, then the DM. Rotate the public lines so they don't read like a bot.</p></div>
+    <ul class="rules" id="rules" style="margin-bottom:14px"></ul>
+    <div class="replies" id="replies"></div>
+  </section>
+</div>
+
+<div class="lb" id="lb" hidden>
+  <img id="lb-img" alt="">
+  <div class="row"><button class="btn gold" id="lb-save" type="button">Save this slide</button><button class="btn" id="lb-prev" type="button">&larr; Prev</button><button class="btn" id="lb-next" type="button">Next &rarr;</button><button class="btn" id="lb-close" type="button">Close</button></div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script id="data" type="application/json">/*DATA*/</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const $ = (s, el = document) => el.querySelector(s);
+  const h = (tag, attrs = {}, ...kids) => {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") el.className = v; else if (k === "text") el.textContent = v;
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else if (v !== false && v != null) el.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) if (kid != null) el.append(kid);
+    return el;
+  };
+  const state = {};          // postId -> {approved, scheduled, note}
+  let db = null, downloads = null;
+
+  $("#mark").innerHTML = D.markSvg;
+  $("#lede").textContent = `${D.posts.length} posts across Instagram, Facebook, LinkedIn and TikTok, Mon Sep 28 to Sat Oct 10. All times ${D.timezone}. Approve each post here before it's scheduled; tick "Scheduled" once it's loaded into Meta Business Suite, TikTok Studio or LinkedIn.`;
+
+  function toast(msg) {
+    const t = $("#toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 2200);
+  }
+  async function copy(text, btn) {
+    try { await navigator.clipboard.writeText(text); btn.classList.add("copied"); btn.textContent = "Copied"; setTimeout(() => { btn.classList.remove("copied"); btn.textContent = btn.dataset.label; }, 1600); }
+    catch { toast("Copy was blocked here. Select the text and copy it by hand."); }
+  }
+  const copyBtn = (label, getText) => { const b = h("button", { class: "btn", type: "button", "data-label": label, text: label }); b.addEventListener("click", () => copy(getText(), b)); return b; };
+
+  async function saveFile(path, filename) {
+    if (!downloads) { toast("Saving isn't available in this view. On a phone, press and hold the image to save it."); return; }
+    try {
+      const blob = await (await fetch(path)).blob();
+      await downloads.save({ filename, data: blob });
+    } catch (e) {
+      if (e && e.code === "declined") return;
+      toast(e && e.code === "rate_limited" ? "One save at a time. Try again in a moment." : "Couldn't save that file.");
+    }
+  }
+
+  // ---- stats
+  function renderStats() {
+    const n = D.posts.length;
+    const ready = D.posts.filter((p) => !p.photoSlots.length).length;
+    const appr = D.posts.filter((p) => state[p.id]?.approved).length;
+    const sch = D.posts.filter((p) => state[p.id]?.scheduled).length;
+    const s = $("#stats"); s.replaceChildren(
+      h("div", { class: "stat" }, h("b", { text: n }), h("span", { text: "posts" })),
+      h("div", { class: "stat" }, h("b", { text: ready }), h("span", { text: "graphics ready" })),
+      h("div", { class: "stat warn" }, h("b", { text: n - ready }), h("span", { text: "need job photos" })),
+      h("div", { class: "stat ok" }, h("b", { text: appr }), h("span", { text: "approved" })),
+      h("div", { class: "stat sched" }, h("b", { text: sch }), h("span", { text: "scheduled" })),
+    );
+  }
+
+  // ---- freebies
+  $("#freebies").replaceChildren(...D.freebies.map((f) => h("article", { class: "freebie" },
+    h("img", { src: f.preview, alt: `First page of ${f.title}`, loading: "lazy" }),
+    h("div", {},
+      h("span", { class: "kw", text: f.key }),
+      h("h3", { text: f.title }),
+      h("p", { text: `For ${f.audience}. Goes live ${f.live}.` }),
+      h("button", { class: "btn gold", type: "button", text: "Save PDF", onclick: () => saveFile(f.pdf, f.pdf.split("/").pop()) }),
+    ))));
+
+  // ---- lightbox
+  let lbList = [], lbI = 0, lbName = "";
+  function openLb(list, i, name) { lbList = list; lbI = i; lbName = name; showLb(); $("#lb").hidden = false; $("#lb-close").focus(); }
+  function showLb() { $("#lb-img").src = lbList[lbI]; $("#lb-img").alt = `Slide ${lbI + 1} of ${lbList.length}`; }
+  $("#lb-prev").onclick = () => { lbI = (lbI - 1 + lbList.length) % lbList.length; showLb(); };
+  $("#lb-next").onclick = () => { lbI = (lbI + 1) % lbList.length; showLb(); };
+  $("#lb-close").onclick = () => ($("#lb").hidden = true);
+  $("#lb-save").onclick = () => saveFile(lbList[lbI], lbList[lbI].split("/").pop());
+  document.addEventListener("keydown", (e) => {
+    if ($("#lb").hidden) return;
+    if (e.key === "Escape") $("#lb").hidden = true;
+    if (e.key === "ArrowRight") $("#lb-next").click();
+    if (e.key === "ArrowLeft") $("#lb-prev").click();
+  });
+
+  // ---- posts
+  const fmt = (d) => new Date(d + "T12:00:00");
+  const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const t12 = (t) => { const [H, M] = t.split(":").map(Number); return `${((H + 11) % 12) + 1}:${String(M).padStart(2, "0")} ${H < 12 ? "am" : "pm"}`; };
+  const postEls = {};
+
+  function postCard(p) {
+    const d = fmt(p.date);
+    const card = h("article", { class: "post", id: p.id });
+    const tabs = h("div", { class: "tabs", role: "tablist" });
+    const cap = h("pre", { class: "caption", tabindex: "0" });
+    let current = Object.keys(p.captions)[0];
+    const setTab = (net) => { current = net; cap.textContent = p.captions[net]; for (const b of tabs.children) b.setAttribute("aria-selected", String(b.dataset.net === net)); };
+    for (const net of Object.keys(p.captions)) tabs.append(h("button", { class: "tab", role: "tab", type: "button", "data-net": net, text: net, onclick: () => setTab(net) }));
+
+    const appr = h("button", { class: "toggle appr", type: "button", "aria-pressed": "false" }, h("span", { class: "box" }), "Approved");
+    const sch = h("button", { class: "toggle sch", type: "button", "aria-pressed": "false" }, h("span", { class: "box" }), "Scheduled");
+    const note = h("textarea", { class: "note", id: `note-${p.id}`, rows: "1", placeholder: "Changes needed? Leave a note", "aria-label": `Note for ${p.hook}` });
+    const sync = h("span", { class: "sync" });
+    appr.onclick = () => write(p.id, { approved: !(state[p.id]?.approved) });
+    sch.onclick = () => write(p.id, { scheduled: !(state[p.id]?.scheduled) });
+    let noteT; note.addEventListener("input", () => { clearTimeout(noteT); noteT = setTimeout(() => write(p.id, { note: note.value.trim() }), 900); });
+
+    card.append(
+      h("div", { class: "when" },
+        h("span", { class: "dow", text: DOW[d.getDay()] }), h("span", { class: "d", text: d.getDate() }),
+        h("span", { class: "m", text: MON[d.getMonth()] }), h("span", { class: "t", text: t12(p.time) })),
+      h("div", { class: "main" },
+        h("div", { class: "post-head" },
+          h("h3", { text: p.hook }),
+          h("div", { class: "chips" },
+            p.keyword ? h("span", { class: "pill gold", text: `Comment ${p.keyword}` }) : h("span", { class: "pill", text: "Question post" }),
+            h("span", { class: "pill", text: p.pillar }),
+            p.photoSlots.length ? h("span", { class: "pill warn", text: "Needs photos" }) : h("span", { class: "pill ok", text: "Graphics ready" }))),
+        h("div", { class: "strip", role: "list", "aria-label": `${p.slides.length} slides` },
+          p.slides.map((src, i) => h("button", { type: "button", role: "listitem", "aria-label": `Open slide ${i + 1}`, onclick: () => openLb(p.slides, i, p.id) },
+            h("img", { src: p.thumbs[i], alt: i === 0 ? p.alt : `Slide ${i + 1}`, loading: "lazy" }), h("span", { class: "n", text: i + 1 })))),
+        p.photoSlots.length ? h("div", { class: "slots" }, "Photo slots to fill after the audit: ", ...p.photoSlots.flatMap((s, i) => [i ? " " : "", h("code", { text: s })])) : null,
+        h("div", {}, tabs, cap),
+        h("div", { class: "row" },
+          copyBtn("Copy caption", () => p.captions[current]),
+          p.firstComment ? copyBtn("Copy first comment", () => p.firstComment) : null,
+          copyBtn("Copy alt text", () => p.alt),
+          h("span", { class: "sync", text: `Posts on ${p.platforms.join(", ")}` })),
+        h("details", { class: "more" }, h("summary", { text: "First comment, story and alt text" }),
+          h("div", { class: "kv" },
+            p.firstComment ? h("div", {}, h("b", { text: "First comment (post it yourself right after publishing)" }), h("p", { text: p.firstComment })) : null,
+            h("div", {}, h("b", { text: "Story the same day" }), h("p", { text: p.story })),
+            h("div", {}, h("b", { text: "Alt text" }), h("p", { text: p.alt })))),
+        h("div", { class: "decide" }, appr, sch, note, sync)));
+    setTab(current);
+    postEls[p.id] = { card, appr, sch, note, sync };
+    return card;
+  }
+
+  const weeks = [...new Set(D.posts.map((p) => p.week))];
+  $("#weeks").replaceChildren(...weeks.map((w) => {
+    const ps = D.posts.filter((p) => p.week === w);
+    const kws = [...new Set(ps.map((p) => p.keyword).filter(Boolean))];
+    return h("section", { class: "week", "aria-labelledby": `w${w}` },
+      h("div", { class: "week-head" }, h("span", { class: "eyebrow", text: `Week ${w}` }),
+        h("h2", { id: `w${w}`, text: `${fmt(ps[0].date).getDate()} ${MON[fmt(ps[0].date).getMonth()]} – ${fmt(ps.at(-1).date).getDate()} ${MON[fmt(ps.at(-1).date).getMonth()]}` }),
+        h("div", { class: "kws" }, kws.map((k) => h("span", { class: "pill gold", text: k })))),
+      ps.map(postCard));
+  }));
+
+  // ---- replies
+  $("#rules").replaceChildren(...D.replyRules.map((r) => h("li", { text: r })));
+  $("#replies").replaceChildren(...D.replies.map((r) => h("article", { class: "reply" },
+    h("span", { class: "kw", text: r.key }),
+    h("b", { class: "eyebrow", style: "color:var(--muted)", text: "Public replies" }),
+    h("ul", {}, r.public.map((line) => h("li", {}, h("span", { text: line }), copyBtn("Copy", () => line)))),
+    h("b", { class: "eyebrow", style: "color:var(--muted)", text: "DM" }),
+    h("pre", { class: "caption", text: r.dm }),
+    h("div", { class: "row" }, copyBtn("Copy DM", () => r.dm)))));
+
+  // ---- shared approvals (db)
+  function paint(id) {
+    const s = state[id] || {}, el = postEls[id]; if (!el) return;
+    el.appr.setAttribute("aria-pressed", String(!!s.approved));
+    el.sch.setAttribute("aria-pressed", String(!!s.scheduled));
+    el.card.classList.toggle("approved", !!s.approved);
+    if (document.activeElement !== el.note) el.note.value = s.note || "";
+  }
+  async function write(id, patch) {
+    if (!db) { toast("Approvals save once you open this page signed in to claude.ai."); return; }
+    const next = { ...(state[id] || {}), ...patch, updatedAt: new Date().toISOString() };
+    state[id] = next; paint(id); renderStats();
+    postEls[id].sync.textContent = "Saving…";
+    try { await db.doc(`approvals/${id}`).set(next); postEls[id].sync.textContent = "Saved"; }
+    catch (e) { postEls[id].sync.textContent = e && e.code === "unavailable" ? "Offline, not saved" : "You can view but not edit approvals"; }
+  }
+  function lockDecisions(msg) {
+    for (const el of Object.values(postEls)) { el.appr.disabled = true; el.sch.disabled = true; el.note.disabled = true; el.sync.textContent = msg; }
+  }
+
+  renderStats();
+  (async () => {
+    if (!window.claude?.use) { lockDecisions("Open on claude.ai to approve"); return; }
+    const [d, dl] = await Promise.all([window.claude.use("db"), window.claude.use("downloads")]);
+    downloads = dl;
+    db = d;
+    if (!db) { lockDecisions("Approvals aren't available in this view"); return; }
+    db.collection("approvals").onSnapshot((snap) => {
+      for (const doc of snap.docs) { state[doc.id] = doc.data(); paint(doc.id); }
+      renderStats();
+    }, () => lockDecisions("Approvals couldn't load"));
+  })();
+})();
+</script>
