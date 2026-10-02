@@ -2,9 +2,10 @@
 // files the slides use: auto-orient, crop to 4:5, strip ALL metadata (GPS).
 // Colour is left alone, because the client applies their own filter before handing photos over.
 //
-// Usage: node scripts/prep-photos.mjs [client=bfc] <slot>=<file>[@position] ...
+// Usage: node scripts/prep-photos.mjs [client=baf] <slot>=<file>[@position] ...
 //   position: centre (default) | top | bottom | left | right | attention
-//   e.g. node scripts/prep-photos.mjs bfc cranbrook-01=/path/IMG_1.jpg@bottom
+//             | x,y,w,h  (exact source window, e.g. to crop out a stray hand)
+//   e.g. node scripts/prep-photos.mjs baf cranbrook-01=/path/IMG_1.jpg@bottom
 // Writes clients/<c>/raw/selected/<slot>.jpg (raw/ is gitignored).
 
 import sharp from "sharp";
@@ -14,7 +15,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
-const client = args[0] && !args[0].includes("=") ? args.shift() : "bfc";
+const client = args[0] && !args[0].includes("=") ? args.shift() : "baf";
 const OUT = join(ROOT, "clients", client, "raw", "selected");
 mkdirSync(OUT, { recursive: true });
 if (!args.length) {
@@ -25,10 +26,13 @@ if (!args.length) {
 for (const arg of args) {
   const [slot, rest] = arg.split(/=(.*)/s);
   const [file, pos = "centre"] = rest.split("@");
-  const position = pos === "attention" ? sharp.strategy.attention : pos;
+  // "@x,y,w,h" = exact window (in source pixels) before the 4:5 cover fit.
+  const box = /^\d+,\d+,\d+,\d+$/.test(pos) ? pos.split(",").map(Number) : null;
+  const position = box ? "centre" : pos === "attention" ? sharp.strategy.attention : pos;
   const out = join(OUT, `${slot}.jpg`);
-  const src = sharp(file).rotate();
-  const { width, height } = await src.metadata();
+  const { width, height } = await sharp(file).metadata();
+  let src = sharp(await sharp(file).rotate().toBuffer());
+  if (box) src = src.extract({ left: box[0], top: box[1], width: box[2], height: box[3] });
   await src
     .resize({ width: 1440, height: 1800, fit: "cover", position, withoutEnlargement: false })
     .jpeg({ quality: 90, mozjpeg: true })

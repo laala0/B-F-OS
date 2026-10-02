@@ -88,6 +88,7 @@ html, body { background: var(--ink); color: var(--text); font-family: var(--body
 .lcard { position: absolute; left: 48px; right: 48px; bottom: 48px; display: flex; align-items: center; gap: 34px;
   background: #fff; color: #10161c; border-radius: 26px; padding: 30px 36px; border-top: 10px solid var(--gold);
   box-shadow: 0 24px 70px rgba(0,0,0,.38); }
+.lcard.top { top: 48px; bottom: auto; border-top: 0; border-bottom: 10px solid var(--gold); }
 .lcard-logo { height: 170px; width: auto; max-width: 340px; object-fit: contain; flex: none; }
 .lcard-wm { display: flex; flex-direction: column; line-height: .95; flex: none; }
 .lcard-wm b { font: 400 64px/0.95 var(--display); letter-spacing: .02em; }

@@ -1,7 +1,7 @@
 {
-  "client": "Boss & Friends Construction Ltd.",
-  "slug": "bfc",
-  "wordmark": "BOSS &amp; FRIENDS",
+  "client": "Boss and Friends Construction Ltd.",
+  "slug": "baf",
+  "wordmark": "BOSS AND FRIENDS",
   "subline": "Construction Ltd.",
   "region": "Lower Mainland, BC",
   "timezone": "America/Vancouver",
@@ -14,9 +14,9 @@
   "logoNote": "Cropped from the client logo card WITHOUT the phone/hours/address lines. Never publish the uncropped card.",
   "handles": {
     "instagram": "TBD (set Sat Sep 26)",
-    "facebook": "TBD: Manpreet Singh's Page or a new BFC Page",
-    "tiktok": "TBD",
-    "linkedin": "TBD (ask Manpreet)"
+    "facebook": "TBD: Manpreet Singh's Page or a new BAF Page",
+    "tiktok": "TBD (BAF account being set up Oct 1)",
+    "linkedin": "Manpreet Singh (personal, managed by the account manager); company Page 'Boss and Friends Construction Ltd.'"
   },
   "rules": [
     "No phone numbers, emails or street addresses on posts. Engagement goes through comments, and freebies go out by DM.",
@@ -47,5 +47,6 @@
       "goesLive": "2026-10-08",
       "link": ""
     }
-  }
+  },
+  "short": "BAF"
 }

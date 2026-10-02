@@ -11,7 +11,7 @@
 // Env (set in the Claude environment settings, never pasted in chat):
 //   BFOS_SUPABASE_URL, BFOS_SUPABASE_ANON_KEY, BFOS_CONTENT_EMAIL, BFOS_CONTENT_PASSWORD
 //
-// Usage: node scripts/pull-media.mjs [client=bfc] [--since=YYYY-MM-DD]
+// Usage: node scripts/pull-media.mjs [client=baf] [--since=YYYY-MM-DD]
 
 import { createClient } from "@supabase/supabase-js";
 import heicConvert from "heic-convert";
@@ -22,7 +22,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
-const client = args.find((a) => !a.startsWith("--")) ?? "bfc";
+const client = args.find((a) => !a.startsWith("--")) ?? "baf";
 const since = args.find((a) => a.startsWith("--since="))?.split("=")[1];
 const RAW = join(ROOT, "clients", client, "raw");
 

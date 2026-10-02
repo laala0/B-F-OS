@@ -135,7 +135,7 @@
 
 <div class="wrap">
   <header class="top">
-    <div class="brandrow"><span class="mark" id="mark"></span><span class="eyebrow">Boss &amp; Friends Construction · 2-week launch</span></div>
+    <div class="brandrow"><span class="mark" id="mark"></span><span class="eyebrow">Boss and Friends Construction (BAF) · content console</span></div>
     <h1>Launch <em>console</em></h1>
     <p class="lede" id="lede"></p>
     <div class="stats" id="stats"></div>
@@ -179,7 +179,9 @@
   let db = null, downloads = null;
 
   $("#mark").innerHTML = D.markSvg;
-  $("#lede").textContent = `${D.posts.length} posts across Instagram, Facebook, LinkedIn and TikTok, Mon Sep 28 to Sat Oct 10. All times ${D.timezone}. Approve each post here before it's scheduled; tick "Scheduled" once it's loaded into Meta Business Suite, TikTok Studio or LinkedIn.`;
+  const nets = [...new Set(D.posts.flatMap((p) => p.platforms))].join(", ");
+  const dfmt = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-CA", { weekday: "short", month: "short", day: "numeric" });
+  $("#lede").textContent = `${D.posts.length} posts across ${nets}, ${dfmt(D.posts[0].date)} to ${dfmt(D.posts.at(-1).date)}. All times ${D.timezone}. Approve each post here before it's scheduled; tick "Scheduled" once it's loaded into LinkedIn, Meta Business Suite or TikTok.`;
 
   function toast(msg) {
     const t = $("#toast"); t.textContent = msg; t.hidden = false;

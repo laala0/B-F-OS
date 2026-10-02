@@ -1,6 +1,6 @@
 # Social content kit
 
-Boss & Friends is client #1 of the social-media service. Everything here is built so client #2 is a new folder under `clients/`, not a rebuild.
+Boss and Friends Construction (BAF) is client #1 of the social-media service. Everything here is built so client #2 is a new folder under `clients/`, not a rebuild.
 
 It's separate from the B-F-OS app on purpose. It has its own `package.json`, so the app's dependencies and lockfile never change, and nothing in here ships with the app.
 
@@ -12,7 +12,7 @@ social/
     pull-media.mjs  B-F-OS photos → EXIF-stripped JPGs per site + asset register
     contact-sheet.mjs  one image of a whole folder, for the audit
     build-console.mjs  packs slides + captions + freebies into the client's launch console page
-  clients/bfc/
+  clients/baf/
     brand.json      colours, keywords, freebie links, posting rules
     posts.mjs       THE calendar: slides + captions + times. Edit here, re-render
     freebies/*.html lead magnets (POUR, HIRE, SAFE)
@@ -28,12 +28,12 @@ social/
 ```bash
 cd social
 npm install
-npm run render                          # everything for bfc
-node scripts/render.mjs bfc --only=posts   # just the slides (also: freebies | brand | calendar)
+npm run render                          # everything for baf
+node scripts/render.mjs baf --only=posts   # just the slides (also: freebies | brand | calendar)
 npm run console                         # rebuild the launch console bundle (out/console/)
 ```
 
-The launch console (BFC's is https://claude.ai/artifact/GYvj8gM29yJRS5DxLgoWbo) is published from `out/console/index.html` with every file in `out/console.files.json` as supporting files. Approvals live in its shared `approvals` collection, one doc per post id: `{approved, scheduled, note}`.
+The launch console (BAF's is https://claude.ai/artifact/GYvj8gM29yJRS5DxLgoWbo) is published from `out/console/index.html` with every file in `out/console.files.json` as supporting files. Approvals live in its shared `approvals` collection, one doc per post id: `{approved, scheduled, note}`.
 
 Chromium comes from `/opt/pw-browsers` in Claude's cloud container. On a Mac, set `CHROME_PATH` to your Chrome binary.
 
@@ -68,7 +68,7 @@ Chromium comes from `/opt/pw-browsers` in Claude's cloud container. On a Mac, se
 - Videos keep their GPS metadata. Re-export them first (on iPhone: Share → Options → turn off Location) before they go anywhere public.
 
 ## New client checklist
-1. `cp -r clients/bfc clients/<slug>`, then edit `brand.json` (name, colours, region, keywords).
+1. `cp -r clients/baf clients/<slug>`, then edit `brand.json` (name, colours, region, keywords).
 2. Rewrite `freebies/*.html` for their trade and audience, and `posts.mjs` for their calendar.
 3. Photos: their app, or a Drive folder. `pull-media.mjs` is B-F-OS-specific; a Drive intake is the same steps (download → HEIC→JPG → strip → per-site folders).
 4. Onboarding to-dos in their calendar: account access, business accounts, photo upload, first batch-schedule, daily engagement windows, weekly review.

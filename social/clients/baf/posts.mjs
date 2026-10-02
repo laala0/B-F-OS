@@ -166,13 +166,13 @@ Part 2: forms, steel and the trade coordination before the pour.
     story: "Behind-the-scenes clip or photo from the same site with a 'Part 2 Saturday' countdown sticker.",
   },
   {
-    // First real-job post. Manpreet's personal LinkedIn; plain site photos, logo only on the cover.
+    // First real-job post. Manpreet's personal LinkedIn; plain site photos, logo card on the cover's sky.
     id: "li01-cranbrook-rebar-inspection", week: 1, date: "2026-10-02", time: "07:30",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
     hook: "Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.",
     slides: [
-      { layout: "logoCover", slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "logoCover", cardTop: true, slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
       { layout: "clean", slot: "cranbrook-02" },
       { layout: "clean", slot: "cranbrook-03" },
       { layout: "clean", slot: "cranbrook-04" },
@@ -190,31 +190,38 @@ What we check before we call the inspector:
 → Cover: chairs holding the steel off the dirt and off the forms
 → Forms clean, braced and on line
 
-Proud of the Boss and Friends crew for getting it right the first time, and thank you to @Unitech Construction Management Ltd. for running a well-organized, safe site.
+Proud of the BAF crew for getting it right the first time, and thank you to @Unitech Construction Management Ltd. for running a well-organized, safe site.
 
-Next up: the pour.
+Next up: the pour. Follow along.
 
-GCs and construction managers building anywhere in BC: forming, rebar, finishing, damp proofing. Add us to your trade list. My DMs are open.
+👷 Supers and PMs: what's the one thing you always check before calling for rebar inspection? Tell me below.
 
-#Construction #Concrete #Rebar #Cranbrook #BritishColumbia`,
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #Rebar #Concrete #Cranbrook #BAFConstruction`,
     },
-    firstComment: null,
-    alt: "Boss and Friends crew on the formed and reinforced footings of a new childcare centre in Cranbrook, BC, after passing rebar inspection, with the Rocky Mountains behind.",
-    story: "Not for LinkedIn. Once the BFC TikTok is live, the tt01 clip covers the same milestone.",
+    firstComment: `Pour-day photos coming soon. Big thanks to the Unitech team on site 🙌`,
+    // LinkedIn takes alt text per image (Edit → Alt text on each photo).
+    alt: `1) Boss and Friends crew on the formed and reinforced footings of Cranbrook's new childcare centre, beside Western Financial Place.
+2) A long footing form full of tied rebar, with two people walking the rebar inspection.
+3) A BAF worker in a hard hat and hi-vis tying rebar inside the footing forms.
+4) The full footing layout, formed and reinforced, ready for concrete.
+5) The crew talking through the next steps at the edge of the excavation.`,
+    story: "Not for LinkedIn. The BAF TikTok clip (tt01) covers the same milestone.",
   },
   {
     // Raw clip posted from the iPhone in the TikTok app; no slides. On-screen text is added in TikTok.
     id: "tt01-cranbrook-rebar-clip", week: 1, date: "2026-10-02", time: "12:15",
     pillar: "Job Proof / Raw", type: "video", keyword: null,
     platforms: ["TikTok"],
-    hook: "Rebar inspection day 👷 → PASSED ✅ Pour day next.",
+    hook: "Rebar inspection day 👷 → PASSED ✅ Follow for pour day.",
     slides: [],
     captions: {
-      TikTok: `Footing rebar on a new childcare centre in Cranbrook BC, inspected and passed ✅ Pour day is next. Follow so you don't miss it 👀 Big thanks to Unitech Construction Management #construction #rebar #concrete #bluecollar #cranbrook`,
+      TikTok: `Rebar inspection ✅ PASSED on Cranbrook's new childcare centre. Pour day is next. Follow so you don't miss it 👀 #BAFConstruction #rebar #concrete #construction #cranbrook`,
     },
     firstComment: null,
     alt: "Raw site clip of the footing rebar on the Cranbrook childcare centre.",
-    story: "On-screen text (TikTok Text tool): 0–2s \"Rebar inspection day 👷\"; last 3s \"PASSED ✅ Pour day next\". Use the best of the 0:17 / 0:20 / 0:24 clips from Sep 30 – Oct 1. Export with Location off (Share → Options).",
+    story: "On-screen text (TikTok Text tool): 0–2s \"Rebar inspection day 👷\"; last 3s \"PASSED ✅ Follow for pour day 👀\". Backup CTAs: \"Rate this rebar 1–10 👇\" or \"Tag your rebar crew 👇\". Use the best of the 0:17 / 0:20 / 0:24 clips from Sep 30 – Oct 1; export with Location off (Share → Options).",
   },
   {
     id: "p04-concrete-myths", week: 1, date: "2026-10-02", time: "12:10",

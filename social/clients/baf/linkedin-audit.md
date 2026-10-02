@@ -37,10 +37,10 @@ Confidence tags:
 
 **Limits:** this is from websites and directories. Their LinkedIn and Instagram post activity sits behind a login, so how often they post and how it performs is unverified. [Certain]
 
-**Where BFC can win** [Likely]
-1. **Visible weekly proof.** Competitors sell years in business, which BFC can't match yet. Real milestone posts, with the CM/GC tagged, can beat that on LinkedIn.
+**Where BAF can win** [Likely]
+1. **Visible weekly proof.** Competitors sell years in business, which BAF can't match yet. Real milestone posts, with the CM/GC tagged, can beat that on LinkedIn.
 2. **Mobility.** Taking Interior BC public work (Cranbrook) while Lower Mainland competitors stay local is a selling point. Say it.
-3. **Safety credential.** CWL leads with COR, and municipal and CM work often screens for it. If BFC has COR, put it in the headline, banner and posts. If not, getting it is a bigger lever than any post.
+3. **Safety credential.** CWL leads with COR, and municipal and CM work often screens for it. If BAF has COR, put it in the headline, banner and posts. If not, getting it is a bigger lever than any post.
 
 ## The Cranbrook job (context for posts)
 - **[Likely]** City of Cranbrook childcare centre beside Western Financial Place, with the site entrance off 17th Ave N.

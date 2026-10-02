@@ -3,7 +3,7 @@
 // rendered out/ folder. Output: clients/<c>/out/console/ + files.json (the
 // list of supporting files to publish next to index.html).
 //
-// Usage: node scripts/build-console.mjs [client=bfc]   (run render.mjs first)
+// Usage: node scripts/build-console.mjs [client=baf]   (run render.mjs first)
 
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -12,7 +12,7 @@ import sharp from "sharp";
 import { mark } from "../templates/slides.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const client = process.argv[2] ?? "bfc";
+const client = process.argv[2] ?? "baf";
 const CLIENT = join(ROOT, "clients", client);
 const OUT = join(CLIENT, "out");
 const DEST = join(OUT, "console");

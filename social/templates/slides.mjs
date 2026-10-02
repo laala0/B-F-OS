@@ -69,7 +69,7 @@ const layouts = {
   // Falls back to the text wordmark until brand.logo exists.
   logoCover: (s, brand) => `
     ${photoImg(s)}
-    <div class="lcard">
+    <div class="lcard${s.cardTop ? " top" : ""}">
       ${brand.logoUrl ? `<img class="lcard-logo" src="${brand.logoUrl}" alt="">` : `<div class="lcard-wm"><b>${brand.wordmark}</b><span>${brand.subline}</span></div>`}
       <div class="lcard-text">
         <div class="lcard-title">${s.title}${s.badge ? ` <span class="lcard-badge">${checkIcon}${s.badge}</span>` : ""}</div>

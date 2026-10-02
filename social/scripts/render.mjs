@@ -4,7 +4,7 @@
 //   profile/banners        -> out/brand/*.png
 //   posts.mjs (captions)   -> calendar.csv, calendar.md, out/packs/<week>/<day>/*.txt
 //
-// Usage: node scripts/render.mjs [client=bfc] [--only=freebies|posts|brand|calendar]
+// Usage: node scripts/render.mjs [client=baf] [--only=freebies|posts|brand|calendar]
 
 import { chromium } from "playwright-core";
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
@@ -14,7 +14,7 @@ import { mark, page, slideHtml, PHOTO_LAYOUTS } from "../templates/slides.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
-const client = args.find((a) => !a.startsWith("--")) ?? "bfc";
+const client = args.find((a) => !a.startsWith("--")) ?? "baf";
 const only = args.find((a) => a.startsWith("--only="))?.split("=")[1];
 const CLIENT = join(ROOT, "clients", client);
 const OUT = join(CLIENT, "out");
