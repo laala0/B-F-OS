@@ -6,7 +6,8 @@
   "scripts": {
     "render": "node scripts/render.mjs",
     "pull-media": "node scripts/pull-media.mjs",
-    "console": "node scripts/build-console.mjs"
+    "console": "node scripts/build-console.mjs",
+    "folder": "node scripts/export-folder.mjs"
   },
   "dependencies": {
     "@fontsource/anton": "^5.0.0",

@@ -168,15 +168,17 @@ Part 2: forms, steel and the trade coordination before the pour.
   {
     // First real-job post. Manpreet's personal LinkedIn; plain site photos, logo card on the cover's sky.
     id: "li01-cranbrook-rebar-inspection", week: 1, date: "2026-10-02", time: "07:30",
+    // to-schedule | scheduled | posted. Drives the BAF folder export (scripts/export-folder.mjs).
+    status: "to-schedule", title: "Cranbrook rebar inspection",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
     hook: "Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.",
     slides: [
-      { layout: "logoCover", cardTop: true, slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
-      { layout: "clean", slot: "cranbrook-02" },
-      { layout: "clean", slot: "cranbrook-03" },
-      { layout: "clean", slot: "cranbrook-04" },
-      { layout: "clean", slot: "cranbrook-05" },
+      { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "clean", name: "inspection-walk", slot: "cranbrook-02" },
+      { layout: "clean", name: "tying-rebar", slot: "cranbrook-03" },
+      { layout: "clean", name: "footing-layout", slot: "cranbrook-04" },
+      { layout: "clean", name: "crew", slot: "cranbrook-05" },
     ],
     captions: {
       LinkedIn: `Rebar inspection: passed. ✅
@@ -212,6 +214,9 @@ Next up: the pour. Follow along.
   {
     // Raw clip posted from the iPhone in the TikTok app; no slides. On-screen text is added in TikTok.
     id: "tt01-cranbrook-rebar-clip", week: 1, date: "2026-10-02", time: "12:15",
+    status: "to-schedule", title: "Cranbrook rebar clip",
+    onScreen: ["First 2 seconds: Rebar inspection day 👷", "Last 3 seconds: PASSED ✅ Follow for pour day 👀"],
+    backupCtas: ["Rate this rebar 1–10 👇", "Tag your rebar crew 👇"],
     pillar: "Job Proof / Raw", type: "video", keyword: null,
     platforms: ["TikTok"],
     hook: "Rebar inspection day 👷 → PASSED ✅ Follow for pour day.",
