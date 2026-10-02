@@ -5,7 +5,13 @@
   "subline": "Construction Ltd.",
   "region": "Lower Mainland, BC",
   "timezone": "America/Vancouver",
-  "colors": { "gold": "#f5a623", "ink": "#0e1419" },
+  "colors": {
+    "gold": "#f5a623",
+    "ink": "#0e1419"
+  },
+  "logo": "assets/logo-mark.png",
+  "logoFull": "assets/logo-full.png",
+  "logoNote": "Cropped from the client logo card WITHOUT the phone/hours/address lines. Never publish the uncropped card.",
   "handles": {
     "instagram": "TBD (set Sat Sep 26)",
     "facebook": "TBD: Manpreet Singh's Page or a new BFC Page",

@@ -172,7 +172,7 @@ Part 2: forms, steel and the trade coordination before the pour.
     platforms: ["LinkedIn"],
     hook: "Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.",
     slides: [
-      { layout: "logoCover", slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Cranbrook, BC · Footings ready for concrete" },
+      { layout: "logoCover", slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
       { layout: "clean", slot: "cranbrook-02" },
       { layout: "clean", slot: "cranbrook-03" },
       { layout: "clean", slot: "cranbrook-04" },

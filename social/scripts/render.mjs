@@ -84,7 +84,10 @@ if (want("freebies")) {
 }
 
 // ---------- brand: profile picture + banners ----------
-if (want("brand")) {
+// Clients with their own logo files (brand.logo) keep their own profile images
+// (see deliverables/); the hard-hat mark is only a stand-in until a logo exists.
+if (want("brand") && brand.logoUrl) console.log("brand: client logo in use, skipping generated profile/banner images");
+if (want("brand") && !brand.logoUrl) {
   const svg = mark().replace('<span class="mark">', "").replace("</span>", "");
   const brandHtml = `<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="${cssHref}">
 <style>
