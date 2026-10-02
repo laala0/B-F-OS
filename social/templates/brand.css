@@ -84,6 +84,21 @@ html, body { background: var(--ink); color: var(--text); font-family: var(--body
 .slide.photo .title { font-size: 96px; margin-top: 24px; }
 .slide.photo .placeholder { position: absolute; inset: 0; display: grid; place-items: center; background: repeating-linear-gradient(45deg, #161f28 0 40px, #1b2630 40px 80px); font: 700 34px/1.4 var(--body); color: var(--muted); text-align: center; padding: 120px; }
 
+/* logo cover: light lower-third card with the client's real logo */
+.lcard { position: absolute; left: 48px; right: 48px; bottom: 48px; display: flex; align-items: center; gap: 34px;
+  background: #fff; color: #10161c; border-radius: 26px; padding: 30px 36px; border-top: 10px solid var(--gold);
+  box-shadow: 0 24px 70px rgba(0,0,0,.38); }
+.lcard-logo { height: 170px; width: auto; max-width: 340px; object-fit: contain; flex: none; }
+.lcard-wm { display: flex; flex-direction: column; line-height: .95; flex: none; }
+.lcard-wm b { font: 400 64px/0.95 var(--display); letter-spacing: .02em; }
+.lcard-wm span { font: 800 17px/1 var(--body); letter-spacing: .24em; text-transform: uppercase; color: #5b6b79; margin-top: 10px; }
+.lcard-text { min-width: 0; padding-left: 34px; border-left: 3px solid #e3e7eb; }
+.lcard-title { font: 400 70px/1.0 var(--display); text-transform: uppercase; letter-spacing: .01em; }
+.lcard-badge { display: inline-flex; align-items: center; gap: 10px; vertical-align: middle; transform: translateY(-6px);
+  font: 800 30px/1 var(--body); letter-spacing: .14em; color: #fff; background: #1f9d55; padding: 12px 18px 12px 14px; border-radius: 999px; }
+.lcard-badge svg { width: 30px; height: 30px; }
+.lcard-sub { font: 600 30px/1.3 var(--body); color: #3a4753; margin-top: 14px; }
+
 /* footer bar on every slide */
 .foot { position: absolute; left: 0; right: 0; bottom: 0; height: 132px; display: flex; align-items: center; justify-content: space-between; padding: 0 88px; border-top: 2px solid rgba(245,166,35,.35); background: rgba(14,20,25,.92); }
 .brand { display: flex; align-items: center; gap: 20px; }

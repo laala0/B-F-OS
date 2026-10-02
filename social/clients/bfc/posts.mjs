@@ -4,7 +4,8 @@
 //
 // Photo slides use `slot` names. After the audit (see pull-media.mjs), the chosen
 // photo for each slot is saved as raw/selected/<slot>.jpg and the slide fills itself.
-// "site-A" is the hero site picked in the audit.
+// "site-A" is the hero site: the Cranbrook childcare centre (Unitech Construction
+// Management, CM). Its photo slots are named cranbrook-NN.
 //
 // Rules: no phone, email or street address anywhere. City-level location only.
 
@@ -163,6 +164,57 @@ Part 2: forms, steel and the trade coordination before the pour.
     firstComment: `Ours: walk the whole site, then check the layout against the plan. Then coffee. What's yours? ☕`,
     alt: "Photo carousel of a Boss & Friends job site going from bare ground to excavation and footings.",
     story: "Behind-the-scenes clip or photo from the same site with a 'Part 2 Saturday' countdown sticker.",
+  },
+  {
+    // First real-job post. Manpreet's personal LinkedIn; plain site photos, logo only on the cover.
+    id: "li01-cranbrook-rebar-inspection", week: 1, date: "2026-10-02", time: "07:30",
+    pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
+    platforms: ["LinkedIn"],
+    hook: "Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.",
+    slides: [
+      { layout: "logoCover", slot: "cranbrook-01", title: "Rebar inspection", badge: "PASSED", sub: "Cranbrook, BC · Footings ready for concrete" },
+      { layout: "clean", slot: "cranbrook-02" },
+      { layout: "clean", slot: "cranbrook-03" },
+      { layout: "clean", slot: "cranbrook-04" },
+      { layout: "clean", slot: "cranbrook-05" },
+    ],
+    captions: {
+      LinkedIn: `Rebar inspection: passed. ✅
+Footings on Cranbrook's new childcare centre are tied, inspected and ready for concrete.
+
+This one means something to our crew. When it opens, this building will hold 123 childcare spaces for local families. Every bar in these footings is carrying that.
+
+What we check before we call the inspector:
+→ Bar size and spacing to the drawings
+→ Laps tied, dowels set and secured
+→ Cover: chairs holding the steel off the dirt and off the forms
+→ Forms clean, braced and on line
+
+Proud of the Boss and Friends crew for getting it right the first time, and thank you to @Unitech Construction Management Ltd. for running a well-organized, safe site.
+
+Next up: the pour.
+
+GCs and construction managers building anywhere in BC: forming, rebar, finishing, damp proofing. Add us to your trade list. My DMs are open.
+
+#Construction #Concrete #Rebar #Cranbrook #BritishColumbia`,
+    },
+    firstComment: null,
+    alt: "Boss and Friends crew on the formed and reinforced footings of a new childcare centre in Cranbrook, BC, after passing rebar inspection, with the Rocky Mountains behind.",
+    story: "Not for LinkedIn. Once the BFC TikTok is live, the tt01 clip covers the same milestone.",
+  },
+  {
+    // Raw clip posted from the iPhone in the TikTok app; no slides. On-screen text is added in TikTok.
+    id: "tt01-cranbrook-rebar-clip", week: 1, date: "2026-10-02", time: "12:15",
+    pillar: "Job Proof / Raw", type: "video", keyword: null,
+    platforms: ["TikTok"],
+    hook: "Rebar inspection day 👷 → PASSED ✅ Pour day next.",
+    slides: [],
+    captions: {
+      TikTok: `Footing rebar on a new childcare centre in Cranbrook BC, inspected and passed ✅ Pour day is next. Follow so you don't miss it 👀 Big thanks to Unitech Construction Management #construction #rebar #concrete #bluecollar #cranbrook`,
+    },
+    firstComment: null,
+    alt: "Raw site clip of the footing rebar on the Cranbrook childcare centre.",
+    story: "On-screen text (TikTok Text tool): 0–2s \"Rebar inspection day 👷\"; last 3s \"PASSED ✅ Pour day next\". Use the best of the 0:17 / 0:20 / 0:24 clips from Sep 30 – Oct 1. Export with Location off (Share → Options).",
   },
   {
     id: "p04-concrete-myths", week: 1, date: "2026-10-02", time: "12:10",

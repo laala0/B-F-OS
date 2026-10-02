@@ -53,20 +53,48 @@ const layouts = {
     ${s.sub ? `<p class="sub">${s.sub}</p>` : ""}`,
 
   photo: (s) => `
-    ${s.src ? `<div class="img" style="background-image:url('${s.src}')"></div>` : `<div class="placeholder">PHOTO SLOT<br>${s.slot ?? ""}</div>`}
+    ${photoImg(s)}
     <div class="shade"></div>
     <div class="copy">
       ${s.kicker ? `<div class="kicker">${s.kicker}</div>` : ""}
       ${s.title ? `<h2 class="title">${s.title}</h2>` : ""}
       ${s.sub ? `<p class="sub" style="color:#dfe6ec">${s.sub}</p>` : ""}
     </div>`,
+
+  // Photo only: real site photos for platforms (LinkedIn) where a designed
+  // overlay reads as an ad. No text, no footer.
+  clean: (s) => photoImg(s),
+
+  // Photo + a light lower-third card carrying the client's real logo file.
+  // Falls back to the text wordmark until brand.logo exists.
+  logoCover: (s, brand) => `
+    ${photoImg(s)}
+    <div class="lcard">
+      ${brand.logoUrl ? `<img class="lcard-logo" src="${brand.logoUrl}" alt="">` : `<div class="lcard-wm"><b>${brand.wordmark}</b><span>${brand.subline}</span></div>`}
+      <div class="lcard-text">
+        <div class="lcard-title">${s.title}${s.badge ? ` <span class="lcard-badge">${checkIcon}${s.badge}</span>` : ""}</div>
+        ${s.sub ? `<div class="lcard-sub">${s.sub}</div>` : ""}
+      </div>
+    </div>`,
 };
 
+const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+
+function photoImg(s) {
+  return s.src
+    ? `<div class="img" style="background-image:url('${s.src}');${s.focus ? `background-position:${s.focus}` : ""}"></div>`
+    : `<div class="placeholder">PHOTO SLOT<br>${s.slot ?? ""}</div>`;
+}
+
+export const PHOTO_LAYOUTS = new Set(["photo", "clean", "logoCover"]);
+const NO_FOOT = new Set(["clean", "logoCover"]);
+
 export function slideHtml(brand, s, i, n, format = "feed") {
-  const cls = ["slide", s.layout === "photo" ? "photo" : "", format === "story" ? "story" : "", format === "square" ? "square" : ""].join(" ");
-  const body = layouts[s.layout](s);
-  const wrapped = s.layout === "photo" ? body : `<div class="body ${s.anchor === "bottom" ? "bottom" : ""}">${body}</div>`;
-  return `<section class="${cls}">${wrapped}${s.noFoot ? "" : foot(brand, i, n)}</section>`;
+  const isPhoto = PHOTO_LAYOUTS.has(s.layout);
+  const cls = ["slide", isPhoto ? "photo" : "", format === "story" ? "story" : "", format === "square" ? "square" : ""].join(" ");
+  const body = layouts[s.layout](s, brand);
+  const wrapped = isPhoto ? body : `<div class="body ${s.anchor === "bottom" ? "bottom" : ""}">${body}</div>`;
+  return `<section class="${cls}">${wrapped}${s.noFoot || NO_FOOT.has(s.layout) ? "" : foot(brand, i, n)}</section>`;
 }
 
 export function page(brand, sections, cssHref) {

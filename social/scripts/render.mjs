@@ -10,7 +10,7 @@ import { chromium } from "playwright-core";
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { mark, page, slideHtml } from "../templates/slides.mjs";
+import { mark, page, slideHtml, PHOTO_LAYOUTS } from "../templates/slides.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -20,6 +20,7 @@ const CLIENT = join(ROOT, "clients", client);
 const OUT = join(CLIENT, "out");
 const TPL = join(ROOT, "templates");
 const brand = JSON.parse(readFileSync(join(CLIENT, "brand.json"), "utf8"));
+if (brand.logo && existsSync(join(CLIENT, brand.logo))) brand.logoUrl = pathToFileURL(join(CLIENT, brand.logo)).href;
 const CHROME = process.env.CHROME_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 
 const want = (k) => !only || only === k;
@@ -118,7 +119,7 @@ if (want("posts") || want("calendar")) {
     for (const p of posts) {
       const slides = p.slides.map((s) => {
         // Photo slots resolve to social/clients/<c>/raw/selected/<slot>.jpg once the audit picks them.
-        if (s.layout === "photo" && s.slot && existsSync(join(photoDir, `${s.slot}.jpg`))) {
+        if (PHOTO_LAYOUTS.has(s.layout) && s.slot && existsSync(join(photoDir, `${s.slot}.jpg`))) {
           return { ...s, src: pathToFileURL(join(photoDir, `${s.slot}.jpg`)).href };
         }
         return s;
@@ -135,8 +136,8 @@ if (want("posts") || want("calendar")) {
   const cols = ["date", "time_pt", "id", "week", "pillar", "format", "platforms", "keyword", "hook", "photo_slots", "status"];
   const rows = posts.map((p) => [
     p.date, p.time, p.id, p.week, p.pillar, p.type, p.platforms.join(" + "), p.keyword ?? "", p.hook,
-    p.slides.filter((s) => s.layout === "photo").map((s) => s.slot).join(" | "),
-    p.slides.some((s) => s.layout === "photo") ? "needs photos (audit Sun Sep 27)" : "ready",
+    p.slides.filter((s) => s.slot).map((s) => s.slot).join(" | "),
+    p.slides.some((s) => s.slot && !existsSync(join(photoDir, `${s.slot}.jpg`))) ? "needs photos" : "ready",
   ]);
   writeFileSync(join(CLIENT, "calendar.csv"), [cols.join(","), ...rows.map((r) => r.map(esc).join(","))].join("\n") + "\n");
 

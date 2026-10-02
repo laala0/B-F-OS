@@ -44,7 +44,7 @@ const data = {
       id: p.id, week: p.week, date: p.date, time: p.time, pillar: p.pillar, keyword: p.keyword,
       platforms: p.platforms, hook: p.hook, captions: Object.fromEntries(Object.entries(p.captions).map(([k, v]) => [k, v.trim()])),
       firstComment: p.firstComment?.trim() ?? null, alt: p.alt, story: p.story,
-      photoSlots: p.slides.filter((s) => s.layout === "photo").map((s) => s.slot),
+      photoSlots: p.slides.filter((s) => s.slot && !existsSync(join(CLIENT, "raw", "selected", `${s.slot}.jpg`))).map((s) => s.slot),
       slides: readdirSync(dir).filter((f) => f.endsWith(".png")).sort().map((f) => add(join(dir, f), `slides/${p.id}/${f}`)),
     };
   }),

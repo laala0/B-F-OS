@@ -193,6 +193,57 @@ Ours: walk the whole site, then check the layout against the plan. Then coffee. 
 
 ---
 
+## 2026-10-02 07:30 · li01-cranbrook-rebar-inspection · Job Proof / Site Story
+
+**Hook:** Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.  
+**Format:** multi-image (5 slides) · **Platforms:** LinkedIn
+
+**LinkedIn**
+
+```
+Rebar inspection: passed. ✅
+Footings on Cranbrook's new childcare centre are tied, inspected and ready for concrete.
+
+This one means something to our crew. When it opens, this building will hold 123 childcare spaces for local families. Every bar in these footings is carrying that.
+
+What we check before we call the inspector:
+→ Bar size and spacing to the drawings
+→ Laps tied, dowels set and secured
+→ Cover: chairs holding the steel off the dirt and off the forms
+→ Forms clean, braced and on line
+
+Proud of the Boss and Friends crew for getting it right the first time, and thank you to @Unitech Construction Management Ltd. for running a well-organized, safe site.
+
+Next up: the pour.
+
+GCs and construction managers building anywhere in BC: forming, rebar, finishing, damp proofing. Add us to your trade list. My DMs are open.
+
+#Construction #Concrete #Rebar #Cranbrook #BritishColumbia
+```
+
+**Alt text:** Boss and Friends crew on the formed and reinforced footings of a new childcare centre in Cranbrook, BC, after passing rebar inspection, with the Rocky Mountains behind.
+
+**Story same day:** Not for LinkedIn. Once the BFC TikTok is live, the tt01 clip covers the same milestone.
+
+---
+
+## 2026-10-02 12:15 · tt01-cranbrook-rebar-clip · Job Proof / Raw
+
+**Hook:** Rebar inspection day 👷 → PASSED ✅ Pour day next.  
+**Format:** video (0 slides) · **Platforms:** TikTok
+
+**TikTok**
+
+```
+Footing rebar on a new childcare centre in Cranbrook BC, inspected and passed ✅ Pour day is next. Follow so you don't miss it 👀 Big thanks to Unitech Construction Management #construction #rebar #concrete #bluecollar #cranbrook
+```
+
+**Alt text:** Raw site clip of the footing rebar on the Cranbrook childcare centre.
+
+**Story same day:** On-screen text (TikTok Text tool): 0–2s "Rebar inspection day 👷"; last 3s "PASSED ✅ Pour day next". Use the best of the 0:17 / 0:20 / 0:24 clips from Sep 30 – Oct 1. Export with Location off (Share → Options).
+
+---
+
 ## 2026-10-02 12:10 · p04-concrete-myths · Myth vs Fact
 
 **Hook:** 4 concrete myths builders, homeowners and crew all fall for.  
