@@ -8,8 +8,9 @@
 //   e.g. node scripts/prep-photos.mjs baf cranbrook-01=/path/IMG_1.jpg@bottom
 // Writes clients/<c>/raw/selected/<slot>.jpg (raw/ is gitignored).
 
+import heicConvert from "heic-convert";
 import sharp from "sharp";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,8 +31,12 @@ for (const arg of args) {
   const box = /^\d+,\d+,\d+,\d+$/.test(pos) ? pos.split(",").map(Number) : null;
   const position = box ? "centre" : pos === "attention" ? sharp.strategy.attention : pos;
   const out = join(OUT, `${slot}.jpg`);
-  const { width, height } = await sharp(file).metadata();
-  let src = sharp(await sharp(file).rotate().toBuffer());
+  // iPhone originals arrive as HEIC, which sharp's prebuilt libvips can't decode.
+  const input = /\.hei[cf]$/i.test(file)
+    ? Buffer.from(await heicConvert({ buffer: readFileSync(file), format: "JPEG", quality: 0.95 }))
+    : file;
+  const { width, height } = await sharp(input).metadata();
+  let src = sharp(await sharp(input).rotate().toBuffer());
   if (box) src = src.extract({ left: box[0], top: box[1], width: box[2], height: box[3] });
   await src
     .resize({ width: 1440, height: 1800, fit: "cover", position, withoutEnlargement: false })

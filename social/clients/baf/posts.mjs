@@ -230,7 +230,7 @@ Next up: the pour. Follow along.
   },
   {
     // Series Part 2. Facts from the user: 80 (m³, to confirm) poured, 9 trucks, 8am-2pm,
-    // Tyler from Toucan Concrete Pumping on the boom (spelling to confirm; no LinkedIn page to tag).
+    // Tyler from Toucan Concrete Pumping on the boom (spelling confirmed by the truck; no LinkedIn page to tag).
     id: "li02-cranbrook-pour-day", week: 2, date: "2026-10-09", time: "07:30",
     status: "to-schedule", title: "Cranbrook pour day",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
@@ -238,22 +238,20 @@ Next up: the pour. Follow along.
     hook: "Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.",
     slides: [
       { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-pour-01", title: "Pour day", badge: "FOOTINGS POURED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
-      { layout: "clean", name: "concrete-going-in", slot: "cranbrook-pour-02" },
-      { layout: "clean", name: "finishing", slot: "cranbrook-pour-03" },
-      { layout: "clean", name: "trucks-and-pump", slot: "cranbrook-pour-04" },
-      { layout: "clean", name: "poured-footings", slot: "cranbrook-pour-05" },
-      { layout: "clean", name: "crew", slot: "cranbrook-pour-06" },
+      { layout: "clean", name: "ready-mix", slot: "cranbrook-pour-02" },
+      { layout: "clean", name: "same-footing-as-part-1", slot: "cranbrook-pour-03" },
+      { layout: "clean", name: "footing-corner", slot: "cranbrook-pour-04" },
+      { layout: "clean", name: "footings-wide", slot: "cranbrook-pour-05" },
     ],
     captions: {
       LinkedIn: `Footings poured. ✅
 80 m³ of concrete, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.
 
-Part 2: right after passing rebar inspection, these footings got their concrete.
+Part 2: right after passing rebar inspection, these footings got their concrete. Swipe to photo 3: same footing, same angle as Part 1, now in concrete.
 
 What a 6-hour pour takes:
 → Trucks spaced so the pump never waits and the concrete never sits
 → A boom operator who places it clean. Big thanks to Tyler from Toucan Concrete Pumping for the boom work
-→ Vibrating it in so there are no voids around the steel
 → Finishing to the top-of-footing marks, then protecting it while it cures
 
 Proud of the BAF crew. It was a great day. Thank you again to @Unitech Construction Management Ltd. for a well-run site.
@@ -267,13 +265,11 @@ More from this site soon. Follow along.
 #Construction #Concrete #ConcretePour #Cranbrook #BAFConstruction`,
     },
     firstComment: `Missed Part 1? The rebar inspection post is on my profile. Thanks to Tyler and the Toucan crew for a smooth pump day 🙌`,
-    // Rewritten per image once the photos arrive.
-    alt: `1) Concrete pump boom placing concrete into the footings of Cranbrook's new childcare centre.
-2) Concrete going into the formed, reinforced footings.
-3) The BAF crew finishing the freshly poured footings.
-4) Ready-mix trucks and the boom pump set up on site.
-5) The finished, poured footings.
-6) The crew after the pour.`,
+    alt: `1) Toucan Concrete Pumping's boom reaching over the footings of Cranbrook's new childcare centre, beside Western Financial Place.
+2) A ready-mix truck on site during the 6-hour footing pour.
+3) The same footing run shown at rebar inspection in Part 1, now poured, with dowels standing up for the next stage.
+4) An L-shaped run of freshly poured footings with rebar dowels, under tall spruce trees.
+5) The poured footings across the site under a dramatic Kootenay sky.`,
     story: "LinkedIn only for now; the TikTok account isn't set up yet.",
   },
   {

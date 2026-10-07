@@ -259,7 +259,7 @@ Rebar inspection ✅ PASSED on Cranbrook's new childcare centre. Pour day is nex
 ## 2026-10-09 07:30 · li02-cranbrook-pour-day · Job Proof / Site Story
 
 **Hook:** Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.  
-**Format:** multi-image (6 slides) · **Platforms:** LinkedIn
+**Format:** multi-image (5 slides) · **Platforms:** LinkedIn
 
 **LinkedIn**
 
@@ -267,12 +267,11 @@ Rebar inspection ✅ PASSED on Cranbrook's new childcare centre. Pour day is nex
 Footings poured. ✅
 80 m³ of concrete, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.
 
-Part 2: right after passing rebar inspection, these footings got their concrete.
+Part 2: right after passing rebar inspection, these footings got their concrete. Swipe to photo 3: same footing, same angle as Part 1, now in concrete.
 
 What a 6-hour pour takes:
 → Trucks spaced so the pump never waits and the concrete never sits
 → A boom operator who places it clean. Big thanks to Tyler from Toucan Concrete Pumping for the boom work
-→ Vibrating it in so there are no voids around the steel
 → Finishing to the top-of-footing marks, then protecting it while it cures
 
 Proud of the BAF crew. It was a great day. Thank you again to @Unitech Construction Management Ltd. for a well-run site.
@@ -292,12 +291,11 @@ More from this site soon. Follow along.
 Missed Part 1? The rebar inspection post is on my profile. Thanks to Tyler and the Toucan crew for a smooth pump day 🙌
 ```
 
-**Alt text:** 1) Concrete pump boom placing concrete into the footings of Cranbrook's new childcare centre.
-2) Concrete going into the formed, reinforced footings.
-3) The BAF crew finishing the freshly poured footings.
-4) Ready-mix trucks and the boom pump set up on site.
-5) The finished, poured footings.
-6) The crew after the pour.
+**Alt text:** 1) Toucan Concrete Pumping's boom reaching over the footings of Cranbrook's new childcare centre, beside Western Financial Place.
+2) A ready-mix truck on site during the 6-hour footing pour.
+3) The same footing run shown at rebar inspection in Part 1, now poured, with dowels standing up for the next stage.
+4) An L-shaped run of freshly poured footings with rebar dowels, under tall spruce trees.
+5) The poured footings across the site under a dramatic Kootenay sky.
 
 **Story same day:** LinkedIn only for now; the TikTok account isn't set up yet.
 

@@ -7,7 +7,7 @@
 // Usage: node scripts/render.mjs [client=baf] [--only=freebies|posts|brand|calendar]
 
 import { chromium } from "playwright-core";
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { copyFileSync, mkdirSync, rmSync, readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { mark, page, slideHtml, PHOTO_LAYOUTS } from "../templates/slides.mjs";
@@ -49,6 +49,8 @@ const ctx = await browser.newContext({ deviceScaleFactor: 1 });
 const pg = await ctx.newPage();
 
 async function shoot(url, outDir, prefix) {
+  // Start clean so a post that loses slides doesn't keep stale PNGs around.
+  rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
   await pg.goto(url, { waitUntil: "load" });
   await pg.evaluate(() => document.fonts.ready);
