@@ -232,7 +232,7 @@ Next up: the pour. Follow along.
     // Series Part 2. Facts from the user: 80 (m³, to confirm) poured, 9 trucks, 8am-2pm,
     // Tyler from Toucan Concrete Pumping on the boom (spelling confirmed by the truck; no LinkedIn page to tag).
     id: "li02-cranbrook-pour-day", week: 2, date: "2026-10-09", time: "07:30",
-    status: "to-schedule", title: "Cranbrook pour day",
+    status: "scheduled", title: "Cranbrook pour day",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
     hook: "Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.",
