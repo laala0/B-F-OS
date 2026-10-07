@@ -169,7 +169,7 @@ Part 2: forms, steel and the trade coordination before the pour.
     // First real-job post. Manpreet's personal LinkedIn; plain site photos, logo card on the cover's sky.
     id: "li01-cranbrook-rebar-inspection", week: 1, date: "2026-10-02", time: "07:30",
     // to-schedule | scheduled | posted. Drives the BAF folder export (scripts/export-folder.mjs).
-    status: "to-schedule", title: "Cranbrook rebar inspection",
+    status: "posted", title: "Cranbrook rebar inspection",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
     hook: "Rebar inspection: passed. Footings on Cranbrook's new childcare centre are ready for concrete.",
@@ -214,7 +214,7 @@ Next up: the pour. Follow along.
   {
     // Raw clip posted from the iPhone in the TikTok app; no slides. On-screen text is added in TikTok.
     id: "tt01-cranbrook-rebar-clip", week: 1, date: "2026-10-02", time: "12:15",
-    status: "to-schedule", title: "Cranbrook rebar clip",
+    status: "hold", title: "Cranbrook rebar clip",
     onScreen: ["First 2 seconds: Rebar inspection day 👷", "Last 3 seconds: PASSED ✅ Follow for pour day 👀"],
     backupCtas: ["Rate this rebar 1–10 👇", "Tag your rebar crew 👇"],
     pillar: "Job Proof / Raw", type: "video", keyword: null,
@@ -227,6 +227,54 @@ Next up: the pour. Follow along.
     firstComment: null,
     alt: "Raw site clip of the footing rebar on the Cranbrook childcare centre.",
     story: "On-screen text (TikTok Text tool): 0–2s \"Rebar inspection day 👷\"; last 3s \"PASSED ✅ Follow for pour day 👀\". Backup CTAs: \"Rate this rebar 1–10 👇\" or \"Tag your rebar crew 👇\". Use the best of the 0:17 / 0:20 / 0:24 clips from Sep 30 – Oct 1; export with Location off (Share → Options).",
+  },
+  {
+    // Series Part 2. Facts from the user: 80 (m³, to confirm) poured, 9 trucks, 8am-2pm,
+    // Tyler from Toucan Concrete Pumping on the boom (spelling to confirm; no LinkedIn page to tag).
+    id: "li02-cranbrook-pour-day", week: 2, date: "2026-10-09", time: "07:30",
+    status: "to-schedule", title: "Cranbrook pour day",
+    pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
+    platforms: ["LinkedIn"],
+    hook: "Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.",
+    slides: [
+      { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-pour-01", title: "Pour day", badge: "FOOTINGS POURED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "clean", name: "concrete-going-in", slot: "cranbrook-pour-02" },
+      { layout: "clean", name: "finishing", slot: "cranbrook-pour-03" },
+      { layout: "clean", name: "trucks-and-pump", slot: "cranbrook-pour-04" },
+      { layout: "clean", name: "poured-footings", slot: "cranbrook-pour-05" },
+      { layout: "clean", name: "crew", slot: "cranbrook-pour-06" },
+    ],
+    captions: {
+      LinkedIn: `Footings poured. ✅
+80 m³ of concrete, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.
+
+Part 2: right after passing rebar inspection, these footings got their concrete.
+
+What a 6-hour pour takes:
+→ Trucks spaced so the pump never waits and the concrete never sits
+→ A boom operator who places it clean. Big thanks to Tyler from Toucan Concrete Pumping for the boom work
+→ Vibrating it in so there are no voids around the steel
+→ Finishing to the top-of-footing marks, then protecting it while it cures
+
+Proud of the BAF crew. It was a great day. Thank you again to @Unitech Construction Management Ltd. for a well-run site.
+
+More from this site soon. Follow along.
+
+👷 Supers and PMs: what makes or breaks a big pour for you: the pump, truck spacing, or the crew? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #Concrete #ConcretePour #Cranbrook #BAFConstruction`,
+    },
+    firstComment: `Missed Part 1? The rebar inspection post is on my profile. Thanks to Tyler and the Toucan crew for a smooth pump day 🙌`,
+    // Rewritten per image once the photos arrive.
+    alt: `1) Concrete pump boom placing concrete into the footings of Cranbrook's new childcare centre.
+2) Concrete going into the formed, reinforced footings.
+3) The BAF crew finishing the freshly poured footings.
+4) Ready-mix trucks and the boom pump set up on site.
+5) The finished, poured footings.
+6) The crew after the pour.`,
+    story: "LinkedIn only for now; the TikTok account isn't set up yet.",
   },
   {
     id: "p04-concrete-myths", week: 1, date: "2026-10-02", time: "12:10",

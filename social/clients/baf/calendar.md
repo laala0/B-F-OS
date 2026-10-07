@@ -256,6 +256,53 @@ Rebar inspection ✅ PASSED on Cranbrook's new childcare centre. Pour day is nex
 
 ---
 
+## 2026-10-09 07:30 · li02-cranbrook-pour-day · Job Proof / Site Story
+
+**Hook:** Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.  
+**Format:** multi-image (6 slides) · **Platforms:** LinkedIn
+
+**LinkedIn**
+
+```
+Footings poured. ✅
+80 m³ of concrete, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.
+
+Part 2: right after passing rebar inspection, these footings got their concrete.
+
+What a 6-hour pour takes:
+→ Trucks spaced so the pump never waits and the concrete never sits
+→ A boom operator who places it clean. Big thanks to Tyler from Toucan Concrete Pumping for the boom work
+→ Vibrating it in so there are no voids around the steel
+→ Finishing to the top-of-footing marks, then protecting it while it cures
+
+Proud of the BAF crew. It was a great day. Thank you again to @Unitech Construction Management Ltd. for a well-run site.
+
+More from this site soon. Follow along.
+
+👷 Supers and PMs: what makes or breaks a big pour for you: the pump, truck spacing, or the crew? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #Concrete #ConcretePour #Cranbrook #BAFConstruction
+```
+
+**First comment (post it yourself right after publishing):**
+
+```
+Missed Part 1? The rebar inspection post is on my profile. Thanks to Tyler and the Toucan crew for a smooth pump day 🙌
+```
+
+**Alt text:** 1) Concrete pump boom placing concrete into the footings of Cranbrook's new childcare centre.
+2) Concrete going into the formed, reinforced footings.
+3) The BAF crew finishing the freshly poured footings.
+4) Ready-mix trucks and the boom pump set up on site.
+5) The finished, poured footings.
+6) The crew after the pour.
+
+**Story same day:** LinkedIn only for now; the TikTok account isn't set up yet.
+
+---
+
 ## 2026-10-02 12:10 · p04-concrete-myths · Myth vs Fact
 
 **Hook:** 4 concrete myths builders, homeowners and crew all fall for.  

@@ -20,12 +20,13 @@ const { posts } = await import(pathToFileURL(join(CLIENT, "posts.mjs")).href);
 
 const NAME = brand.short ?? client.toUpperCase();
 const BASE = join(OUT, NAME);
-const SECTIONS = { "to-schedule": "1 - To schedule", scheduled: "2 - Scheduled", posted: "3 - Posted" };
+const SECTIONS = { "to-schedule": "1 - To schedule", scheduled: "2 - Scheduled", posted: "3 - Posted", hold: "4 - On hold" };
 
 rmSync(BASE, { recursive: true, force: true });
 for (const s of Object.values(SECTIONS)) mkdirSync(join(BASE, s), { recursive: true });
 writeFileSync(join(BASE, SECTIONS.scheduled, "README.txt"), "Drag a post's folder here once it's scheduled.\n");
 writeFileSync(join(BASE, SECTIONS.posted, "README.txt"), "Drag a post's folder here once it's live.\n");
+writeFileSync(join(BASE, SECTIONS.hold, "README.txt"), "Parked posts, e.g. waiting for the TikTok account to be set up.\n");
 
 const write = (dir, file, text) => text && writeFileSync(join(dir, file), text.trim() + "\n");
 const ampm = (t) => { const [h, m] = t.split(":").map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
