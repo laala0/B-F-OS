@@ -316,40 +316,45 @@ Next up: the wall pour. Follow along.
     story: "Alt text is rewritten per image once the photos arrive.",
   },
   {
-    // Native LinkedIn video. scripts/prep-video.mjs builds it from the POV clips, using
-    // slides[0] for the opening title card; the rendered slide 01 doubles as the custom thumbnail.
+    // Built from Tyler's (Toucan pump operator) photos; credited in caption + first comment.
+    // Photo 4 (IMG_3160) has the overcast sky of the footing pour: confirm it's the wall pour or swap it.
+    // A POV video version can still be built with scripts/prep-video.mjs if clips arrive.
     id: "li04-cranbrook-wall-pour", week: 8, date: "2026-11-09", time: "07:30",
     status: "to-schedule", title: "Cranbrook wall pour",
-    pillar: "Job Proof / Raw", type: "video", keyword: null,
+    pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
-    hook: "Walls poured. Part 4 on Cranbrook's new childcare centre, straight from the site.",
-    video: "out/video/li04-cranbrook-wall-pour.mp4",
-    videoEndCta: "DM for forming &amp; rebar pricing",
+    hook: "Walls poured. Part 4 on Cranbrook's new childcare centre.",
     slides: [
-      { layout: "logoCover", cardTop: true, name: "thumbnail", slot: "cranbrook-wallpour-thumb", title: "Wall pour", badge: "POURED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-wallpour-01", title: "Wall pour", badge: "POURED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "clean", name: "boom-over-forms", slot: "cranbrook-wallpour-02" },
+      { layout: "clean", name: "pump-truck", slot: "cranbrook-wallpour-03" },
+      { layout: "clean", name: "concrete-going-in", slot: "cranbrook-wallpour-04" },
     ],
     captions: {
-      LinkedIn: `Walls poured. ✅ 🎥
-Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced in Part 3, filled with concrete. Sound on.
+      LinkedIn: `Walls poured. ✅
+Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced, now full of concrete.
 
 What a clean wall pour comes down to:
-→ Placing the concrete in even lifts so the forms take the load evenly
-→ Vibrating every lift so the wall comes out solid, with no honeycombing
-→ Someone watching the forms the whole time, so nothing moves
+→ A boom operator who places it exactly where it's needed. Thank you to Tyler from Toucan Concrete Pumping, who also took these photos 📸
+→ Forms set and steel tied and checked before the first truck shows up
+→ A crew on the hose and on the forms from the first truck to the last
 
 Thank you again to @Unitech Construction Management Ltd. and to the BAF crew for another long, clean day.
 
-Next up: forms off and the finished walls. Follow along.
+Next up: forms off, damp proofing on. Follow along.
 
-👷 Supers and PMs: how do you like your wall pours: more lifts and slower, or fewer lifts and faster? Tell me below.
+👷 Supers and PMs: what makes or breaks a wall pour for you? Tell me below.
 
 🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
 
 #Construction #ConcretePour #Formwork #Cranbrook #BAFConstruction`,
     },
-    firstComment: `Missed the start? Parts 1–3 of this build are on my profile 👆`,
-    alt: "Point-of-view video of concrete being placed into the formed, reinforced walls of Cranbrook's new childcare centre.",
-    story: "Upload video.mp4 as a native LinkedIn video; set 01-thumbnail.png as the custom thumbnail.",
+    firstComment: `📸 Photos by Tyler at Toucan Concrete Pumping. Thanks for the boom work and the shots. Earlier parts of this build are on my profile 👆`,
+    alt: `1) Toucan Concrete Pumping's boom arching over the formed walls of Cranbrook's new childcare centre, beside Western Financial Place.
+2) The boom reaching across the formed, reinforced walls on a sunny day.
+3) The Toucan pump truck set up beside the site.
+4) The crew placing concrete from the boom hose into the forms.`,
+    story: "Photos courtesy of Tyler (Toucan Concrete Pumping).",
   },
   {
     // Finale + recap. recap slots need 2–3 Part 1/2 photos re-sent (raw/ was cleared on restart).

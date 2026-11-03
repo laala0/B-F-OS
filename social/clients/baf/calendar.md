@@ -344,27 +344,27 @@ Catch up on the series: Part 1 (rebar inspection) and Part 2 (pour day) are on m
 
 ---
 
-## 2026-11-09 07:30 · li04-cranbrook-wall-pour · Job Proof / Raw
+## 2026-11-09 07:30 · li04-cranbrook-wall-pour · Job Proof / Site Story
 
-**Hook:** Walls poured. Part 4 on Cranbrook's new childcare centre, straight from the site.  
-**Format:** video (1 slides) · **Platforms:** LinkedIn
+**Hook:** Walls poured. Part 4 on Cranbrook's new childcare centre.  
+**Format:** multi-image (4 slides) · **Platforms:** LinkedIn
 
 **LinkedIn**
 
 ```
-Walls poured. ✅ 🎥
-Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced in Part 3, filled with concrete. Sound on.
+Walls poured. ✅
+Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced, now full of concrete.
 
 What a clean wall pour comes down to:
-→ Placing the concrete in even lifts so the forms take the load evenly
-→ Vibrating every lift so the wall comes out solid, with no honeycombing
-→ Someone watching the forms the whole time, so nothing moves
+→ A boom operator who places it exactly where it's needed. Thank you to Tyler from Toucan Concrete Pumping, who also took these photos 📸
+→ Forms set and steel tied and checked before the first truck shows up
+→ A crew on the hose and on the forms from the first truck to the last
 
 Thank you again to @Unitech Construction Management Ltd. and to the BAF crew for another long, clean day.
 
-Next up: forms off and the finished walls. Follow along.
+Next up: forms off, damp proofing on. Follow along.
 
-👷 Supers and PMs: how do you like your wall pours: more lifts and slower, or fewer lifts and faster? Tell me below.
+👷 Supers and PMs: what makes or breaks a wall pour for you? Tell me below.
 
 🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
 
@@ -374,12 +374,15 @@ Next up: forms off and the finished walls. Follow along.
 **First comment (post it yourself right after publishing):**
 
 ```
-Missed the start? Parts 1–3 of this build are on my profile 👆
+📸 Photos by Tyler at Toucan Concrete Pumping. Thanks for the boom work and the shots. Earlier parts of this build are on my profile 👆
 ```
 
-**Alt text:** Point-of-view video of concrete being placed into the formed, reinforced walls of Cranbrook's new childcare centre.
+**Alt text:** 1) Toucan Concrete Pumping's boom arching over the formed walls of Cranbrook's new childcare centre, beside Western Financial Place.
+2) The boom reaching across the formed, reinforced walls on a sunny day.
+3) The Toucan pump truck set up beside the site.
+4) The crew placing concrete from the boom hose into the forms.
 
-**Story same day:** Upload video.mp4 as a native LinkedIn video; set 01-thumbnail.png as the custom thumbnail.
+**Story same day:** Photos courtesy of Tyler (Toucan Concrete Pumping).
 
 ---
 

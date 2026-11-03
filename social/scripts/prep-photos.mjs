@@ -5,6 +5,7 @@
 // Usage: node scripts/prep-photos.mjs [client=baf] <slot>=<file>[@position] ...
 //   position: centre (default) | top | bottom | left | right | attention
 //             | x,y,w,h  (exact source window, e.g. to crop out a stray hand)
+//   file!270 rotates the source clockwise by 90/180/270 before cropping (sideways images)
 //   e.g. node scripts/prep-photos.mjs baf cranbrook-01=/path/IMG_1.jpg@bottom
 // Writes clients/<c>/raw/selected/<slot>.jpg (raw/ is gitignored).
 
@@ -26,7 +27,9 @@ if (!args.length) {
 
 for (const arg of args) {
   const [slot, rest] = arg.split(/=(.*)/s);
-  const [file, pos = "centre"] = rest.split("@");
+  const [fileSpec, pos = "centre"] = rest.split("@");
+  // "file!270" = rotate clockwise by 90/180/270 first (for images stored sideways).
+  const [file, rot] = fileSpec.split("!");
   // "@x,y,w,h" = exact window (in source pixels) before the 4:5 cover fit.
   const box = /^\d+,\d+,\d+,\d+$/.test(pos) ? pos.split(",").map(Number) : null;
   const position = box ? "centre" : pos === "attention" ? sharp.strategy.attention : pos;
@@ -36,7 +39,7 @@ for (const arg of args) {
     ? Buffer.from(await heicConvert({ buffer: readFileSync(file), format: "JPEG", quality: 0.95 }))
     : file;
   const { width, height } = await sharp(input).metadata();
-  let src = sharp(await sharp(input).rotate().toBuffer());
+  let src = sharp(await sharp(input).rotate().rotate(rot ? Number(rot) : 0).toBuffer());
   if (box) src = src.extract({ left: box[0], top: box[1], width: box[2], height: box[3] });
   await src
     .resize({ width: 1440, height: 1800, fit: "cover", position, withoutEnlargement: false })
