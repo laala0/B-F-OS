@@ -21,7 +21,19 @@ const OUT = join(CLIENT, "out");
 const TPL = join(ROOT, "templates");
 const brand = JSON.parse(readFileSync(join(CLIENT, "brand.json"), "utf8"));
 if (brand.logo && existsSync(join(CLIENT, brand.logo))) brand.logoUrl = pathToFileURL(join(CLIENT, brand.logo)).href;
-const CHROME = process.env.CHROME_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+const CHROME = process.env.CHROME_PATH ?? findChromium();
+
+// The cloud container's Chromium build number (and folder layout) changes over
+// time, so pick the newest /opt/pw-browsers/chromium-* instead of pinning one.
+function findChromium() {
+  const base = "/opt/pw-browsers";
+  const builds = existsSync(base) ? readdirSync(base).filter((d) => /^chromium-\d+$/.test(d)).sort((a, b) => b.split("-")[1] - a.split("-")[1]) : [];
+  for (const b of builds) for (const sub of ["chrome-linux64", "chrome-linux"]) {
+    const p = join(base, b, sub, "chrome");
+    if (existsSync(p)) return p;
+  }
+  throw new Error("No Chromium found; set CHROME_PATH (e.g. to Google Chrome on a Mac).");
+}
 
 const want = (k) => !only || only === k;
 const tmp = join(OUT, ".html");

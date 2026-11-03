@@ -232,7 +232,7 @@ Next up: the pour. Follow along.
     // Series Part 2. Facts from the user: 80 (m³, to confirm) poured, 9 trucks, 8am-2pm,
     // Tyler from Toucan Concrete Pumping on the boom (spelling confirmed by the truck; no LinkedIn page to tag).
     id: "li02-cranbrook-pour-day", week: 2, date: "2026-10-09", time: "07:30",
-    status: "scheduled", title: "Cranbrook pour day",
+    status: "posted", title: "Cranbrook pour day",
     pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
     platforms: ["LinkedIn"],
     hook: "Footings poured. 80 m³, 9 trucks, 8 am to 2 pm on Cranbrook's new childcare centre.",
@@ -271,6 +271,132 @@ More from this site soon. Follow along.
 4) An L-shaped run of freshly poured footings with rebar dowels, under tall spruce trees.
 5) The poured footings across the site under a dramatic Kootenay sky.`,
     story: "LinkedIn only for now; the TikTok account isn't set up yet.",
+  },
+  // ── Cranbrook series finale (job finished): Parts 3–5 ──────────────────────
+  // Draft captions: each "→" line must be backed by the footage once it arrives,
+  // and no numbers go in unless the user supplies them.
+  {
+    id: "li03-cranbrook-walls-formed", week: 7, date: "2026-11-04", time: "07:30",
+    status: "to-schedule", title: "Cranbrook walls formed",
+    pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
+    platforms: ["LinkedIn"],
+    hook: "Walls formed. Steel in. Part 3 on Cranbrook's new childcare centre.",
+    slides: [
+      { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-walls-01", title: "Walls formed", badge: "STEEL IN", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "clean", name: "forms-up", slot: "cranbrook-walls-02" },
+      { layout: "clean", name: "rebar-in-walls", slot: "cranbrook-walls-03" },
+      { layout: "clean", name: "bracing", slot: "cranbrook-walls-04" },
+      { layout: "clean", name: "wide", slot: "cranbrook-walls-05" },
+    ],
+    captions: {
+      LinkedIn: `Walls formed. Steel in. ✅
+Part 3 on Cranbrook's new childcare centre: the footings from Part 2 now have their walls.
+
+What goes into a wall before any concrete does:
+→ Forms set to the layout, plumb and braced so nothing moves during the pour
+→ Rebar placed and tied inside the walls, tied into the dowels left in the footings
+→ Ties and spacing checked so the wall comes out the right thickness, top to bottom
+
+Proud of the BAF crew, and thank you to @Unitech Construction Management Ltd. for keeping the site moving.
+
+Next up: the wall pour. Follow along.
+
+👷 Supers and PMs: what's the first thing you check on wall forms before the pump shows up? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #Formwork #Rebar #Cranbrook #BAFConstruction`,
+    },
+    firstComment: `Catch up on the series: Part 1 (rebar inspection) and Part 2 (pour day) are on my profile 👆`,
+    alt: `1) Wall forms standing on the poured footings of Cranbrook's new childcare centre.
+2) Wall forms going up along the footing layout.
+3) Rebar placed and tied inside the wall forms.
+4) Bracing holding the wall forms plumb.
+5) The formed walls across the site.`,
+    story: "Alt text is rewritten per image once the photos arrive.",
+  },
+  {
+    // Native LinkedIn video. scripts/prep-video.mjs builds it from the POV clips, using
+    // slides[0] for the opening title card; the rendered slide 01 doubles as the custom thumbnail.
+    id: "li04-cranbrook-wall-pour", week: 8, date: "2026-11-09", time: "07:30",
+    status: "to-schedule", title: "Cranbrook wall pour",
+    pillar: "Job Proof / Raw", type: "video", keyword: null,
+    platforms: ["LinkedIn"],
+    hook: "Walls poured. Part 4 on Cranbrook's new childcare centre, straight from the site.",
+    video: "out/video/li04-cranbrook-wall-pour.mp4",
+    videoEndCta: "DM for forming &amp; rebar pricing",
+    slides: [
+      { layout: "logoCover", cardTop: true, name: "thumbnail", slot: "cranbrook-wallpour-thumb", title: "Wall pour", badge: "POURED", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+    ],
+    captions: {
+      LinkedIn: `Walls poured. ✅ 🎥
+Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced in Part 3, filled with concrete. Sound on.
+
+What a clean wall pour comes down to:
+→ Placing the concrete in even lifts so the forms take the load evenly
+→ Vibrating every lift so the wall comes out solid, with no honeycombing
+→ Someone watching the forms the whole time, so nothing moves
+
+Thank you again to @Unitech Construction Management Ltd. and to the BAF crew for another long, clean day.
+
+Next up: forms off and the finished walls. Follow along.
+
+👷 Supers and PMs: how do you like your wall pours: more lifts and slower, or fewer lifts and faster? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #ConcretePour #Formwork #Cranbrook #BAFConstruction`,
+    },
+    firstComment: `Missed the start? Parts 1–3 of this build are on my profile 👆`,
+    alt: "Point-of-view video of concrete being placed into the formed, reinforced walls of Cranbrook's new childcare centre.",
+    story: "Upload video.mp4 as a native LinkedIn video; set 01-thumbnail.png as the custom thumbnail.",
+  },
+  {
+    // Finale + recap. recap slots need 2–3 Part 1/2 photos re-sent (raw/ was cleared on restart).
+    id: "li05-cranbrook-job-done", week: 8, date: "2026-11-12", time: "07:30",
+    status: "to-schedule", title: "Cranbrook job done",
+    pillar: "Job Proof / Site Story", type: "multi-image", keyword: null,
+    platforms: ["LinkedIn"],
+    hook: "Job done. Cranbrook's new childcare centre foundation, from bare dirt to finished, waterproofed walls.",
+    slides: [
+      { layout: "logoCover", cardTop: true, name: "cover", slot: "cranbrook-final-01", title: "Job done", badge: "FOUNDATION COMPLETE", sub: "Boss and Friends Construction Ltd. · Cranbrook, BC" },
+      { layout: "clean", name: "walls-stripped", slot: "cranbrook-final-02" },
+      { layout: "clean", name: "damp-proofing", slot: "cranbrook-final-03" },
+      { layout: "clean", name: "recap-rebar", slot: "cranbrook-recap-01" },
+      { layout: "clean", name: "recap-pour", slot: "cranbrook-recap-02" },
+      { layout: "clean", name: "recap-walls", slot: "cranbrook-recap-03" },
+      { layout: "clean", name: "crew", slot: "cranbrook-final-04" },
+    ],
+    captions: {
+      LinkedIn: `Job done. ✅
+Cranbrook's new childcare centre: foundation complete, from bare dirt to finished, waterproofed walls.
+
+The whole build in 5 parts:
+1. Rebar inspection: passed first time
+2. Footings: 9 trucks in one 6-hour pour
+3. Walls formed and reinforced
+4. Walls poured
+5. Forms stripped and damp proofing on
+
+When it opens, this building will hold 123 childcare spaces for local families. We're proud our work is underneath it.
+
+Thank you to @Unitech Construction Management Ltd. for having us, to Tyler and Toucan Concrete Pumping, and to the BAF crew for every early start.
+
+🏗️ Now booking forming, rebar, concrete finishing and damp proofing for 2027, anywhere in BC. DM me your project and timeline.
+
+👷 Supers and PMs: what's the one thing you want most from a foundation crew? Tell me below.
+
+#Construction #Concrete #Waterproofing #Cranbrook #BAFConstruction`,
+    },
+    firstComment: `The full series (Parts 1–5) is on my profile. Thanks to everyone who followed along 🙌`,
+    alt: `1) The finished foundation walls of Cranbrook's new childcare centre.
+2) Concrete walls after the forms came off.
+3) Damp proofing applied to the foundation walls.
+4) Part 1: footing rebar at inspection.
+5) Part 2: pour day, with the boom pump over the site.
+6) Part 3: the walls formed and reinforced.
+7) The BAF crew on the finished job.`,
+    story: "Recap slides 4–6 reuse photos from Parts 1–3. Re-send the Part 1 rebar shot and the Part 2 pour cover.",
   },
   {
     id: "p04-concrete-myths", week: 1, date: "2026-10-02", time: "12:10",

@@ -33,6 +33,14 @@ const ampm = (t) => { const [h, m] = t.split(":").map(Number); return `${((h + 1
 const day = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-CA", { weekday: "long", month: "short", day: "numeric" });
 
 const howTo = {
+  "LinkedIn-video": (p) => `Post on Manpreet's LinkedIn: ${day(p.date)}, ${ampm(p.time)} (${brand.timezone})
+
+1. LinkedIn → Start a post → video icon → upload video.mp4.
+2. Video settings (pencil icon) → Thumbnail → upload 01-thumbnail.png.
+3. Paste caption.txt. Re-type any @tag (e.g. "@Unitech") and pick the company from the dropdown.
+4. Clock icon → ${day(p.date)} → ${ampm(p.time)} → Next → Schedule.
+5. Move this folder to "2 - Scheduled".
+6. When it goes live: post first-comment.txt as a comment, reply to every comment for the first hour, then move this folder to "3 - Posted".`,
   LinkedIn: (p, n) => `Post on Manpreet's LinkedIn: ${day(p.date)}, ${ampm(p.time)} (${brand.timezone})
 
 1. LinkedIn → Start a post → photo icon → add the ${n} images in order (01 first).
@@ -69,8 +77,11 @@ for (const p of posts.filter((x) => x.status)) {
   for (const [net, text] of captions) write(dir, captions.length > 1 ? `caption-${net.toLowerCase()}.txt` : "caption.txt", text);
   write(dir, "first-comment.txt", p.firstComment);
   if (pngs.length) write(dir, "alt-text.txt", p.alt);
+  // Video posts: the MP4 (built by prep-video.mjs) goes in as video.mp4.
+  if (p.video && existsSync(join(CLIENT, p.video))) copyFileSync(join(CLIENT, p.video), join(dir, "video.mp4"));
+  else if (p.video) write(dir, "VIDEO-MISSING.txt", `video.mp4 isn't built yet: run scripts/prep-video.mjs ${client} ${p.id} <clips>`);
   if (p.onScreen) write(dir, "on-screen-text.txt", [...p.onScreen, "", "Backup CTAs:", ...(p.backupCtas ?? [])].join("\n"));
-  const guide = howTo[p.platforms[0]];
+  const guide = howTo[p.type === "video" && p.platforms[0] === "LinkedIn" ? "LinkedIn-video" : p.platforms[0]];
   if (guide) write(dir, p.platforms[0] === "TikTok" ? "HOW-TO-POST.txt" : "HOW-TO-SCHEDULE.txt", guide(p, pngs.length));
   count++;
 }

@@ -301,6 +301,135 @@ Missed Part 1? The rebar inspection post is on my profile. Thanks to Tyler and t
 
 ---
 
+## 2026-11-04 07:30 · li03-cranbrook-walls-formed · Job Proof / Site Story
+
+**Hook:** Walls formed. Steel in. Part 3 on Cranbrook's new childcare centre.  
+**Format:** multi-image (5 slides) · **Platforms:** LinkedIn
+
+**LinkedIn**
+
+```
+Walls formed. Steel in. ✅
+Part 3 on Cranbrook's new childcare centre: the footings from Part 2 now have their walls.
+
+What goes into a wall before any concrete does:
+→ Forms set to the layout, plumb and braced so nothing moves during the pour
+→ Rebar placed and tied inside the walls, tied into the dowels left in the footings
+→ Ties and spacing checked so the wall comes out the right thickness, top to bottom
+
+Proud of the BAF crew, and thank you to @Unitech Construction Management Ltd. for keeping the site moving.
+
+Next up: the wall pour. Follow along.
+
+👷 Supers and PMs: what's the first thing you check on wall forms before the pump shows up? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #Formwork #Rebar #Cranbrook #BAFConstruction
+```
+
+**First comment (post it yourself right after publishing):**
+
+```
+Catch up on the series: Part 1 (rebar inspection) and Part 2 (pour day) are on my profile 👆
+```
+
+**Alt text:** 1) Wall forms standing on the poured footings of Cranbrook's new childcare centre.
+2) Wall forms going up along the footing layout.
+3) Rebar placed and tied inside the wall forms.
+4) Bracing holding the wall forms plumb.
+5) The formed walls across the site.
+
+**Story same day:** Alt text is rewritten per image once the photos arrive.
+
+---
+
+## 2026-11-09 07:30 · li04-cranbrook-wall-pour · Job Proof / Raw
+
+**Hook:** Walls poured. Part 4 on Cranbrook's new childcare centre, straight from the site.  
+**Format:** video (1 slides) · **Platforms:** LinkedIn
+
+**LinkedIn**
+
+```
+Walls poured. ✅ 🎥
+Part 4 on Cranbrook's new childcare centre: the walls we formed and reinforced in Part 3, filled with concrete. Sound on.
+
+What a clean wall pour comes down to:
+→ Placing the concrete in even lifts so the forms take the load evenly
+→ Vibrating every lift so the wall comes out solid, with no honeycombing
+→ Someone watching the forms the whole time, so nothing moves
+
+Thank you again to @Unitech Construction Management Ltd. and to the BAF crew for another long, clean day.
+
+Next up: forms off and the finished walls. Follow along.
+
+👷 Supers and PMs: how do you like your wall pours: more lifts and slower, or fewer lifts and faster? Tell me below.
+
+🏗️ Building in BC? Boss and Friends Construction (BAF) does forming, rebar, concrete finishing and damp proofing. DM me your project and timeline and we'll get you a price.
+
+#Construction #ConcretePour #Formwork #Cranbrook #BAFConstruction
+```
+
+**First comment (post it yourself right after publishing):**
+
+```
+Missed the start? Parts 1–3 of this build are on my profile 👆
+```
+
+**Alt text:** Point-of-view video of concrete being placed into the formed, reinforced walls of Cranbrook's new childcare centre.
+
+**Story same day:** Upload video.mp4 as a native LinkedIn video; set 01-thumbnail.png as the custom thumbnail.
+
+---
+
+## 2026-11-12 07:30 · li05-cranbrook-job-done · Job Proof / Site Story
+
+**Hook:** Job done. Cranbrook's new childcare centre foundation, from bare dirt to finished, waterproofed walls.  
+**Format:** multi-image (7 slides) · **Platforms:** LinkedIn
+
+**LinkedIn**
+
+```
+Job done. ✅
+Cranbrook's new childcare centre: foundation complete, from bare dirt to finished, waterproofed walls.
+
+The whole build in 5 parts:
+1. Rebar inspection: passed first time
+2. Footings: 9 trucks in one 6-hour pour
+3. Walls formed and reinforced
+4. Walls poured
+5. Forms stripped and damp proofing on
+
+When it opens, this building will hold 123 childcare spaces for local families. We're proud our work is underneath it.
+
+Thank you to @Unitech Construction Management Ltd. for having us, to Tyler and Toucan Concrete Pumping, and to the BAF crew for every early start.
+
+🏗️ Now booking forming, rebar, concrete finishing and damp proofing for 2027, anywhere in BC. DM me your project and timeline.
+
+👷 Supers and PMs: what's the one thing you want most from a foundation crew? Tell me below.
+
+#Construction #Concrete #Waterproofing #Cranbrook #BAFConstruction
+```
+
+**First comment (post it yourself right after publishing):**
+
+```
+The full series (Parts 1–5) is on my profile. Thanks to everyone who followed along 🙌
+```
+
+**Alt text:** 1) The finished foundation walls of Cranbrook's new childcare centre.
+2) Concrete walls after the forms came off.
+3) Damp proofing applied to the foundation walls.
+4) Part 1: footing rebar at inspection.
+5) Part 2: pour day, with the boom pump over the site.
+6) Part 3: the walls formed and reinforced.
+7) The BAF crew on the finished job.
+
+**Story same day:** Recap slides 4–6 reuse photos from Parts 1–3. Re-send the Part 1 rebar shot and the Part 2 pour cover.
+
+---
+
 ## 2026-10-02 12:10 · p04-concrete-myths · Myth vs Fact
 
 **Hook:** 4 concrete myths builders, homeowners and crew all fall for.  
