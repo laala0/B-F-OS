@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
-import { CAPABILITY_PATH, FORM2FINISH_HOST } from "@/lib/domain/form2finish";
+import { CAPABILITY_PATH, FORM2FINISH_HOST, sheetIsPublic } from "@/lib/domain/form2finish";
 
 // Coarse gate only: logged in or not. Which of (admin)/(field) a route
 // belongs to isn't visible here (route groups are stripped from the URL),
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const onFormToFinish = request.headers.get("host") === FORM2FINISH_HOST;
-  if (path === "/" && onFormToFinish) {
+  if (sheetIsPublic && path === "/" && onFormToFinish) {
     const url = request.nextUrl.clone();
     url.pathname = CAPABILITY_PATH;
     return NextResponse.rewrite(url);
@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
     url.pathname = "/content";
     return NextResponse.redirect(url);
   }
-  if (MARKETING_PATHS.includes(path)) return NextResponse.next();
+  if (sheetIsPublic && MARKETING_PATHS.includes(path)) return NextResponse.next();
 
   const { supabaseResponse, user } = await updateSession(request);
 
