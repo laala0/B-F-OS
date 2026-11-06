@@ -1,6 +1,6 @@
 // Hand-authored to match supabase/migrations/0001_init_auth.sql,
 // 0002_projects.sql, 0003_tasks.sql, 0004_invoices.sql, 0005_reports.sql,
-// and 0006_security_hardening.sql.
+// 0006_security_hardening.sql, and 0014_content_system.sql.
 //
 // Once this project is linked to a real Supabase project (`supabase link`),
 // regenerate this file from the live schema instead of hand-editing it:
@@ -26,6 +26,35 @@ export type InvoiceStatus = "draft" | "sent" | "paid";
 export type TimeEntryStatus = "open" | "pending" | "approved" | "rejected";
 export type PhaseStatus = "not_started" | "in_progress" | "complete";
 export type DocumentCategory = "drawing" | "permit" | "contract" | "quote" | "other";
+export type JobSiteEra = "ontario_drywall_reno" | "vancouver_concrete";
+export type ContentBrand = "f2f" | "bfc" | "experience" | "unsorted";
+export type ContentReviewStatus = "pending" | "kept" | "skipped";
+export type ContentStage =
+  | "lead"
+  | "excavation"
+  | "base_prep"
+  | "forming"
+  | "rebar"
+  | "pour"
+  | "concrete_finish"
+  | "framing"
+  | "drywall"
+  | "tape_paint"
+  | "bath_kitchen"
+  | "landscape"
+  | "repair"
+  | "other";
+export type PostAccount = "manpreet_linkedin" | "f2f";
+export type PostType = "talk" | "success" | "openings" | "site_info" | "hiring" | "joke" | "idea";
+export type PostStatus =
+  | "raw"
+  | "selected"
+  | "edited"
+  | "captioned"
+  | "approved"
+  | "scheduled"
+  | "posted"
+  | "rejected";
 
 export type Json =
   | string
@@ -711,6 +740,240 @@ export interface Database {
           },
         ];
       };
+      job_sites: {
+        Row: {
+          id: string;
+          company_id: string;
+          slug: string;
+          label: string;
+          city: string | null;
+          address: string | null;
+          era: JobSiteEra;
+          performed_by: string | null;
+          scope: string | null;
+          first_date: string | null;
+          last_date: string | null;
+          confirmed: boolean;
+          project_id: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          slug: string;
+          label: string;
+          city?: string | null;
+          address?: string | null;
+          era: JobSiteEra;
+          performed_by?: string | null;
+          scope?: string | null;
+          first_date?: string | null;
+          last_date?: string | null;
+          confirmed?: boolean;
+          project_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["job_sites"]["Insert"]>;
+        Relationships: [];
+      };
+      content_assets: {
+        Row: {
+          id: string;
+          company_id: string;
+          catalog_id: string;
+          job_site_id: string | null;
+          taken_at: string | null;
+          kind: string | null;
+          city: string | null;
+          stage: ContentStage | null;
+          brand: ContentBrand;
+          quality: number | null;
+          privacy_flags: string[];
+          labels: string[];
+          has_person: boolean;
+          thumb_path: string | null;
+          review_status: ContentReviewStatus;
+          public_ok: boolean;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          catalog_id: string;
+          job_site_id?: string | null;
+          taken_at?: string | null;
+          kind?: string | null;
+          city?: string | null;
+          stage?: ContentStage | null;
+          brand?: ContentBrand;
+          quality?: number | null;
+          privacy_flags?: string[];
+          labels?: string[];
+          has_person?: boolean;
+          thumb_path?: string | null;
+          review_status?: ContentReviewStatus;
+          public_ok?: boolean;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["content_assets"]["Insert"]>;
+        Relationships: [
+          {
+            foreignKeyName: "content_assets_job_site_fkey";
+            columns: ["job_site_id", "company_id"];
+            isOneToOne: false;
+            referencedRelation: "job_sites";
+            referencedColumns: ["id", "company_id"];
+          },
+        ];
+      };
+      posts: {
+        Row: {
+          id: string;
+          company_id: string;
+          account: PostAccount;
+          post_type: PostType;
+          scheduled_for: string | null;
+          hook: string | null;
+          caption: string | null;
+          first_comment: string | null;
+          alt_text: string | null;
+          preview_paths: string[];
+          status: PostStatus;
+          feedback: string | null;
+          published_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          account: PostAccount;
+          post_type: PostType;
+          scheduled_for?: string | null;
+          hook?: string | null;
+          caption?: string | null;
+          first_comment?: string | null;
+          alt_text?: string | null;
+          preview_paths?: string[];
+          status?: PostStatus;
+          feedback?: string | null;
+          published_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["posts"]["Insert"]>;
+        Relationships: [];
+      };
+      post_assets: {
+        Row: { post_id: string; company_id: string; asset_id: string; position: number };
+        Insert: { post_id: string; company_id: string; asset_id: string; position?: number };
+        Update: Partial<Database["public"]["Tables"]["post_assets"]["Insert"]>;
+        Relationships: [];
+      };
+      case_files: {
+        Row: {
+          id: string;
+          company_id: string;
+          job_site_id: string;
+          problem: string | null;
+          constraints: string | null;
+          options: string | null;
+          decision: string | null;
+          result: string | null;
+          dollars: string | null;
+          transcript: string | null;
+          status: "draft" | "verified";
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          job_site_id: string;
+          problem?: string | null;
+          constraints?: string | null;
+          options?: string | null;
+          decision?: string | null;
+          result?: string | null;
+          dollars?: string | null;
+          transcript?: string | null;
+          status?: "draft" | "verified";
+        };
+        Update: Partial<Database["public"]["Tables"]["case_files"]["Insert"]>;
+        Relationships: [];
+      };
+      agent_approvals: {
+        Row: {
+          id: string;
+          company_id: string;
+          graph: string;
+          thread_id: string;
+          kind: string;
+          payload: Json;
+          status: "pending" | "decided" | "consumed";
+          decision: Json | null;
+          created_at: string;
+          decided_at: string | null;
+          consumed_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          graph: string;
+          thread_id: string;
+          kind: string;
+          payload?: Json;
+          status?: "pending" | "decided" | "consumed";
+          decision?: Json | null;
+          decided_at?: string | null;
+          consumed_at?: string | null;
+        };
+        Update: Partial<Database["public"]["Tables"]["agent_approvals"]["Insert"]>;
+        Relationships: [];
+      };
+      leads: {
+        Row: {
+          id: string;
+          company_id: string;
+          source: string;
+          name: string | null;
+          role: string | null;
+          organization: string | null;
+          email: string | null;
+          phone: string | null;
+          city: string | null;
+          problem: string | null;
+          status: "new" | "contacted" | "qualified" | "won" | "lost" | "spam";
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          company_id: string;
+          source?: string;
+          name?: string | null;
+          role?: string | null;
+          organization?: string | null;
+          email?: string | null;
+          phone?: string | null;
+          city?: string | null;
+          problem?: string | null;
+          status?: "new" | "contacted" | "qualified" | "won" | "lost" | "spam";
+        };
+        Update: Partial<Database["public"]["Tables"]["leads"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -786,3 +1049,9 @@ export type ProjectPhase = Tables<"project_phases">;
 export type ActivityEvent = Tables<"activity_events">;
 export type Media = Tables<"media">;
 export type ProjectDocument = Tables<"documents">;
+export type JobSite = Tables<"job_sites">;
+export type ContentAsset = Tables<"content_assets">;
+export type ContentPost = Tables<"posts">;
+export type CaseFile = Tables<"case_files">;
+export type AgentApproval = Tables<"agent_approvals">;
+export type Lead = Tables<"leads">;
